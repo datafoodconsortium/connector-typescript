@@ -1,0 +1,1 @@
+{"version":3,"file":"Certifiable.d.ts","sourceRoot":"","sources":["../src/Certifiable.ts"],"names":[],"mappings":"AAAA,OAAO,cAAc,MAAM,qBAAqB,CAAA;AAEhD,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,WAAW;IAEnC,gBAAgB,CAAC,aAAa,EAAE,CAAC,cAAc,GAAG,YAAY,CAAC,GAAG,IAAI,CAAC;IACvE,iBAAiB,IAAI,gBAAgB,CAAC,CAAC,cAAc,GAAG,YAAY,CAAC,CAAC,CAAC;CAEvE"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"Measurable.d.ts","sourceRoot":"","sources":["../src/Measurable.ts"],"names":[],"mappings":"AACA,OAAO,wBAAwB,MAAM,+BAA+B,CAAA;AAEpE,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,UAAU;IAElC,oBAAoB,IAAI,CAAC,wBAAwB,GAAG,YAAY,CAAC,CAAC;IAClE,oBAAoB,CAAC,iBAAiB,EAAE,CAAC,wBAAwB,GAAG,YAAY,CAAC,GAAG,IAAI,CAAC;CAEzF"}

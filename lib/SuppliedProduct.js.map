@@ -1,0 +1,1 @@
+{"version":3,"file":"SuppliedProduct.js","sourceRoot":"","sources":["../src/SuppliedProduct.ts"],"names":[],"mappings":"AAAA,OAAO,cAAc,MAAM,qBAAqB,CAAA;AAIhD,MAAM,CAAC,OAAO,OAAO,eAAgB,SAAQ,cAAc;IAG1D,YAAY,IAAY,EAAE,WAAmB;QAC5C,KAAK,CAAC,IAAI,EAAE,WAAW,CAAC,CAAC;QACzB,IAAI,CAAC,eAAe,CAAC,0FAA0F,CAAC,CAAC;IAIlH,CAAC;CAID"}

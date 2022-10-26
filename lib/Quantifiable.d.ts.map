@@ -1,0 +1,1 @@
+{"version":3,"file":"Quantifiable.d.ts","sourceRoot":"","sources":["../src/Quantifiable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,YAAY;IAEpC,eAAe,IAAI,MAAM,CAAC;IAC1B,gBAAgB,IAAI,MAAM,CAAC;IAC3B,eAAe,CAAC,YAAY,EAAE,MAAM,GAAG,IAAI,CAAC;IAC5C,gBAAgB,CAAC,aAAa,EAAE,MAAM,GAAG,IAAI,CAAC;CAE9C"}
