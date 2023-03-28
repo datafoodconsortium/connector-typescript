@@ -1,0 +1,1 @@
+{"version":3,"file":"IConnectorExportOptions.d.ts","sourceRoot":"","sources":["../src/IConnectorExportOptions.ts"],"names":[],"mappings":"AAAA,OAAO,kBAAkB,MAAM,sBAAsB,CAAC;AAEtD,MAAM,CAAC,OAAO,WAAW,uBAAuB;IAE5C,QAAQ,CAAC,EAAE,kBAAkB,CAAC;IAC9B,YAAY,CAAC,EAAE,GAAG,CAAC;IACnB,aAAa,CAAC,EAAE,GAAG,CAAC;CAEvB"}

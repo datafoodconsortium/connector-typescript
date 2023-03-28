@@ -1,7 +1,8 @@
+import IUnit from "./IUnit.js";
 export default interface Quantifiable {
-    getQuantityUnit(): string;
+    getQuantityUnit(): Promise<IUnit | undefined>;
     getQuantityValue(): number;
-    setQuantityUnit(quantityUnit: string): void;
+    setQuantityUnit(quantityUnit: IUnit): void;
     setQuantityValue(quantityValue: number): void;
 }
 //# sourceMappingURL=Quantifiable.d.ts.map

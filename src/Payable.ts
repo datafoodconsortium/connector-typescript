@@ -1,9 +1,11 @@
-
+import IPrice from "./IPrice.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Payable {
 
-	getPrice(): number;
+	getPrice(): Promise<IPrice | undefined>
+	;
+	setPrice(price: IPrice): void;
 
 }

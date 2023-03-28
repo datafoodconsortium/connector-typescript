@@ -4,6 +4,7 @@ import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Invoiceable {
 
-	getOrders(): IterableIterator<(Orderable & Semanticable)>;
+	getOrders(): Promise<Array<Orderable>>
+	;
 
 }

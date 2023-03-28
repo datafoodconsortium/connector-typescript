@@ -1,1 +1,1 @@
-{"version":3,"file":"Catalogable.d.ts","sourceRoot":"","sources":["../src/Catalogable.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,gBAAgB,CAAA;AAEtC,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,WAAW;IAEnC,aAAa,IAAI,CAAC,SAAS,GAAG,YAAY,CAAC,GAAG,SAAS,CAAC;CAExD"}
+{"version":3,"file":"Catalogable.d.ts","sourceRoot":"","sources":["../src/Catalogable.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,eAAe,CAAA;AAIpC,MAAM,CAAC,OAAO,WAAW,WAAW;IAEnC,WAAW,IAAI,OAAO,CAAC,KAAK,CAAC,QAAQ,CAAC,CAAC,CACtC;IACD,iBAAiB,CAAC,UAAU,EAAE,QAAQ,GAAG,IAAI,CAAC;CAE9C"}

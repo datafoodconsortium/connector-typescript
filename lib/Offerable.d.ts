@@ -1,9 +1,9 @@
-import IDefinedProduct from "./IDefinedProduct.js";
 import IOffer from "./IOffer.js";
-import { Semanticable } from "@virtual-assembly/semantizer";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default interface Offerable {
-    getOfferers(): IterableIterator<(IOffer & Semanticable)>;
-    getOfferedProduct(): (IDefinedProduct & Semanticable);
-    addOffer(offer: (IOffer & Semanticable)): void;
+    getOfferers(): Promise<Array<IOffer>>;
+    getOfferedProduct(): Promise<IDefinedProduct | undefined>;
+    addOffer(offer: IOffer): void;
+    setOfferedProduct(offeredProduct: IDefinedProduct): void;
 }
 //# sourceMappingURL=Offerable.d.ts.map

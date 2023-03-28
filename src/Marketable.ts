@@ -1,11 +1,15 @@
-import ICustomerCategory from "./ICustomerCategory.js"
 import ICatalogItem from "./ICatalogItem.js"
+import ICustomerCategory from "./ICustomerCategory.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Marketable {
 
-	getOfferedItem(): (ICatalogItem & Semanticable) | undefined;
-	getCustomerCategory(): (ICustomerCategory & Semanticable);
+	getOfferedItem(): Promise<ICatalogItem | undefined>
+	;
+	getCustomerCategory(): Promise<ICustomerCategory | undefined>
+	;
+	setOfferedItem(offeredItem: ICatalogItem): void;
+	setCustomerCategory(customerCategory: ICustomerCategory): void;
 
 }

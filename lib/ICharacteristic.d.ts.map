@@ -1,1 +1,1 @@
-{"version":3,"file":"ICharacteristic.d.ts","sourceRoot":"","sources":["../src/ICharacteristic.ts"],"names":[],"mappings":"AAAA,OAAO,UAAU,MAAM,iBAAiB,CAAA;AAIxC,MAAM,CAAC,OAAO,WAAW,eAAgB,SAAQ,UAAU;CAG1D"}
+{"version":3,"file":"ICharacteristic.d.ts","sourceRoot":"","sources":["../src/ICharacteristic.ts"],"names":[],"mappings":"AAAA,OAAO,UAAU,MAAM,iBAAiB,CAAA;AAExC,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,eAAgB,SAAQ,YAAY,EAAE,UAAU;CAGxE"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"TechnicalProductProposer.d.ts","sourceRoot":"","sources":["../src/TechnicalProductProposer.ts"],"names":[],"mappings":"AAAA,OAAO,iBAAiB,MAAM,wBAAwB,CAAA;AAItD,MAAM,CAAC,OAAO,WAAW,wBAAwB;IAEhD,4BAA4B,IAAI,OAAO,CAAC,KAAK,CAAC,iBAAiB,CAAC,CAAC,CAChE;IACD,wBAAwB,CAAC,iBAAiB,EAAE,iBAAiB,GAAG,IAAI,CAAC;IACrE,0BAA0B,CAAC,iBAAiB,EAAE,iBAAiB,GAAG,IAAI,CAAC;CAEvE"}

@@ -7,8 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- None.
+
+## [1.0.0-alpha.1] - 2023-03-27
+
 ### Added
 
+- Add optional parameters in constructors.
+- Add the import functions:
+  - We use the node fetch API by default, be sure to have node >= v17.15 installed.
+  - Add the `importOne` and `importOneTyped` methods to get only one result.
+- Add a store:
+  - `IConnectorStore`
+  - `ConnectorStoreMap`: basic store implemented using a Map.
+- Add a factory:
+  - `IConnectorFactory`
+  - `ConnectorFactory`
+- Support `Catalog`, `SaleSession`, `Order` and `OrderLine`.
+- Add copy constructor.
+- Test all classes.
+- Add create functions in the `Connector` class.
+- Export interfaces and `Semanticable`.
+- Add interfaces for options:
+    - `IConnectorExporterOptions`
+    - `IConnectorExportOptions`
+    - `IConnectorImporterOptions`
+    - `IConnectorImportOptions`
+    - `IGetterOptions`
+
+### Fixed
+
+- The getters for number do return a number and not a string.
+- Make the test/thesaurus to be valid JSON-LD compliant files.
+
+### Changed
+
+- Connector is not a singleton anymore.
+- The interfaces of the concreate classes directly inherit from `Semanticable`.
+- We now use RDFJS parser and serializer.
+- Use `@virtual_assembly/semantizer v1.0.0-alpha.1` (RDFJS).
+- License to MIT.
 - `README.md` and `CHANGELOG.md` files.
 
 ## [1.0.0-alpha] - 2022-10-26
@@ -17,5 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha...HEAD
+[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.1...HEAD
+[1.0.0-alpha.1]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha...v1.0.0-alpha.1
 [1.0.0-alpha]: https://github.com/datafoodconsortium/connector-typescript/releases/tag/v1.0.0-alpha

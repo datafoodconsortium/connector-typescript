@@ -1,1 +1,1 @@
-{"version":3,"file":"Dialable.d.ts","sourceRoot":"","sources":["../src/Dialable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,QAAQ;IAEhC,SAAS,IAAI,MAAM,CAAC;IACpB,cAAc,IAAI,MAAM,CAAC;IACzB,SAAS,CAAC,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;IAChC,cAAc,CAAC,WAAW,EAAE,MAAM,GAAG,IAAI,CAAC;CAE1C"}
+{"version":3,"file":"Dialable.d.ts","sourceRoot":"","sources":["../src/Dialable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,QAAQ;IAEhC,SAAS,IAAI,MAAM,CAClB;IACD,cAAc,IAAI,MAAM,CACvB;IACD,SAAS,CAAC,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;IAChC,cAAc,CAAC,WAAW,EAAE,MAAM,GAAG,IAAI,CAAC;CAE1C"}

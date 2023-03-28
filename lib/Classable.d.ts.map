@@ -1,1 +1,1 @@
-{"version":3,"file":"Classable.d.ts","sourceRoot":"","sources":["../src/Classable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,SAAS;IAEjC,OAAO,IAAI,MAAM,CAAC;CAElB"}
+{"version":3,"file":"Classable.d.ts","sourceRoot":"","sources":["../src/Classable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,SAAS;IAEjC,OAAO,IAAI,MAAM,CAChB;IACD,OAAO,CAAC,IAAI,EAAE,MAAM,GAAG,IAAI,CAAC;CAE5B"}

@@ -1,8 +1,7 @@
-import Onboardable from "./Onboardable.js";
-import { Semanticable } from "@virtual-assembly/semantizer";
+import IEnterprise from "./IEnterprise.js";
 export default interface Affiliable {
-    getAffiliatedOrganizations(): IterableIterator<(Onboardable & Semanticable)>;
-    affiliateTo(organization: (Onboardable & Semanticable)): void;
-    leaveAffiliatedOrganization(organization: (Onboardable & Semanticable)): void;
+    getAffiliatedOrganizations(): Promise<Array<IEnterprise>>;
+    affiliateTo(organization: IEnterprise): void;
+    leaveAffiliatedOrganization(organization: IEnterprise): void;
 }
 //# sourceMappingURL=Affiliable.d.ts.map

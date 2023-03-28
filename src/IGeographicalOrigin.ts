@@ -2,7 +2,7 @@ import ISKOSConcept from "./ISKOSConcept.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IGeographicalOrigin extends ISKOSConcept {
+export default interface IGeographicalOrigin extends ISKOSConcept{
 
 
 }

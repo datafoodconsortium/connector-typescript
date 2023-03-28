@@ -1,1 +1,1 @@
-{"version":3,"file":"Payable.d.ts","sourceRoot":"","sources":["../src/Payable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,OAAO;IAE/B,QAAQ,IAAI,MAAM,CAAC;CAEnB"}
+{"version":3,"file":"Payable.d.ts","sourceRoot":"","sources":["../src/Payable.ts"],"names":[],"mappings":"AAAA,OAAO,MAAM,MAAM,aAAa,CAAA;AAIhC,MAAM,CAAC,OAAO,WAAW,OAAO;IAE/B,QAAQ,IAAI,OAAO,CAAC,MAAM,GAAG,SAAS,CAAC,CACtC;IACD,QAAQ,CAAC,KAAK,EAAE,MAAM,GAAG,IAAI,CAAC;CAE9B"}

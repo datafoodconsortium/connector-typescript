@@ -1,21 +1,25 @@
-import Dialable from "./Dialable.js"
 import Emailable from "./Emailable.js"
 import Localizable from "./Localizable.js"
+import Dialable from "./Dialable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Contactable {
 
-	getContactName(): string;
-	getPostalAddresses(): IterableIterator<(Localizable & Semanticable)>;
-	getPhoneNumbers(): IterableIterator<(Dialable & Semanticable)>;
-	getEmailAddresses(): IterableIterator<(Emailable & Semanticable)>;
-	addPostalAddress(postalAddress: (Localizable & Semanticable)): void;
-	addPhoneNumber(phoneNumber: (Dialable & Semanticable)): void;
-	addEmailAddress(emailAddress: (Emailable & Semanticable)): void;
-	removePostalAddress(postalAddress: (Localizable & Semanticable)): void;
-	removePhoneNumber(phoneNumber: (Dialable & Semanticable)): void;
-	removeEmailAddress(emailAddress: (Emailable & Semanticable)): void;
+	getContactName(): string
+	;
+	getPostalAddresses(): Promise<Array<Localizable>>
+	;
+	getPhoneNumbers(): Promise<Array<Dialable>>
+	;
+	getEmailAddresses(): Promise<Array<Emailable>>
+	;
+	addPostalAddress(postalAddress: Localizable): void;
+	addPhoneNumber(phoneNumber: Dialable): void;
+	addEmailAddress(emailAddress: Emailable): void;
+	removePostalAddress(postalAddress: Localizable): void;
+	removePhoneNumber(phoneNumber: Dialable): void;
+	removeEmailAddress(emailAddress: Emailable): void;
 	setContactName(contactName: string): void;
 
 }

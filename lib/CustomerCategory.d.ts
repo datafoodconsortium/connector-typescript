@@ -1,12 +1,17 @@
 import ICustomerCategory from "./ICustomerCategory.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
+import { Semanticable } from "@virtual-assembly/semantizer";
+import IConnector from "./IConnector.js";
 export default class CustomerCategory extends SemanticObject implements ICustomerCategory {
-    private name;
-    private description;
-    constructor(name: string, description: string);
-    getDescription(): string;
+    protected connector: IConnector;
+    constructor(parameters: {
+        connector: IConnector;
+        semanticId?: string;
+        other?: Semanticable;
+        description?: string;
+        doNotStore?: boolean;
+    });
     setDescription(description: string): void;
-    getName(): string;
-    setName(name: string): void;
+    getDescription(): string;
 }
 //# sourceMappingURL=CustomerCategory.d.ts.map

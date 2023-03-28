@@ -1,6 +1,6 @@
-import Browsable from "./Browsable.js";
-import { Semanticable } from "@virtual-assembly/semantizer";
+import ICatalog from "./ICatalog.js";
 export default interface Catalogable {
-    getRepository(): (Browsable & Semanticable) | undefined;
+    getCatalogs(): Promise<Array<ICatalog>>;
+    registerInCatalog(repository: ICatalog): void;
 }
 //# sourceMappingURL=Catalogable.d.ts.map

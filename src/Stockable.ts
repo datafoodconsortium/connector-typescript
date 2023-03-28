@@ -4,6 +4,8 @@ import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Stockable {
 
-	getStockLimitation(): number;
+	getStockLimitation(): number
+	;
+	setStockLimitation(stockLimitation: number): void;
 
 }

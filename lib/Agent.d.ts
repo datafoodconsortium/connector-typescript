@@ -1,17 +1,20 @@
-import Identifiable from "./Identifiable.js";
-import Localizable from "./Localizable.js";
-import Contactable from "./Contactable.js";
+import IAddress from "./IAddress.js";
+import IAgent from "./IAgent.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default abstract class Agent extends SemanticObject implements Identifiable {
-    private contacts;
-    private localizations;
-    constructor();
-    getLocalizations(): IterableIterator<(Localizable & Semanticable)>;
-    getContacts(): IterableIterator<(Contactable & Semanticable)>;
-    removeContact(contact: (Contactable & Semanticable)): void;
-    removeLocalization(localization: (Localizable & Semanticable)): void;
-    addLocalization(localization: (Localizable & Semanticable)): void;
-    addContact(contact: (Contactable & Semanticable)): void;
+import IConnector from "./IConnector.js";
+import IGetterOptions from "./IGetterOptions.js";
+export default abstract class Agent extends SemanticObject implements IAgent {
+    protected connector: IConnector;
+    protected constructor(parameters: {
+        connector: IConnector;
+        semanticId?: string;
+        semanticType?: string;
+        other?: Semanticable;
+        localizations?: IAddress[];
+    });
+    addLocalization(localization: IAddress): void;
+    removeLocalization(localization: IAddress): void;
+    getLocalizations(options?: IGetterOptions): Promise<Array<IAddress>>;
 }
 //# sourceMappingURL=Agent.d.ts.map

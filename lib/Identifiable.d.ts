@@ -1,12 +1,7 @@
-import Contactable from "./Contactable.js";
-import Localizable from "./Localizable.js";
-import { Semanticable } from "@virtual-assembly/semantizer";
+import IAddress from "./IAddress.js";
 export default interface Identifiable {
-    getContacts(): IterableIterator<(Contactable & Semanticable)>;
-    getLocalizations(): IterableIterator<(Localizable & Semanticable)>;
-    addContact(contact: (Contactable & Semanticable)): void;
-    addLocalization(localization: (Localizable & Semanticable)): void;
-    removeContact(contact: (Contactable & Semanticable)): void;
-    removeLocalization(localization: (Localizable & Semanticable)): void;
+    getLocalizations(): Promise<Array<IAddress>>;
+    addLocalization(localization: IAddress): void;
+    removeLocalization(localization: IAddress): void;
 }
 //# sourceMappingURL=Identifiable.d.ts.map

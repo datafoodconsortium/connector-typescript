@@ -1,6 +1,5 @@
 import Invoiceable from "./Invoiceable.js";
-import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface Orderable {
-    getCustomer(): (Invoiceable & Semanticable);
+    getCustomer(): Promise<Invoiceable | undefined>;
 }
 //# sourceMappingURL=Orderable.d.ts.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"ProductSupplier.d.ts","sourceRoot":"","sources":["../src/ProductSupplier.ts"],"names":[],"mappings":"AACA,OAAO,gBAAgB,MAAM,uBAAuB,CAAA;AAIpD,MAAM,CAAC,OAAO,WAAW,eAAe;IAEvC,mBAAmB,IAAI,OAAO,CAAC,KAAK,CAAC,gBAAgB,CAAC,CAAC,CACtD;IACD,aAAa,CAAC,eAAe,EAAE,gBAAgB,GAAG,IAAI,CAAC;IACvD,eAAe,CAAC,eAAe,EAAE,gBAAgB,GAAG,IAAI,CAAC;CAEzD"}

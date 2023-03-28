@@ -4,6 +4,7 @@ import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Orderable {
 
-	getCustomer(): (Invoiceable & Semanticable);
+	getCustomer(): Promise<Invoiceable | undefined>
+	;
 
 }

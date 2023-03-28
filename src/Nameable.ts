@@ -4,7 +4,8 @@ import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Nameable {
 
-	getName(): string;
+	getName(): string
+	;
 	setName(name: string): void;
 
 }

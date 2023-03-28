@@ -1,12 +1,22 @@
-import IAllergenDimension from "./IAllergenDimension.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import ICharacteristicDimension from "./ICharacteristicDimension.js";
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import IAllergenDimension from "./IAllergenDimension.js";
 import Characteristic from "./Characteristic.js";
+import IUnit from "./IUnit.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
+import IConnector from "./IConnector.js";
+import IGetterOptions from "./IGetterOptions.js";
 export default class AllergenCharacteristic extends Characteristic implements IAllergenCharacteristic {
-    private allergenDimension;
-    constructor(quantityUnit: string, quantityValue: number, allergenDimension: (IAllergenDimension & Semanticable));
-    getQuantityDimension(): (ICharacteristicDimension & Semanticable);
-    setQuantityDimension(quantityDimension: (ICharacteristicDimension & Semanticable)): void;
+    constructor(parameters: {
+        connector: IConnector;
+        semanticId?: string;
+        semanticType?: string;
+        other?: Semanticable;
+        unit?: IUnit;
+        value?: number;
+        allergenDimension?: IAllergenDimension;
+    });
+    getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>;
+    setQuantityDimension(quantityDimension: ICharacteristicDimension): void;
 }
 //# sourceMappingURL=AllergenCharacteristic.d.ts.map

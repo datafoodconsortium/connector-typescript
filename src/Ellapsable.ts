@@ -4,7 +4,11 @@ import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Ellapsable {
 
-	getStartDate(): void;
-	getEndDate(): void;
+	getBeginDate(): string
+	;
+	getEndDate(): string
+	;
+	setBeginDate(beginDate: string): void;
+	setEndDate(endDate: string): void;
 
 }
