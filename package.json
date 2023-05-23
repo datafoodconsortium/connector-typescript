@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@rdfjs/serializer-jsonld-ext": "^4.0.0",
-    "@virtual-assembly/semantizer": "^1.0.0-alpha.1",
+    "@virtual-assembly/semantizer": "^1.0.0-alpha.2",
     "jsonld": "^8.1.0",
     "jsonld-streaming-parser": "^3.2.0",
     "rdf-ext": "^2.2.0",
