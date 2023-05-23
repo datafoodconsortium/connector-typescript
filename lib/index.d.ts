@@ -1,4 +1,3 @@
-export { Semanticable } from '@virtual-assembly/semantizer';
 export { default as Connector } from './Connector.js';
 export { default as ConnectorStoreMap } from './ConnectorStoreMap.js';
 export { default as ConnectorFactory } from './ConnectorFactory.js';
