@@ -9,13 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None.
 
+## [1.0.0-alpha.3] - 2023-07-10
+
+### Fixed
+
+- The importer is able to import only one blank node.
+### Changed
+
+- Use the new DFC semantic resources:
+  - https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl
+  - https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf
+  - https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf
+  - https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf
+- Update thesaurus with the new resources (test directory).
+- Update context to https://www.datafoodconsortium.org (was previously static.datafoodconsortium.org).
+- Update jest to version >= 29.5.0.
+- Expect exceptions in tests for not implemented features.
+- Increase the timeout for all the tests (10sec instead of 5sec).
+
 ## [1.0.0-alpha.2] - 2023-05-23
 
 ### Changed
 
-- index does not export Semanticable anymore.
-- update @types/rdf-ext to version 2.2.0.
-- git ignore .code-workspace files.
+- Index does not export Semanticable anymore.
+- Update @types/rdf-ext to version 2.2.0.
+- Git ignore .code-workspace files.
 
 ## [1.0.0-alpha.1] - 2023-03-27
 
@@ -63,7 +81,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.2...HEAD
+[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.3...HEAD
+[1.0.0-alpha.3]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.2...v1.0.0-alpha.3
 [1.0.0-alpha.2]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.1...v1.0.0-alpha.2
 [1.0.0-alpha.1]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha...v1.0.0-alpha.1
 [1.0.0-alpha]: https://github.com/datafoodconsortium/connector-typescript/releases/tag/v1.0.0-alpha

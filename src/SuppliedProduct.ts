@@ -45,18 +45,18 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 
 	public getTotalTheoreticalStock(): number
 	 {
-		return Number(this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#totalTheoreticalStock"));
+		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#totalTheoreticalStock"));
 	}
 	
 
 	public setTotalTheoreticalStock(totalTheoreticalStock: number): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#totalTheoreticalStock";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#totalTheoreticalStock";
 		this.setSemanticPropertyLiteral(property, totalTheoreticalStock);
 	}
 	
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, name?: string, description?: string, productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[], totalTheoreticalStock?: number, doNotStore?: boolean}) {
-		const type: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#SuppliedProduct";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#SuppliedProduct";
 		
 		if (parameters.other) {
 			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });

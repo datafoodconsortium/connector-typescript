@@ -69,20 +69,20 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	}
 
 	public setName(name: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#name";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#name";
 		this.setSemanticPropertyLiteral(property, name);
 	}
 	
 
 	public getName(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#name");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#name");
 	}
 	
 	public async getPartOrigin(options?: IGetterOptions): Promise<Array<IPartOrigin>>
 	 {
 		const results = new Array<IPartOrigin>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasPartOrigin");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPartOrigin");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IPartOrigin> semanticObject);
@@ -92,7 +92,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public addNutrientCharacteristic(nutrientCharacteristic: INutrientCharacteristic): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasNutrientCharacteristic";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasNutrientCharacteristic";
 		if (nutrientCharacteristic.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, nutrientCharacteristic);
 		}
@@ -105,14 +105,14 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 
 	public getUsageOrStorageConditions(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#usageOrStorageCondition");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#usageOrStorageCondition");
 	}
 	
 
 	public async getGeographicalOrigin(options?: IGetterOptions): Promise<IGeographicalOrigin | undefined>
 	 {
 		let result: IGeographicalOrigin | undefined = undefined;
-		const semanticId = this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasGeographicalOrigin");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasGeographicalOrigin");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <IGeographicalOrigin | undefined> semanticObject;
@@ -124,7 +124,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 
 	public getAlcoholPercentage(): number
 	 {
-		return Number(this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#alcoholPercentage"));
+		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#alcoholPercentage"));
 	}
 	
 
@@ -136,7 +136,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getNutrientCharacteristics(options?: IGetterOptions): Promise<Array<INutrientCharacteristic>>
 	 {
 		const results = new Array<INutrientCharacteristic>();
-		const blankNodesId = this.getSemanticPropertyAnonymousAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasNutrientCharacteristic");
+		const blankNodesId = this.getSemanticPropertyAnonymousAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasNutrientCharacteristic");
 		blankNodesId.forEach(blankNodeId => {
 			const blankNode = <INutrientCharacteristic> this.connector.getDefaultFactory().createFromRdfDataset(blankNodeId);
 			results.push(blankNode);
@@ -147,7 +147,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getPhysicalCharacteristics(options?: IGetterOptions): Promise<Array<IPhysicalCharacteristic>>
 	 {
 		const results = new Array<IPhysicalCharacteristic>();
-		const blankNodesId = this.getSemanticPropertyAnonymousAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasPhysicalCharacteristic");
+		const blankNodesId = this.getSemanticPropertyAnonymousAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPhysicalCharacteristic");
 		blankNodesId.forEach(blankNodeId => {
 			const blankNode = <IPhysicalCharacteristic> this.connector.getDefaultFactory().createFromRdfDataset(blankNodeId);
 			results.push(blankNode);
@@ -163,7 +163,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getNatureOrigin(options?: IGetterOptions): Promise<Array<INatureOrigin>>
 	 {
 		const results = new Array<INatureOrigin>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasNatureOrigin");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasNatureOrigin");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<INatureOrigin> semanticObject);
@@ -173,7 +173,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public addPartOrigin(partOrigin: IPartOrigin): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasPartOrigin";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPartOrigin";
 		if (partOrigin.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, partOrigin);
 		}
@@ -190,19 +190,19 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public setLifetime(lifetime: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#lifetime";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#lifetime";
 		this.setSemanticPropertyLiteral(property, lifetime);
 	}
 	
 
 	public setAlcoholPercentage(alcoholPercentage: number): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#alcoholPercentage";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#alcoholPercentage";
 		this.setSemanticPropertyLiteral(property, alcoholPercentage);
 	}
 	
 
 	public addPhysicalCharacteristic(physicalCharacteristic: IPhysicalCharacteristic): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasPhysicalCharacteristic";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPhysicalCharacteristic";
 		if (physicalCharacteristic.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, physicalCharacteristic);
 		}
@@ -216,7 +216,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getAllergenCharacteristics(options?: IGetterOptions): Promise<Array<IAllergenCharacteristic>>
 	 {
 		const results = new Array<IAllergenCharacteristic>();
-		const blankNodesId = this.getSemanticPropertyAnonymousAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasAllergenCharacteristic");
+		const blankNodesId = this.getSemanticPropertyAnonymousAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasAllergenCharacteristic");
 		blankNodesId.forEach(blankNodeId => {
 			const blankNode = <IAllergenCharacteristic> this.connector.getDefaultFactory().createFromRdfDataset(blankNodeId);
 			results.push(blankNode);
@@ -226,12 +226,12 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 
 	public getLifetime(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#lifetime");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#lifetime");
 	}
 	
 
 	public addNatureOrigin(natureOrigin: INatureOrigin): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasNatureOrigin";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasNatureOrigin";
 		if (natureOrigin.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, natureOrigin);
 		}
@@ -243,7 +243,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public addAllergenCharacteristic(allergenCharacteristic: IAllergenCharacteristic): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasAllergenCharacteristic";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasAllergenCharacteristic";
 		if (allergenCharacteristic.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, allergenCharacteristic);
 		}
@@ -265,26 +265,26 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public setUsageOrStorageConditions(usageOrStorageConditions: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#usageOrStorageCondition";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#usageOrStorageCondition";
 		this.setSemanticPropertyLiteral(property, usageOrStorageConditions);
 	}
 	
 
 	public setGeographicalOrigin(geographicalOrigin: IGeographicalOrigin): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasGeographicalOrigin";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasGeographicalOrigin";
 		this.setSemanticPropertyReference(property, geographicalOrigin);
 		this.connector.store(geographicalOrigin);
 	}
 	
 	public setDescription(description: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#description";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#description";
 		this.setSemanticPropertyLiteral(property, description);
 	}
 	
 
 	public getDescription(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#description");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#description");
 	}
 	
 	public removeCertification(certification: ICertification): void {
@@ -295,7 +295,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getCertifications(options?: IGetterOptions): Promise<Array<ICertification>>
 	 {
 		const results = new Array<ICertification>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasCertification");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasCertification");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ICertification> semanticObject);
@@ -305,7 +305,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public addCertification(certification: ICertification): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasCertification";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasCertification";
 		if (certification.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, certification);
 		}
@@ -317,7 +317,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 	public async getQuantity(options?: IGetterOptions): Promise<IQuantity | undefined>
 	 {
-		const blankNode: any = this.getSemanticPropertyAnonymous("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasQuantity");
+		const blankNode: any = this.getSemanticPropertyAnonymous("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasQuantity");
 		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 	
@@ -325,7 +325,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getProductType(options?: IGetterOptions): Promise<IProductType | undefined>
 	 {
 		let result: IProductType | undefined = undefined;
-		const semanticId = this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasType");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasType");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <IProductType | undefined> semanticObject;
@@ -343,7 +343,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getClaims(options?: IGetterOptions): Promise<Array<IClaim>>
 	 {
 		const results = new Array<IClaim>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasClaim");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasClaim");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IClaim> semanticObject);
@@ -353,7 +353,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public addClaim(claim: IClaim): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasClaim";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasClaim";
 		if (claim.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, claim);
 		}
@@ -365,19 +365,19 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 
 	public setProductType(productType: IProductType): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasType";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasType";
 		this.setSemanticPropertyReference(property, productType);
 		this.connector.store(productType);
 	}
 	
 
 	public setQuantity(quantity: IQuantity): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasQuantity";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasQuantity";
 		this.setSemanticPropertyAnonymous(property, quantity);
 	}
 	
 	public addCatalogItem(catalogItem: ICatalogItem): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#referencedBy";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#referencedBy";
 		if (catalogItem.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, catalogItem);
 		}
@@ -391,7 +391,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	public async getCatalogItems(options?: IGetterOptions): Promise<Array<ICatalogItem>>
 	 {
 		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#referencedBy");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#referencedBy");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ICatalogItem> semanticObject);

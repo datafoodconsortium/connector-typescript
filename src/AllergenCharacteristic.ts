@@ -36,7 +36,7 @@ export default class AllergenCharacteristic extends Characteristic implements IA
 	
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, unit?: IUnit, value?: number, allergenDimension?: IAllergenDimension}) {
-		const type: string = parameters.semanticType? parameters.semanticType: "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#AllergenCharacteristic";
+		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#AllergenCharacteristic";
 		
 		if (parameters.other) {
 			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
@@ -54,7 +54,7 @@ export default class AllergenCharacteristic extends Characteristic implements IA
 	public async getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>
 	 {
 		let result: ICharacteristicDimension | undefined = undefined;
-		const semanticId = this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasAllergenDimension");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasAllergenDimension");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <ICharacteristicDimension | undefined> semanticObject;
@@ -65,7 +65,7 @@ export default class AllergenCharacteristic extends Characteristic implements IA
 	
 
 	public setQuantityDimension(quantityDimension: ICharacteristicDimension): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasAllergenDimension";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasAllergenDimension";
 		this.setSemanticPropertyReference(property, quantityDimension);
 		this.connector.store(quantityDimension);
 	}

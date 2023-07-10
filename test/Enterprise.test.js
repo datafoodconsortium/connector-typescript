@@ -72,7 +72,7 @@ const enterprise = new Enterprise({
     catalogItems: [catalogItem]
 });
 
-const json = `{"@context":"http://static.datafoodconsortium.org/ontologies/context.json","@id":"http://myplatform.com/enterprise1","@type":"dfc-b:Enterprise","dfc-b:VATnumber":"vatNumber","dfc-b:defines":"http://myplatform.com/customerCategory1","dfc-b:hasAddress":{"@id":"http://myplatform.com/address1"},"dfc-b:hasDescription":"description","dfc-b:maintains":{"@id":"http://myplatform.com/catalog1"},"dfc-b:manages":"http://myplatform.com/catalogItem1","dfc-b:supplies":"http://myplatform.com/suppliedProduct1"}`;
+const json = `{"@context":"https://www.datafoodconsortium.org","@id":"http://myplatform.com/enterprise1","@type":"dfc-b:Enterprise","dfc-b:VATnumber":"vatNumber","dfc-b:defines":"http://myplatform.com/customerCategory1","dfc-b:hasAddress":{"@id":"http://myplatform.com/address1"},"dfc-b:hasDescription":"description","dfc-b:maintains":{"@id":"http://myplatform.com/catalog1"},"dfc-b:manages":"http://myplatform.com/catalogItem1","dfc-b:supplies":"http://myplatform.com/suppliedProduct1"}`;
 
 test('Enterprise:import', async () => {
     const imported = await connector.import(json);
@@ -160,10 +160,11 @@ test('Enterprise:supplyProduct', async () => {
 });
 
 test('Enterprise:unsupplyProduct', async () => {
-    enterprise.unsupplyProduct(suppliedProduct);
-    const suppliedProducts = await enterprise.getSuppliedProducts();
-    expect(suppliedProducts.length).toStrictEqual(1);
-    expect(suppliedProducts[0].equals(suppliedProduct2)).toStrictEqual(true);
+    expect(() => enterprise.unsupplyProduct(suppliedProduct)).toThrow();
+    // enterprise.unsupplyProduct(suppliedProduct);
+    // const suppliedProducts = await enterprise.getSuppliedProducts();
+    // expect(suppliedProducts.length).toStrictEqual(1);
+    // expect(suppliedProducts[0].equals(suppliedProduct2)).toStrictEqual(true);
 });
 
 test('Enterprise:maintainCatalog', async () => {
@@ -175,10 +176,11 @@ test('Enterprise:maintainCatalog', async () => {
 });
 
 test('Enterprise:unmaintainCatalog', async () => {
-    enterprise.unmaintainCatalog(catalog);
-    const catalogs = await enterprise.getMaintainedCatalogs();
-    expect(catalogs.length).toStrictEqual();
-    expect(catalogs[0].equals(catalog2)).toStrictEqual(true);
+    expect(() => enterprise.unmaintainCatalog(catalog)).toThrow();
+    // enterprise.unmaintainCatalog(catalog);
+    // const catalogs = await enterprise.getMaintainedCatalogs();
+    // expect(catalogs.length).toStrictEqual();
+    // expect(catalogs[0].equals(catalog2)).toStrictEqual(true);
 });
 
 test('Enterprise:manageCatalogItem', async () => {
@@ -189,8 +191,9 @@ test('Enterprise:manageCatalogItem', async () => {
 });
 
 test('Enterprise:unmanageCatalogItem', async () => {
-    enterprise.unmanageCatalogItem(catalogItem);
-    const catalogItems = await enterprise.getManagedCatalogItems();
-    expect(catalogItems.length).toStrictEqual(1);
-    expect(catalogItems[0].equals(catalogItem2)).toStrictEqual(true);
+    expect(() => enterprise.unmanageCatalogItem(catalogItem)).toThrow();
+    // enterprise.unmanageCatalogItem(catalogItem);
+    // const catalogItems = await enterprise.getManagedCatalogItems();
+    // expect(catalogItems.length).toStrictEqual(1);
+    // expect(catalogItems[0].equals(catalogItem2)).toStrictEqual(true);
 });

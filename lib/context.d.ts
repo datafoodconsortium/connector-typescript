@@ -1,24 +1,16 @@
 declare const context: {
     rdfs: string;
     skos: string;
-    dfc: string;
     dc: string;
     "dfc-b": string;
-    "dfc-p": string;
     "dfc-t": string;
     "dfc-m": string;
     "dfc-pt": string;
     "dfc-f": string;
-    "dfc-p:hasUnit": {
-        "@type": string;
-    };
     "dfc-b:hasUnit": {
         "@type": string;
     };
     "dfc-b:hasQuantity": {
-        "@type": string;
-    };
-    "dfc-p:hasType": {
         "@type": string;
     };
     "dfc-b:hasType": {

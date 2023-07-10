@@ -1,7 +1,5 @@
 import Address from '../lib/Address.js';
 import Connector from "../lib/Connector.js";
-//import ConnectorImporterJsonldStream from "../lib/ConnectorImporterJsonldStream.js";
-//import context from "../lib/context.js";
 
 const connector = new Connector();
 
@@ -14,7 +12,7 @@ const address = new Address({
     country: "Belgium",
 });
 
-const data = '{"@context":"http://static.datafoodconsortium.org/ontologies/context.json","@id":"http://myplatform.com/address/address1","@type":"dfc-b:Address","dfc-b:hasCity":"Brussels","dfc-b:hasCountry":"Belgium","dfc-b:hasPostalCode":"00001","dfc-b:hasStreet":"1, place or Europe"}';
+const data = '{"@context":"https://www.datafoodconsortium.org","@id":"http://myplatform.com/address/address1","@type":"dfc-b:Address","dfc-b:hasCity":"Brussels","dfc-b:hasCountry":"Belgium","dfc-b:hasPostalCode":"00001","dfc-b:hasStreet":"1, place or Europe"}';
 
 test('Address:import', async () => {
     const imported = await connector.import(data);

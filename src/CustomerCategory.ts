@@ -33,7 +33,7 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 	protected connector: IConnector;
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, description?: string, doNotStore?: boolean}) {
-		const type: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#CustomerCategory";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#CustomerCategory";
 		
 		if (parameters.other) {
 			super({ semanticId: parameters.semanticId!, other: parameters.other });
@@ -51,14 +51,14 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 	}
 
 	public setDescription(description: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#description";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#description";
 		this.setSemanticPropertyLiteral(property, description);
 	}
 	
 
 	public getDescription(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#description");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#description");
 	}
 	
 

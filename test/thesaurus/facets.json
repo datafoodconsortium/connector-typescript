@@ -1,6 +1,6 @@
 {
   "@context": {
-    "dfc-f": "http://static.datafoodconsortium.org/data/facets.rdf#",
+    "dfc-f": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/facets.rdf#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "rdf": "http://www.w3.org/2000/01/rdf-schema#"
   },

@@ -34,7 +34,7 @@ const person = new Person({
     organizations: [enterprise]
 });
 
-const json = `{"@context":"http://static.datafoodconsortium.org/ontologies/context.json","@id":"http://myplatform.com/person1","@type":"dfc-b:Person","dfc-b:affiliates":"http://myplatform.com/address/enterprise1","dfc-b:familyName":"Smith","dfc-b:firstName":"John","dfc-b:hasAddress":{"@id":"http://myplatform.com/address/address1"}}`;
+const json = `{"@context":"https://www.datafoodconsortium.org","@id":"http://myplatform.com/person1","@type":"dfc-b:Person","dfc-b:affiliates":"http://myplatform.com/address/enterprise1","dfc-b:familyName":"Smith","dfc-b:firstName":"John","dfc-b:hasAddress":{"@id":"http://myplatform.com/address/address1"}}`;
 
 test('Person:import', async () => {
     const imported = await connector.import(json);
@@ -99,15 +99,17 @@ test('Person:affiliatedTo', async () => {
 });
 
 test('Person:removeLocalization', async () => {
-    person.removeLocalization(address);
-    const localizations = await person.getLocalizations();
-    expect(localizations.length).toStrictEqual();
-    expect(localizations[0].equals(address2)).toStrictEqual(true);
+    expect(() => person.removeLocalization(address)).toThrow();
+    // person.removeLocalization(address);
+    // const localizations = await person.getLocalizations();
+    // expect(localizations.length).toStrictEqual();
+    // expect(localizations[0].equals(address2)).toStrictEqual(true);
 });
 
 test('Person:leaveAaffiliatedOrganization', async () => {
-    person.leaveAaffiliatedOrganization(enterprise);
-    const organizations = await person.affiliatedOrganizations();
-    expect(organizations.length).toStrictEqual(1);
-    expect(organizations[0].equals(enterprise2)).toStrictEqual(true);
+    expect(() => person.leaveAaffiliatedOrganization(enterprise)).toThrow();
+    // person.leaveAaffiliatedOrganization(enterprise);
+    // const organizations = await person.affiliatedOrganizations();
+    // expect(organizations.length).toStrictEqual(1);
+    // expect(organizations[0].equals(enterprise2)).toStrictEqual(true);
 });

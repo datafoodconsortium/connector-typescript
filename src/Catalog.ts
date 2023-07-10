@@ -36,7 +36,7 @@ export default class Catalog extends SemanticObject implements ICatalog {
 	protected connector: IConnector;
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, maintainers?: IEnterprise[], items?: ICatalogItem[], doNotStore?: boolean}) {
-		const type: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#Catalog";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#Catalog";
 		
 		if (parameters.other) {
 			super({ semanticId: parameters.semanticId!, other: parameters.other });
@@ -57,7 +57,7 @@ export default class Catalog extends SemanticObject implements ICatalog {
 	public async getItems(options?: IGetterOptions): Promise<Array<ICatalogItem>>
 	 {
 		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#lists");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#lists");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ICatalogItem> semanticObject);
@@ -67,7 +67,7 @@ export default class Catalog extends SemanticObject implements ICatalog {
 	
 
 	public addMaintainer(maintainer: IEnterprise): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#maintainedBy";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#maintainedBy";
 		if (maintainer.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, maintainer);
 		}
@@ -86,7 +86,7 @@ export default class Catalog extends SemanticObject implements ICatalog {
 	public async getMaintainers(options?: IGetterOptions): Promise<Array<IEnterprise>>
 	 {
 		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#maintainedBy");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#maintainedBy");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IEnterprise> semanticObject);
@@ -96,7 +96,7 @@ export default class Catalog extends SemanticObject implements ICatalog {
 	
 
 	public addItem(item: ICatalogItem): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#lists";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#lists";
 		if (item.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, item);
 		}

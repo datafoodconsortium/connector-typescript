@@ -41,7 +41,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, localizations?: IAddress[], description?: string, vatNumber?: string, customerCategories?: ICustomerCategory[], catalogs?: ICatalog[], catalogItems?: ICatalogItem[], suppliedProducts?: ISuppliedProduct[], technicalProducts?: ITechnicalProduct[], doNotStore?: boolean}) {
-		const type: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#Enterprise";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#Enterprise";
 		
 		if (parameters.other) {
 			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
@@ -65,7 +65,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	}
 
 	public manageCatalogItem(catalogItem: ICatalogItem): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#manages";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#manages";
 		if (catalogItem.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, catalogItem);
 		}
@@ -79,7 +79,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	public async getManagedCatalogItems(options?: IGetterOptions): Promise<Array<ICatalogItem>>
 	 {
 		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#manages");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#manages");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ICatalogItem> semanticObject);
@@ -93,7 +93,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	}
 	
 	public maintainCatalog(catalog: ICatalog): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#maintains";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#maintains";
 		if (catalog.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, catalog);
 		}
@@ -107,7 +107,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	public async getMaintainedCatalogs(options?: IGetterOptions): Promise<Array<ICatalog>>
 	 {
 		const results = new Array<ICatalog>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#maintains");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#maintains");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ICatalog> semanticObject);
@@ -126,7 +126,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	
 
 	public supplyProduct(suppliedProduct: ISuppliedProduct): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#supplies";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#supplies";
 		if (suppliedProduct.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, suppliedProduct);
 		}
@@ -140,7 +140,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	public async getSuppliedProducts(options?: IGetterOptions): Promise<Array<ISuppliedProduct>>
 	 {
 		const results = new Array<ISuppliedProduct>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#supplies");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#supplies");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ISuppliedProduct> semanticObject);
@@ -177,31 +177,31 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	}
 	
 	public setDescription(description: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasDescription";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasDescription";
 		this.setSemanticPropertyLiteral(property, description);
 	}
 	
 
 	public getDescription(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#hasDescription");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasDescription");
 	}
 	
 	public setVatNumber(vatNumber: string): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#VATnumber";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#VATnumber";
 		this.setSemanticPropertyLiteral(property, vatNumber);
 	}
 	
 
 	public getVatNumber(): string
 	 {
-		return this.getSemanticProperty("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#VATnumber");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#VATnumber");
 	}
 	
 	public async getCustomerCategories(options?: IGetterOptions): Promise<Array<ICustomerCategory>>
 	 {
 		const results = new Array<ICustomerCategory>();
-		const properties = this.getSemanticPropertyAll("http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#defines");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#defines");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<ICustomerCategory> semanticObject);
@@ -211,7 +211,7 @@ export default class Enterprise extends Agent implements Onboardable, ProductSup
 	
 
 	public addCustomerCategory(customerCategory: ICustomerCategory): void {
-		const property: string = "http://static.datafoodconsortium.org/ontologies/DFC_BusinessOntology.owl#defines";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#defines";
 		if (customerCategory.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, customerCategory);
 		}

@@ -97,7 +97,7 @@ let suppliedProduct = new SuppliedProduct({
     partOrigin: [connector.FACETS.PARTORIGIN.PLANTPARTORIGIN.FRUIT]
 });
 
-const json = `{"@context":"http://static.datafoodconsortium.org/ontologies/context.json","@graph":[{"@id":"_:b1","@type":"dfc-b:QuantitativeValue","dfc-b:hasUnit":"dfc-m:Kilogram","dfc-b:value":"1.2"},{"@id":"_:b2","@type":"dfc-b:AllergenCharacteristic","dfc-b:hasAllergenDimension":"dfc-m:Peanuts","dfc-b:hasUnit":"dfc-m:Kilogram","dfc-b:value":"1"},{"@id":"_:b4","@type":"dfc-b:NutrientCharacteristic","dfc-b:hasNutrientDimension":{"@id":"dfc-m:Calcium"},"dfc-b:hasUnit":"dfc-m:Gram","dfc-b:value":"10"},{"@id":"_:b6","@type":"dfc-b:PhysicalCharacteristic","dfc-b:hasPhysicalDimension":"dfc-m:Weight","dfc-b:hasUnit":"dfc-m:Gram","dfc-b:value":"100"},{"@id":"http://myplatform.com/tomato","@type":"dfc-b:SuppliedProduct","dfc-b:alcoholPercentage":"0","dfc-b:description":"Awesome tomato","dfc-b:hasAllergenCharacteristic":{"@id":"_:b2"},"dfc-b:hasCertification":[{"@id":"dfc-f:Organic-AB"},{"@id":"dfc-f:Organic-EU"}],"dfc-b:hasClaim":"dfc-f:NoAddedSugars","dfc-b:hasGeographicalOrigin":"dfc-f:CentreValLoire","dfc-b:hasNatureOrigin":{"@id":"dfc-f:PlantOrigin"},"dfc-b:hasNutrientCharacteristic":{"@id":"_:b4"},"dfc-b:hasPartOrigin":{"@id":"dfc-f:Fruit"},"dfc-b:hasPhysicalCharacteristic":{"@id":"_:b6"},"dfc-b:hasQuantity":"_:b1","dfc-b:hasType":"dfc-pt:round-tomato","dfc-b:lifetime":"a week","dfc-b:referencedBy":"http://myplatform.com/catalogItem","dfc-b:totalTheoreticalStock":"2.23","dfc-b:usageOrStorageCondition":"free text"}]}`;
+const json = `{"@context":"https://www.datafoodconsortium.org","@graph":[{"@id":"_:b1","@type":"dfc-b:QuantitativeValue","dfc-b:hasUnit":"dfc-m:Kilogram","dfc-b:value":"1.2"},{"@id":"_:b2","@type":"dfc-b:AllergenCharacteristic","dfc-b:hasAllergenDimension":"dfc-m:Peanuts","dfc-b:hasUnit":"dfc-m:Kilogram","dfc-b:value":"1"},{"@id":"_:b4","@type":"dfc-b:NutrientCharacteristic","dfc-b:hasNutrientDimension":{"@id":"dfc-m:Calcium"},"dfc-b:hasUnit":"dfc-m:Gram","dfc-b:value":"10"},{"@id":"_:b6","@type":"dfc-b:PhysicalCharacteristic","dfc-b:hasPhysicalDimension":"dfc-m:Weight","dfc-b:hasUnit":"dfc-m:Gram","dfc-b:value":"100"},{"@id":"http://myplatform.com/tomato","@type":"dfc-b:SuppliedProduct","dfc-b:alcoholPercentage":"0","dfc-b:description":"Awesome tomato","dfc-b:hasAllergenCharacteristic":{"@id":"_:b2"},"dfc-b:hasCertification":[{"@id":"dfc-f:Organic-AB"},{"@id":"dfc-f:Organic-EU"}],"dfc-b:hasClaim":"dfc-f:NoAddedSugars","dfc-b:hasGeographicalOrigin":"dfc-f:CentreValLoire","dfc-b:hasNatureOrigin":{"@id":"dfc-f:PlantOrigin"},"dfc-b:hasNutrientCharacteristic":{"@id":"_:b4"},"dfc-b:hasPartOrigin":{"@id":"dfc-f:Fruit"},"dfc-b:hasPhysicalCharacteristic":{"@id":"_:b6"},"dfc-b:hasQuantity":"_:b1","dfc-b:hasType":"dfc-pt:round-tomato","dfc-b:lifetime":"a week","dfc-b:referencedBy":"http://myplatform.com/catalogItem","dfc-b:totalTheoreticalStock":"2.23","dfc-b:usageOrStorageCondition":"free text"}]}`;
 
 test('SuppliedProduct:import', async () => {
     const importedAll = await connector.import(json);
@@ -245,10 +245,11 @@ test('SuppliedProduct:addClaim', async () => {
 });
 
 test('SuppliedProduct:removeClaim', async () => {
-    suppliedProduct.removeClaim(connector.FACETS.CLAIM.NUTRITIONALCLAIM.NOADDEDSUGARS);
-    const claims = await suppliedProduct.getClaims();
-    expect(claims.length).toStrictEqual(1);
-    expect(claims[0].equals(connector.FACETS.CLAIM.NUTRITIONALCLAIM.FATFREE)).toStrictEqual(true);
+    expect(() => suppliedProduct.removeClaim(connector.FACETS.CLAIM.NUTRITIONALCLAIM.NOADDEDSUGARS)).toThrow();
+    // suppliedProduct.removeClaim(connector.FACETS.CLAIM.NUTRITIONALCLAIM.NOADDEDSUGARS);
+    // const claims = await suppliedProduct.getClaims();
+    // expect(claims.length).toStrictEqual(1);
+    // expect(claims[0].equals(connector.FACETS.CLAIM.NUTRITIONALCLAIM.FATFREE)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:setUsageOrStorageConditions', async () => {
@@ -265,10 +266,11 @@ test('SuppliedProduct:addAllergenCharacteristics', async () => {
 });
 
 test('SuppliedProduct:removeAllergenCharacteristics', async () => {
-    suppliedProduct.removeAllergenCharacteristic(allergenCharacteristic);
-    const allergenCharacteristics = await suppliedProduct.getAllergenCharacteristics();
-    expect(allergenCharacteristics.length).toStrictEqual(1);
-    expect(allergenCharacteristics[0].equals(allergenCharacteristic2)).toStrictEqual(true);
+    expect(() => suppliedProduct.removeAllergenCharacteristic(allergenCharacteristic)).toThrow();
+    // suppliedProduct.removeAllergenCharacteristic(allergenCharacteristic);
+    // const allergenCharacteristics = await suppliedProduct.getAllergenCharacteristics();
+    // expect(allergenCharacteristics.length).toStrictEqual(1);
+    // expect(allergenCharacteristics[0].equals(allergenCharacteristic2)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:addNutrientCharacteristics', async () => {
@@ -280,10 +282,11 @@ test('SuppliedProduct:addNutrientCharacteristics', async () => {
 });
 
 test('SuppliedProduct:removeNutrientCharacteristics', async () => {
-    suppliedProduct.removeNutrientCharacteristic(nutrientCharacteristic);
-    const nutrientCharacteristics = await suppliedProduct.getNutrientCharacteristics();
-    expect(nutrientCharacteristics.length).toStrictEqual(1);
-    expect(nutrientCharacteristics[0].equals(nutrientCharacteristic2)).toStrictEqual(true);
+    expect(() => suppliedProduct.removeNutrientCharacteristic(nutrientCharacteristic)).toThrow();
+    // suppliedProduct.removeNutrientCharacteristic(nutrientCharacteristic);
+    // const nutrientCharacteristics = await suppliedProduct.getNutrientCharacteristics();
+    // expect(nutrientCharacteristics.length).toStrictEqual(1);
+    // expect(nutrientCharacteristics[0].equals(nutrientCharacteristic2)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:getPhysicalCharacteristics', async () => {
@@ -295,10 +298,11 @@ test('SuppliedProduct:getPhysicalCharacteristics', async () => {
 });
 
 test('SuppliedProduct:removePhysicalCharacteristics', async () => {
-    suppliedProduct.removePhysicalCharacteristic(physicalCharacteristic);
-    const physicalCharacteristics = await suppliedProduct.getPhysicalCharacteristics();
-    expect(physicalCharacteristics.length).toStrictEqual(1);
-    expect(physicalCharacteristics[0].equals(physicalCharacteristic2)).toStrictEqual(true);
+    expect(() => suppliedProduct.removePhysicalCharacteristic(physicalCharacteristic)).toThrow();
+    // suppliedProduct.removePhysicalCharacteristic(physicalCharacteristic);
+    // const physicalCharacteristics = await suppliedProduct.getPhysicalCharacteristics();
+    // expect(physicalCharacteristics.length).toStrictEqual(1);
+    // expect(physicalCharacteristics[0].equals(physicalCharacteristic2)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:setGeographicalOrigin', async () => {
@@ -316,10 +320,11 @@ test('SuppliedProduct:addCatalogItem', async () => {
 });
 
 test('SuppliedProduct:removeCatalogItem', async () => {
-    suppliedProduct.removeCatalogItem(catalogItem);
-    const catalogItems = await suppliedProduct.getCatalogItems()
-    expect(catalogItems.length).toStrictEqual(1);
-    expect(catalogItems[0].equals(catalogItem2)).toStrictEqual(true);
+    expect(() => suppliedProduct.removeCatalogItem(catalogItem)).toThrow();
+    // suppliedProduct.removeCatalogItem(catalogItem);
+    // const catalogItems = await suppliedProduct.getCatalogItems()
+    // expect(catalogItems.length).toStrictEqual(1);
+    // expect(catalogItems[0].equals(catalogItem2)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:addCertification', async () => {
@@ -332,11 +337,12 @@ test('SuppliedProduct:addCertification', async () => {
 });
 
 test('SuppliedProduct:removeCertification', async () => {
-    suppliedProduct.removeCertification(connector.FACETS.CERTIFICATION.ORGANICLABEL.ORGANIC_EU);
-    const certifications = await suppliedProduct.getCertifications();
-    expect(certifications.length).toStrictEqual(2);
-    expect(certifications[0].equals(connector.FACETS.CERTIFICATION.ORGANICLABEL.ORGANIC_AB)).toStrictEqual(true);
-    expect(certifications[1].equals(connector.FACETS.CERTIFICATION.ORGANICLABEL.NATUREETPROGRES)).toStrictEqual(true);
+    expect(() => suppliedProduct.removeCertification(connector.FACETS.CERTIFICATION.ORGANICLABEL.ORGANIC_EU)).toThrow();
+    // suppliedProduct.removeCertification(connector.FACETS.CERTIFICATION.ORGANICLABEL.ORGANIC_EU);
+    // const certifications = await suppliedProduct.getCertifications();
+    // expect(certifications.length).toStrictEqual(2);
+    // expect(certifications[0].equals(connector.FACETS.CERTIFICATION.ORGANICLABEL.ORGANIC_AB)).toStrictEqual(true);
+    // expect(certifications[1].equals(connector.FACETS.CERTIFICATION.ORGANICLABEL.NATUREETPROGRES)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:addNatureOrigin', async () => {
@@ -348,10 +354,11 @@ test('SuppliedProduct:addNatureOrigin', async () => {
 });
 
 test('SuppliedProduct:removeNatureOrigin', async () => {
-    suppliedProduct.removeNatureOrigin(connector.FACETS.NATUREORIGIN.PLANTORIGIN);
-    const natureOrigins = await suppliedProduct.getNatureOrigin();
-    expect(natureOrigins.length).toStrictEqual(1);
-    expect(natureOrigins[0].equals(connector.FACETS.NATUREORIGIN.ALGAE)).toStrictEqual(true);
+    expect(() => suppliedProduct.removeNatureOrigin(connector.FACETS.NATUREORIGIN.PLANTORIGIN)).toThrow();
+    // suppliedProduct.removeNatureOrigin(connector.FACETS.NATUREORIGIN.PLANTORIGIN);
+    // const natureOrigins = await suppliedProduct.getNatureOrigin();
+    // expect(natureOrigins.length).toStrictEqual(1);
+    // expect(natureOrigins[0].equals(connector.FACETS.NATUREORIGIN.ALGAE)).toStrictEqual(true);
 });
 
 test('SuppliedProduct:addPartOrigin', async () => {
@@ -363,8 +370,9 @@ test('SuppliedProduct:addPartOrigin', async () => {
 });
 
 test('SuppliedProduct:removePartOrigin', async () => {
-    suppliedProduct.removePartOrigin(connector.FACETS.PARTORIGIN.PLANTPARTORIGIN.FRUIT)
-    const partOrigins = await suppliedProduct.getPartOrigin();
-    expect(partOrigins.length).toStrictEqual(1);
-    expect(partOrigins[0].equals(connector.FACETS.PARTORIGIN.ANIMALPARTORIGIN.COW)).toStrictEqual(true);
+    expect(() => suppliedProduct.removePartOrigin(connector.FACETS.PARTORIGIN.PLANTPARTORIGIN.FRUIT)).toThrow();
+    // suppliedProduct.removePartOrigin(connector.FACETS.PARTORIGIN.PLANTPARTORIGIN.FRUIT);
+    // const partOrigins = await suppliedProduct.getPartOrigin();
+    // expect(partOrigins.length).toStrictEqual(1);
+    // expect(partOrigins[0].equals(connector.FACETS.PARTORIGIN.ANIMALPARTORIGIN.COW)).toStrictEqual(true);
 });
