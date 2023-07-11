@@ -36,7 +36,7 @@ export default class Order extends SemanticObject implements IOrder {
 	protected connector: IConnector;
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, number?: string, date?: string, saleSession?: ISaleSession, client?: IAgent, lines?: IOrderLine[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#Order";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Order";
 		
 		if (parameters.other) {
 			super({ semanticId: parameters.semanticId!, other: parameters.other });
@@ -58,25 +58,25 @@ export default class Order extends SemanticObject implements IOrder {
 	}
 
 	public setDate(date: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#date";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#date";
 		this.setSemanticPropertyLiteral(property, date);
 	}
 	
 
 	public getNumber(): string
 	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#orderNumber");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderNumber");
 	}
 	
 
 	public getDate(): string
 	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#date");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#date");
 	}
 	
 
 	public addLine(line: IOrderLine): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPart";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPart";
 		if (line.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, line);
 		}
@@ -90,7 +90,7 @@ export default class Order extends SemanticObject implements IOrder {
 	public async getClient(options?: IGetterOptions): Promise<IAgent | undefined>
 	 {
 		let result: IAgent | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#orderedBy");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderedBy");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <IAgent | undefined> semanticObject;
@@ -103,7 +103,7 @@ export default class Order extends SemanticObject implements IOrder {
 	public async getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined>
 	 {
 		let result: ISaleSession | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#belongsTo");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#belongsTo");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <ISaleSession | undefined> semanticObject;
@@ -114,7 +114,7 @@ export default class Order extends SemanticObject implements IOrder {
 	
 
 	public setClient(client: IAgent): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#orderedBy";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderedBy";
 		this.setSemanticPropertyReference(property, client);
 		this.connector.store(client);
 	}
@@ -123,7 +123,7 @@ export default class Order extends SemanticObject implements IOrder {
 	public async getLines(options?: IGetterOptions): Promise<Array<IOrderLine>>
 	 {
 		const results = new Array<IOrderLine>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPart");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPart");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IOrderLine> semanticObject);
@@ -133,13 +133,13 @@ export default class Order extends SemanticObject implements IOrder {
 	
 
 	public setNumber(number: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#orderNumber";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderNumber";
 		this.setSemanticPropertyLiteral(property, number);
 	}
 	
 
 	public setSaleSession(saleSession: ISaleSession): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#belongsTo";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#belongsTo";
 		this.setSemanticPropertyReference(property, saleSession);
 		this.connector.store(saleSession);
 	}

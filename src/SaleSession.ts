@@ -34,7 +34,7 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 	protected connector: IConnector;
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, beginDate?: string, endDate?: string, quantity?: number, offers?: IOffer[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#SaleSession";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SaleSession";
 		
 		if (parameters.other) {
 			super({ semanticId: parameters.semanticId!, other: parameters.other });
@@ -56,35 +56,35 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 
 	public getBeginDate(): string
 	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#beginDate");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#beginDate");
 	}
 	
 
 	public getEndDate(): string
 	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#endDate");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#endDate");
 	}
 	
 
 	public setBeginDate(beginDate: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#beginDate";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#beginDate";
 		this.setSemanticPropertyLiteral(property, beginDate);
 	}
 	
 
 	public setEndDate(endDate: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#endDate";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#endDate";
 		this.setSemanticPropertyLiteral(property, endDate);
 	}
 	
 	public setQuantity(quantity: number): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#quantity";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#quantity";
 		this.setSemanticPropertyLiteral(property, quantity);
 	}
 	
 
 	public addOffer(offer: IOffer): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#lists";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#lists";
 		if (offer.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, offer);
 		}
@@ -98,7 +98,7 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 	public async getOffers(options?: IGetterOptions): Promise<Array<IOffer>>
 	 {
 		const results = new Array<IOffer>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#lists");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#lists");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IOffer> semanticObject);
@@ -109,7 +109,7 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 
 	public getQuantity(): number
 	 {
-		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#quantity"));
+		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#quantity"));
 	}
 	
 

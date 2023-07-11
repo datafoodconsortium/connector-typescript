@@ -44,7 +44,7 @@ export default abstract class Agent extends SemanticObject implements IAgent {
 	}
 
 	public addLocalization(localization: IAddress): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasAddress";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasAddress";
 		if (localization.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, localization);
 		}
@@ -63,7 +63,7 @@ export default abstract class Agent extends SemanticObject implements IAgent {
 	public async getLocalizations(options?: IGetterOptions): Promise<Array<IAddress>>
 	 {
 		const results = new Array<IAddress>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasAddress");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasAddress");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IAddress> semanticObject);

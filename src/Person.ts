@@ -35,7 +35,7 @@ export default class Person extends Agent implements IPerson {
 	
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, firstName?: string, lastName?: string, localizations?: IAddress[], organizations?: IEnterprise[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#Person";
+		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Person";
 		
 		if (parameters.other) {
 			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
@@ -56,29 +56,29 @@ export default class Person extends Agent implements IPerson {
 
 	public getLastName(): string
 	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#familyName");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#familyName");
 	}
 	
 
 	public getFirstName(): string
 	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#firstName");
+		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#firstName");
 	}
 	
 
 	public setLastName(lastName: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#familyName";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#familyName";
 		this.setSemanticPropertyLiteral(property, lastName);
 	}
 	
 
 	public setFirstName(firstName: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#firstName";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#firstName";
 		this.setSemanticPropertyLiteral(property, firstName);
 	}
 	
 	public affiliateTo(organization: IEnterprise): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#affiliates";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#affiliates";
 		if (organization.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous(property, organization);
 		}
@@ -97,7 +97,7 @@ export default class Person extends Agent implements IPerson {
 	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<Array<IEnterprise>>
 	 {
 		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#affiliates");
+		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#affiliates");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) results.push(<IEnterprise> semanticObject);

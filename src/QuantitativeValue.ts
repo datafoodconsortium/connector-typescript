@@ -34,7 +34,7 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
 	protected connector: IConnector;
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, unit?: IUnit, value?: number}) {
-		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#QuantitativeValue";
+		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#QuantitativeValue";
 		
 		if (parameters.other) {
 			super({ semanticId: parameters.semanticId!, other: parameters.other });
@@ -52,19 +52,19 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
 
 	public getQuantityValue(): number
 	 {
-		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#value"));
+		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#value"));
 	}
 	
 
 	public setQuantityUnit(quantityUnit: IUnit): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasUnit";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasUnit";
 		this.setSemanticPropertyReference(property, quantityUnit);
 		this.connector.store(quantityUnit);
 	}
 	
 
 	public setQuantityValue(quantityValue: number): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#value";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#value";
 		this.setSemanticPropertyLiteral(property, quantityValue);
 	}
 	
@@ -72,7 +72,7 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
 	public async getQuantityUnit(options?: IGetterOptions): Promise<IUnit | undefined>
 	 {
 		let result: IUnit | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasUnit");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasUnit");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <IUnit | undefined> semanticObject;

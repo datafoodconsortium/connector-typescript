@@ -36,7 +36,7 @@ export default class PhysicalCharacteristic extends Characteristic implements IP
 	
 
 	public constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, unit?: IUnit, value?: number, physicalDimension?: IPhysicalDimension}) {
-		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#PhysicalCharacteristic";
+		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#PhysicalCharacteristic";
 		
 		if (parameters.other) {
 			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
@@ -54,7 +54,7 @@ export default class PhysicalCharacteristic extends Characteristic implements IP
 	public async getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>
 	 {
 		let result: ICharacteristicDimension | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPhysicalDimension");
+		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPhysicalDimension");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <ICharacteristicDimension | undefined> semanticObject;
@@ -65,7 +65,7 @@ export default class PhysicalCharacteristic extends Characteristic implements IP
 	
 
 	public setQuantityDimension(quantityDimension: ICharacteristicDimension): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#hasPhysicalDimension";
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPhysicalDimension";
 		this.setSemanticPropertyReference(property, quantityDimension);
 		this.connector.store(quantityDimension);
 	}

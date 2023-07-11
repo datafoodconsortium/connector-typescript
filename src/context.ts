@@ -2,7 +2,7 @@ const context = {
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "skos" : "http://www.w3.org/2004/02/skos/core#",
     "dc": "http://purl.org/dc/elements/1.1/#",
-    "dfc-b": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_FullModel.owl#",
+    "dfc-b": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#",
     "dfc-t": "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_TechnicalOntology.owl#",
     "dfc-m": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/measures.rdf#",
 		"dfc-pt": "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/productTypes.rdf#",
