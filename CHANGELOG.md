@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None.
 
-## [1.0.0-alpha.5] - 2023-01-13
+## [1.0.0-alpha.5] - 2024-01-13
 
 ### Fixed
 
