@@ -205,12 +205,8 @@ export default class ConnectorFactory implements IConnectorFactory {
                 break;
         
             default:
-                console.log(type);
-                break;
+                throw new Error(`Unknown type "${type}"`);
         }
-
-        //if (!result)
-          //  throw new Error;
 
         return result;
     }

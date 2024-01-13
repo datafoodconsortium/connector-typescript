@@ -180,14 +180,16 @@ export default class Connector implements IConnector {
                 const datasets: Array<DatasetExt> = await importer.import(data, { context: options?.context });
 
                 datasets.forEach(dataset => {
-                    const semanticObject = factory.createFromRdfDataset(dataset);
-                    if (semanticObject) {
-                        results.push(semanticObject);
-                        if (options?.doNotStore === undefined || options.doNotStore !== false)
+                    try {
+                        const semanticObject = factory.createFromRdfDataset(dataset);
+                        if (semanticObject) {
+                            results.push(semanticObject);
+                            if (options?.doNotStore === undefined || options.doNotStore !== false)
                             this.store(semanticObject);
                         if (options && options.callbacks)
-                            options.callbacks.forEach((callback: Function) => callback(semanticObject));
-                    }
+                        options.callbacks.forEach((callback: Function) => callback(semanticObject));
+                        }
+                    } catch(e) {}
                 });
 
                 if (options) {
