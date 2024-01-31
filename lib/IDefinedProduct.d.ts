@@ -15,5 +15,7 @@ export default interface IDefinedProduct extends Semanticable, Proposable, Descr
     getProductType(): Promise<IProductType | undefined>;
     setProductType(productType: IProductType): void;
     removeClaim(claim: IClaim): void;
+    addImage(url: string): void;
+    getImages(): string[];
 }
 //# sourceMappingURL=IDefinedProduct.d.ts.map

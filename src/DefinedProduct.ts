@@ -43,7 +43,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 	
 	protected connector: IConnector;
 
-	protected constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, name?: string, description?: string, productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[]}) {
+	protected constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, name?: string, description?: string, images?: string[], productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[]}) {
 		if (parameters.other) super({ semanticId: parameters.semanticId!, other: parameters.other })
 		else super({ semanticId: parameters.semanticId!, semanticType: parameters.semanticType! });
 		
@@ -52,6 +52,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 		
 		if (parameters.name) this.setName(parameters.name);
 		if (parameters.description) this.setDescription(parameters.description);
+		if (parameters.images) parameters.images.forEach(e => this.addImage(e));
 		if (parameters.productType) this.setProductType(parameters.productType);
 		if (parameters.quantity) this.setQuantity(parameters.quantity);
 		if (parameters.alcoholPercentage || parameters.alcoholPercentage === 0) this.setAlcoholPercentage(parameters.alcoholPercentage);
@@ -397,6 +398,15 @@ export default abstract class DefinedProduct extends SemanticObject implements I
 			if (semanticObject) results.push(<ICatalogItem> semanticObject);
 		}
 		return results;
+	}
+
+	public addImage(url: string): void {
+		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#image";
+		this.addSemanticPropertyLiteral(property, url);
+	}
+
+	public getImages(): string[] {
+		return this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#image");
 	}
 	
 

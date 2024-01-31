@@ -21,5 +21,8 @@ export default interface IDefinedProduct extends Semanticable, Proposable, Descr
 	;
 	setProductType(productType: IProductType): void;
 	removeClaim(claim: IClaim): void;
+	
+	addImage(url: string): void;
+	getImages(): string[];
 
 }

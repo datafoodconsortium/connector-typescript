@@ -80,6 +80,7 @@ let suppliedProduct = new SuppliedProduct({
     connector: connector,
     semanticId: "http://myplatform.com/tomato",
     description: "Awesome tomato",
+    images: ["http://example.org/image"],
     productType: connector.PRODUCT_TYPES.VEGETABLE.TOMATO.ROUND_TOMATO, 
     quantity: quantity,
     totalTheoreticalStock: 2.23,
@@ -375,4 +376,15 @@ test('SuppliedProduct:removePartOrigin', async () => {
     // const partOrigins = await suppliedProduct.getPartOrigin();
     // expect(partOrigins.length).toStrictEqual(1);
     // expect(partOrigins[0].equals(connector.FACETS.PARTORIGIN.ANIMALPARTORIGIN.COW)).toStrictEqual(true);
+});
+
+test('SuppliedProduct:getImages', async () => {
+    expect(suppliedProduct.getImages().length).toStrictEqual(1);
+    expect(suppliedProduct.getImages()).toStrictEqual(["http://example.org/image"]);
+});
+
+test('SuppliedProduct:addImage', async () => {
+    suppliedProduct.addImage("http://example.org/image2");
+    expect(suppliedProduct.getImages().length).toStrictEqual(2);
+    expect(suppliedProduct.getImages()).toStrictEqual(["http://example.org/image", "http://example.org/image2"]);
 });

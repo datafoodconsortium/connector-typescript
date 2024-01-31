@@ -23,6 +23,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
         other?: Semanticable;
         name?: string;
         description?: string;
+        images?: string[];
         productType?: IProductType;
         quantity?: IQuantity;
         alcoholPercentage?: number;
@@ -77,5 +78,7 @@ export default abstract class DefinedProduct extends SemanticObject implements I
     setQuantity(quantity: IQuantity): void;
     addCatalogItem(catalogItem: ICatalogItem): void;
     getCatalogItems(options?: IGetterOptions): Promise<Array<ICatalogItem>>;
+    addImage(url: string): void;
+    getImages(): string[];
 }
 //# sourceMappingURL=DefinedProduct.d.ts.map

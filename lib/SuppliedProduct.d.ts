@@ -22,6 +22,7 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
         other?: Semanticable;
         name?: string;
         description?: string;
+        images?: string[];
         productType?: IProductType;
         quantity?: IQuantity;
         alcoholPercentage?: number;

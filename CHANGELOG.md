@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None.
 
+## [1.0.0-alpha.8] - 2024-01-31
+
+### Added
+
+- Add `DefinedProduct` support for images url.
+
 ## [1.0.0-alpha.7] - 2024-01-13
 
 ### Fixed
@@ -114,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial release.
 
 [unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.5...HEAD
+[1.0.0-alpha.8]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.7...v1.0.0-alpha.8
 [1.0.0-alpha.7]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.6...v1.0.0-alpha.7
 [1.0.0-alpha.6]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.5...v1.0.0-alpha.6
 [1.0.0-alpha.5]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.4...v1.0.0-alpha.5
