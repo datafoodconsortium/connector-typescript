@@ -1,5 +1,5 @@
 export default interface Describable {
-    getDescription(): string;
+    getDescription(): string | undefined;
     setDescription(description: string): void;
 }
 //# sourceMappingURL=Describable.d.ts.map

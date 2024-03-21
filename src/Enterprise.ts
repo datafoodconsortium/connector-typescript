@@ -21,205 +21,260 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import ISuppliedProduct from "./ISuppliedProduct.js"
 import ICatalogItem from "./ICatalogItem.js"
-import IEnterprise from "./IEnterprise.js"
-import ICatalog from "./ICatalog.js"
-import Agent from "./Agent.js"
+import ManagedByMainContact from "./ManagedByMainContact.js"
 import ICustomerCategory from "./ICustomerCategory.js"
-import Onboardable from "./Onboardable.js"
-import ITechnicalProduct from "./ITechnicalProduct.js"
-import ProductSupplier from "./ProductSupplier.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
 import IAddress from "./IAddress.js"
+import ProductSupplier from "./ProductSupplier.js"
+import ICatalog from "./ICatalog.js"
+import Onboardable from "./Onboardable.js"
+import IEnterprise from "./IEnterprise.js"
+import ITechnicalProduct from "./ITechnicalProduct.js"
+import IPerson from "./IPerson.js"
+import Agent from "./Agent.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
 
-export default class Enterprise extends Agent implements Onboardable, ProductSupplier, IEnterprise {
-	
+const ENTERPRISE_SEM_TYPE: string = "dfc-b:Enterprise";
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, localizations?: IAddress[], description?: string, vatNumber?: string, customerCategories?: ICustomerCategory[], catalogs?: ICatalog[], catalogItems?: ICatalogItem[], suppliedProducts?: ISuppliedProduct[], technicalProducts?: ITechnicalProduct[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Enterprise";
+export default class Enterprise extends Agent implements ProductSupplier, Onboardable, IEnterprise, ManagedByMainContact {
+
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		name?: string,
+		localizations?: IAddress[],
+		description?: string,
+		vatNumber?: string,
+		customerCategories?: ICustomerCategory[],
+		catalogs?: ICatalog[],
+		catalogItems?: ICatalogItem[],
+		suppliedProducts?: ISuppliedProduct[],
+		technicalProducts?: ITechnicalProduct[],
+		mainContact?: IPerson,
+		logo?: string,
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = ENTERPRISE_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				localizations: parameters.localizations,
+				logo: parameters.logo
+		});
 		}
-		else super({ connector: parameters.connector, semanticId: parameters.semanticId!, semanticType: type, localizations: parameters.localizations });
 		
 		
-		
-		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.description) this.setDescription(parameters.description);
-		if (parameters.vatNumber) this.setVatNumber(parameters.vatNumber);
-		if (parameters.customerCategories) parameters.customerCategories.forEach(e => this.addCustomerCategory(e));
-		if (parameters.catalogs) parameters.catalogs.forEach(e => this.maintainCatalog(e));
-		if (parameters.catalogItems) parameters.catalogItems.forEach(e => this.manageCatalogItem(e));
-		if (parameters.suppliedProducts) parameters.suppliedProducts.forEach(e => this.supplyProduct(e));
-		if (parameters.technicalProducts) parameters.technicalProducts.forEach(e => this.proposeTechnicalProducts(e));
+		}
+		if (parameters.name) {
+			this.setName(parameters.name);
+		}
+		
+		if (parameters.description) {
+			this.setDescription(parameters.description);
+		}
+		
+		if (parameters.vatNumber) {
+			this.setVatNumber(parameters.vatNumber);
+		}
+		
+		if (parameters.customerCategories) {
+			parameters.customerCategories.forEach(e => this.addCustomerCategory(e));
+		}
+		
+		if (parameters.catalogs) {
+			parameters.catalogs.forEach(e => this.maintainCatalog(e));
+		}
+		
+		if (parameters.catalogItems) {
+			parameters.catalogItems.forEach(e => this.manageCatalogItem(e));
+		}
+		
+		if (parameters.suppliedProducts) {
+			parameters.suppliedProducts.forEach(e => this.supplyProduct(e));
+		}
+		
+		if (parameters.technicalProducts) {
+			parameters.technicalProducts.forEach(e => this.proposeTechnicalProducts(e));
+		}
+		
+		if (parameters.mainContact) {
+			this.setMainContact(parameters.mainContact);
+		}
+		
 	}
 
-	public manageCatalogItem(catalogItem: ICatalogItem): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#manages";
-		if (catalogItem.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, catalogItem);
-		}
-		else {
-			this.connector.store(catalogItem);
-			this.addSemanticPropertyReference(property, catalogItem);
-		}
-	}
-	
-
-	public async getManagedCatalogItems(options?: IGetterOptions): Promise<Array<ICatalogItem>>
-	 {
+	public async getManagedCatalogItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
 		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#manages");
+		const properties = this.getSemanticPropertyAll("dfc-b:manages");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalogItem> semanticObject);
+			if (semanticObject) results.push(<ICatalogItem>semanticObject);
 		}
 		return results;
 	}
-	
 
-	public unmanageCatalogItem(catalogItem: ICatalogItem): void {
-		throw new Error("Not yet implemented.");
-	}
-	
-	public maintainCatalog(catalog: ICatalog): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#maintains";
-		if (catalog.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, catalog);
+	public addCustomerCategory(customerCategory: ICustomerCategory): void {
+		if (customerCategory.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:defines", customerCategory);
 		}
 		else {
-			this.connector.store(catalog);
-			this.addSemanticPropertyReference(property, catalog);
+			this.connector.store(customerCategory);
+			this.addSemanticPropertyReference("dfc-b:defines", customerCategory);
 		}
 	}
-	
-
-	public async getMaintainedCatalogs(options?: IGetterOptions): Promise<Array<ICatalog>>
-	 {
-		const results = new Array<ICatalog>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#maintains");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalog> semanticObject);
-		}
-		return results;
-	}
-	
 
 	public unmaintainCatalog(catalog: ICatalog): void {
 		throw new Error("Not yet implemented.");
 	}
-	
-	public unsupplyProduct(suppliedProduct: ISuppliedProduct): void {
-		throw new Error("Not yet implemented.");
+
+	public setVatNumber(vatNumber: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:VATnumber", vatNumber);
 	}
-	
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasDescription", description);
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public maintainCatalog(catalog: ICatalog): void {
+		if (catalog.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:maintains", catalog);
+		}
+		else {
+			this.connector.store(catalog);
+			this.addSemanticPropertyReference("dfc-b:maintains", catalog);
+		}
+	}
+
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasDescription");
+	}
 
 	public supplyProduct(suppliedProduct: ISuppliedProduct): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#supplies";
 		if (suppliedProduct.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, suppliedProduct);
+			this.addSemanticPropertyAnonymous("dfc-b:supplies", suppliedProduct);
 		}
 		else {
 			this.connector.store(suppliedProduct);
-			this.addSemanticPropertyReference(property, suppliedProduct);
+			this.addSemanticPropertyReference("dfc-b:supplies", suppliedProduct);
 		}
 	}
-	
 
-	public async getSuppliedProducts(options?: IGetterOptions): Promise<Array<ISuppliedProduct>>
-	 {
-		const results = new Array<ISuppliedProduct>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#supplies");
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public async getProposedTechnicalProducts(options?: IGetterOptions): Promise<ITechnicalProduct[]> {
+		const results = new Array<ITechnicalProduct>();
+		const properties = this.getSemanticPropertyAll("dfc-b:proposes");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ISuppliedProduct> semanticObject);
+			if (semanticObject) results.push(<ITechnicalProduct>semanticObject);
 		}
 		return results;
 	}
-	
+
+	public unmanageCatalogItem(catalogItem: ICatalogItem): void {
+		throw new Error("Not yet implemented.");
+	}
+
 	public unproposeTechnicalProducts(technicalProducts: ITechnicalProduct): void {
 		throw new Error("Not yet implemented.");
 	}
-	
+
+	public async getMaintainedCatalogs(options?: IGetterOptions): Promise<ICatalog[]> {
+		const results = new Array<ICatalog>();
+		const properties = this.getSemanticPropertyAll("dfc-b:maintains");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICatalog>semanticObject);
+		}
+		return results;
+	}
+
+	public setMainContact(mainContact: IPerson): void {
+		this.setSemanticPropertyReference("dfc-b:hasMainContact", mainContact);
+		
+		this.connector.store(mainContact);
+	}
+
+	public unsupplyProduct(suppliedProduct: ISuppliedProduct): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getCustomerCategories(options?: IGetterOptions): Promise<ICustomerCategory[]> {
+		const results = new Array<ICustomerCategory>();
+		const properties = this.getSemanticPropertyAll("dfc-b:defines");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICustomerCategory>semanticObject);
+		}
+		return results;
+	}
+
+	public async getMainContact(options?: IGetterOptions): Promise<IPerson | undefined> {
+		let result: IPerson | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasMainContact");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPerson> semanticObject;
+		}
+		return result;
+	}
 
 	public proposeTechnicalProducts(technicalProducts: ITechnicalProduct): void {
-		const property: string = "";
 		if (technicalProducts.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, technicalProducts);
+			this.addSemanticPropertyAnonymous("dfc-b:proposes", technicalProducts);
 		}
 		else {
 			this.connector.store(technicalProducts);
-			this.addSemanticPropertyReference(property, technicalProducts);
+			this.addSemanticPropertyReference("dfc-b:proposes", technicalProducts);
 		}
 	}
-	
 
-	public async getProposedTechnicalProducts(options?: IGetterOptions): Promise<Array<ITechnicalProduct>>
-	 {
-		const results = new Array<ITechnicalProduct>();
-		const properties = this.getSemanticPropertyAll("");
+	public getVatNumber(): string | undefined {
+		return this.getSemanticProperty("dfc-b:VATnumber");
+	}
+
+	public async getSuppliedProducts(options?: IGetterOptions): Promise<ISuppliedProduct[]> {
+		const results = new Array<ISuppliedProduct>();
+		const properties = this.getSemanticPropertyAll("dfc-b:supplies");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ITechnicalProduct> semanticObject);
+			if (semanticObject) results.push(<ISuppliedProduct>semanticObject);
 		}
 		return results;
 	}
-	
-	public setDescription(description: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasDescription";
-		this.setSemanticPropertyLiteral(property, description);
-	}
-	
 
-	public getDescription(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasDescription");
-	}
-	
-	public setVatNumber(vatNumber: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#VATnumber";
-		this.setSemanticPropertyLiteral(property, vatNumber);
-	}
-	
-
-	public getVatNumber(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#VATnumber");
-	}
-	
-	public async getCustomerCategories(options?: IGetterOptions): Promise<Array<ICustomerCategory>>
-	 {
-		const results = new Array<ICustomerCategory>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#defines");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICustomerCategory> semanticObject);
-		}
-		return results;
-	}
-	
-
-	public addCustomerCategory(customerCategory: ICustomerCategory): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#defines";
-		if (customerCategory.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, customerCategory);
+	public manageCatalogItem(catalogItem: ICatalogItem): void {
+		if (catalogItem.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:manages", catalogItem);
 		}
 		else {
-			this.connector.store(customerCategory);
-			this.addSemanticPropertyReference(property, customerCategory);
+			this.connector.store(catalogItem);
+			this.addSemanticPropertyReference("dfc-b:manages", catalogItem);
 		}
 	}
-	
-
 }

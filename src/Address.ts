@@ -21,84 +21,139 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
 import IAddress from "./IAddress.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const ADDRESS_SEM_TYPE: string = "dfc-b:Address";
 
 export default class Address extends SemanticObject implements IAddress {
-	
+
 	protected connector: IConnector;
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, street?: string, postalCode?: string, city?: string, country?: string, doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Address";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		street?: string,
+		postalCode?: string,
+		city?: string,
+		country?: string,
+		latitude?: number,
+		longitude?: number,
+		region?: string,
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = ADDRESS_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				
+		});
 		}
-		else super({ semanticId: parameters.semanticId!, semanticType: type });
-		
 		this.connector = parameters.connector;
 		
 		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.street) this.setStreet(parameters.street);
-		if (parameters.postalCode) this.setPostalCode(parameters.postalCode);
-		if (parameters.city) this.setCity(parameters.city);
-		if (parameters.country) this.setCountry(parameters.country);
+		}
+		if (parameters.street) {
+			this.setStreet(parameters.street);
+		}
+		
+		if (parameters.postalCode) {
+			this.setPostalCode(parameters.postalCode);
+		}
+		
+		if (parameters.city) {
+			this.setCity(parameters.city);
+		}
+		
+		if (parameters.country) {
+			this.setCountry(parameters.country);
+		}
+		
+		if (parameters.latitude || parameters.latitude === 0) {
+			this.setLatitude(parameters.latitude);
+		}
+		
+		if (parameters.longitude || parameters.longitude === 0) {
+			this.setLongitude(parameters.longitude);
+		}
+		
+		if (parameters.region) {
+			this.setRegion(parameters.region);
+		}
+		
+	}
+
+	public getCountry(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasCountry");
+	}
+
+	public getCity(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasCity");
+	}
+
+	public setLatitude(latitude: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:latitude", latitude);
+	}
+
+	public getStreet(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasStreet");
+	}
+
+	public setPostalCode(postalCode: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasPostalCode", postalCode);
+	}
+
+	public getLongitude(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:longitude"));
+	}
+
+	public getRegion(): string | undefined {
+		return this.getSemanticProperty("dfc-b:region");
 	}
 
 	public setCountry(country: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasCountry";
-		this.setSemanticPropertyLiteral(property, country);
+		this.setSemanticPropertyLiteral("dfc-b:hasCountry", country);
 	}
-	
+
+	public getLatitude(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:latitude"));
+	}
 
 	public setStreet(street: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasStreet";
-		this.setSemanticPropertyLiteral(property, street);
+		this.setSemanticPropertyLiteral("dfc-b:hasStreet", street);
 	}
-	
+
+	public setLongitude(longitude: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:longitude", longitude);
+	}
+
+	public getPostalCode(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasPostalCode");
+	}
+
+	public setRegion(region: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:region", region);
+	}
 
 	public setCity(city: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasCity";
-		this.setSemanticPropertyLiteral(property, city);
+		this.setSemanticPropertyLiteral("dfc-b:hasCity", city);
 	}
-	
-
-	public getCountry(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasCountry");
-	}
-	
-
-	public setPostalCode(postalCode: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPostalCode";
-		this.setSemanticPropertyLiteral(property, postalCode);
-	}
-	
-
-	public getPostalCode(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPostalCode");
-	}
-	
-
-	public getCity(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasCity");
-	}
-	
-
-	public getStreet(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasStreet");
-	}
-	
-
 }

@@ -21,31 +21,46 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
+import ISKOSConcept from "./ISKOSConcept.js"
 import ICharacteristic from "./ICharacteristic.js"
-import ICharacteristicDimension from "./ICharacteristicDimension.js"
-import IUnit from "./IUnit.js"
 import QuantitativeValue from "./QuantitativeValue.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
 
 export default abstract class Characteristic extends QuantitativeValue implements ICharacteristic {
-	
 
-	protected constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, unit?: IUnit, value?: number}) {
-		if (parameters.other) super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other })
-		else super({ connector: parameters.connector, semanticId: parameters.semanticId!, semanticType: parameters.semanticType!, unit: parameters.unit, value: parameters.value });
+	protected constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		semanticType?: string,
+		other?: Semanticable,
+		unit?: ISKOSConcept,
+		value?: number,
+	}) {
 		
-		
+		if (parameters.other) {
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
+		} else {
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				semanticType: parameters.semanticType!,
+				unit: parameters.unit,
+				value: parameters.value
+		});
+		}
 		
 		
 		
 	}
 
-	abstract getQuantityDimension(): Promise<ICharacteristicDimension | undefined>;
-	abstract setQuantityDimension(quantityDimension: ICharacteristicDimension): void
+	abstract getQuantityDimension(options?: IGetterOptions): Promise<ISKOSConcept | undefined>
 
-
+	abstract setQuantityDimension(quantityDimension: ISKOSConcept): void
 }

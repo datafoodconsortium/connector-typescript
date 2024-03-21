@@ -1,6 +1,6 @@
 import ICatalog from "./ICatalog.js";
 export default interface CatalogMaintainer {
-    getMaintainedCatalogs(): Promise<Array<ICatalog>>;
+    getMaintainedCatalogs(): Promise<ICatalog[]>;
     maintainCatalog(catalog: ICatalog): void;
     unmaintainCatalog(catalog: ICatalog): void;
 }

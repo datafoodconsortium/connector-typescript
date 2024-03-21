@@ -1,7 +1,7 @@
-import ICertification from "./ICertification.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 export default interface Certifiable {
-    addCertification(certification: ICertification): void;
-    getCertifications(): Promise<Array<ICertification>>;
-    removeCertification(certification: ICertification): void;
+    addCertification(certification: ISKOSConcept): void;
+    getCertifications(): Promise<ISKOSConcept[]>;
+    removeCertification(certification: ISKOSConcept): void;
 }
 //# sourceMappingURL=Certifiable.d.ts.map

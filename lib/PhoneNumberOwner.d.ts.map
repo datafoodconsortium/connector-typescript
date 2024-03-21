@@ -1,0 +1,1 @@
+{"version":3,"file":"PhoneNumberOwner.d.ts","sourceRoot":"","sources":["../src/PhoneNumberOwner.ts"],"names":[],"mappings":"AAuBA,OAAO,YAAY,MAAM,mBAAmB,CAAA;AAC5C,OAAO,kBAAkB,MAAM,yBAAyB,CAAA;AAIxD,MAAM,CAAC,OAAO,WAAW,gBAAiB,SAAQ,kBAAkB;IAEnE,cAAc,CAAC,WAAW,EAAE,YAAY,GAAG,IAAI,CAAC;IAEhD,iBAAiB,CAAC,WAAW,EAAE,YAAY,GAAG,IAAI,CAAC;CAEnD"}

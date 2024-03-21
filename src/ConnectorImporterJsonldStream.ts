@@ -1,9 +1,10 @@
 import { JsonLdParser } from "jsonld-streaming-parser";
-import IConnectorImporter from "./IConnectorImporter";
 import { Readable } from 'readable-stream';
 import DatasetExt from "rdf-ext/lib/Dataset";
 import datasetFactory from 'rdf-ext';
 import QuadExt from "rdf-ext/lib/Quad";
+
+import IConnectorImporter from "./IConnectorImporter";
 import IConnectorImporterOptions from "./IConnectorImporterOptions";
 
 export default class ConnectorImporterJsonldStream implements IConnectorImporter {
@@ -108,7 +109,7 @@ export default class ConnectorImporterJsonldStream implements IConnectorImporter
                 // If we are just importing one blank node,
                 // we have to add it to the result set.
                 if (datasets.length === 0 && blankNodes.length === 1) {
-                    datasets.push(blankNodes[0])
+                    datasets.push(blankNodes[0]);
                 }
 
                 resolve(datasets);

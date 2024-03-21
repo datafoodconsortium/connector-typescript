@@ -21,45 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
 import ICustomerCategory from "./ICustomerCategory.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const CUSTOMER_CATEGORY_SEM_TYPE: string = "dfc-b:CustomerCategory";
 
 export default class CustomerCategory extends SemanticObject implements ICustomerCategory {
-	
+
 	protected connector: IConnector;
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, description?: string, doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#CustomerCategory";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		description?: string,
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = CUSTOMER_CATEGORY_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				
+		});
 		}
-		else super({ semanticId: parameters.semanticId!, semanticType: type });
-		
 		this.connector = parameters.connector;
 		
 		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.description) this.setDescription(parameters.description);
+		}
+		if (parameters.description) {
+			this.setDescription(parameters.description);
+		}
+		
 	}
 
 	public setDescription(description: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#description";
-		this.setSemanticPropertyLiteral(property, description);
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
-	
 
-	public getDescription(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#description");
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
 	}
-	
-
 }

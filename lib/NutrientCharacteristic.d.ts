@@ -1,8 +1,6 @@
-import ICharacteristicDimension from "./ICharacteristicDimension.js";
-import Characteristic from "./Characteristic.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import IUnit from "./IUnit.js";
-import INutrientDimension from "./INutrientDimension.js";
+import Characteristic from "./Characteristic.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -12,11 +10,11 @@ export default class NutrientCharacteristic extends Characteristic implements IN
         semanticId?: string;
         semanticType?: string;
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        nutrientDimension?: INutrientDimension;
+        nutrientDimension?: ISKOSConcept;
     });
-    getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>;
-    setQuantityDimension(quantityDimension: ICharacteristicDimension): void;
+    getQuantityDimension(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    setQuantityDimension(quantityDimension: ISKOSConcept): void;
 }
 //# sourceMappingURL=NutrientCharacteristic.d.ts.map

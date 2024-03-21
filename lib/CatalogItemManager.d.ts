@@ -1,6 +1,6 @@
 import ICatalogItem from "./ICatalogItem.js";
 export default interface CatalogItemManager {
-    getManagedCatalogItems(): Promise<Array<ICatalogItem>>;
+    getManagedCatalogItems(): Promise<ICatalogItem[]>;
     manageCatalogItem(catalogItem: ICatalogItem): void;
     unmanageCatalogItem(catalogItem: ICatalogItem): void;
 }

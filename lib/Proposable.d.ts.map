@@ -1,1 +1,1 @@
-{"version":3,"file":"Proposable.d.ts","sourceRoot":"","sources":["../src/Proposable.ts"],"names":[],"mappings":"AAAA,OAAO,YAAY,MAAM,mBAAmB,CAAA;AAI5C,MAAM,CAAC,OAAO,WAAW,UAAU;IAElC,eAAe,IAAI,OAAO,CAAC,KAAK,CAAC,YAAY,CAAC,CAAC,CAC9C;IACD,cAAc,CAAC,WAAW,EAAE,YAAY,GAAG,IAAI,CAAC;CAEhD"}
+{"version":3,"file":"Proposable.d.ts","sourceRoot":"","sources":["../src/Proposable.ts"],"names":[],"mappings":"AAuBA,OAAO,YAAY,MAAM,mBAAmB,CAAA;AAI5C,MAAM,CAAC,OAAO,WAAW,UAAU;IAElC,eAAe,IAAI,OAAO,CAAC,YAAY,EAAE,CAAC,CAAC;IAE3C,cAAc,CAAC,WAAW,EAAE,YAAY,GAAG,IAAI,CAAC;CAEhD"}

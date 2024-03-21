@@ -21,65 +21,80 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import IUnit from "./IUnit.js"
-import IQuantity from "./IQuantity.js"
+import Quantifiable from "./Quantifiable.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
 
-export default class QuantitativeValue extends SemanticObjectAnonymous implements IQuantity {
-	
+const QUANTITATIVE_VALUE_SEM_TYPE: string = "dfc-b:QuantitativeValue";
+
+export default class QuantitativeValue extends SemanticObjectAnonymous implements Quantifiable {
+
 	protected connector: IConnector;
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, unit?: IUnit, value?: number}) {
-		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#QuantitativeValue";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		semanticType?: string,
+		other?: Semanticable,
+		unit?: ISKOSConcept,
+		value?: number,
+	}) {
+		
+		const type: string = parameters.semanticType ? parameters.semanticType : QUANTITATIVE_VALUE_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				
+		});
 		}
-		else super({ semanticId: parameters.semanticId!, semanticType: type });
-		
 		this.connector = parameters.connector;
 		
 		
-		if (parameters.unit) this.setQuantityUnit(parameters.unit);
-		if (parameters.value || parameters.value === 0) this.setQuantityValue(parameters.value);
-	}
-
-	public getQuantityValue(): number
-	 {
-		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#value"));
-	}
-	
-
-	public setQuantityUnit(quantityUnit: IUnit): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasUnit";
-		this.setSemanticPropertyReference(property, quantityUnit);
-		this.connector.store(quantityUnit);
-	}
-	
-
-	public setQuantityValue(quantityValue: number): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#value";
-		this.setSemanticPropertyLiteral(property, quantityValue);
-	}
-	
-
-	public async getQuantityUnit(options?: IGetterOptions): Promise<IUnit | undefined>
-	 {
-		let result: IUnit | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasUnit");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IUnit | undefined> semanticObject;
+		if (parameters.unit) {
+			this.setQuantityUnit(parameters.unit);
 		}
-		return result;
+		
+		if (parameters.value || parameters.value === 0) {
+			this.setQuantityValue(parameters.value);
+		}
 		
 	}
-	
 
+	public getQuantityValue(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:value"));
+	}
+
+	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
+		
+		this.connector.store(quantityUnit);
+	}
+
+	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasUnit");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
+	}
+
+	public setQuantityValue(quantityValue: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
+	}
 }

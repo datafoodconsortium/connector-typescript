@@ -1,8 +1,6 @@
-import ICharacteristicDimension from "./ICharacteristicDimension.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import IAllergenDimension from "./IAllergenDimension.js";
 import Characteristic from "./Characteristic.js";
-import IUnit from "./IUnit.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -12,11 +10,11 @@ export default class AllergenCharacteristic extends Characteristic implements IA
         semanticId?: string;
         semanticType?: string;
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        allergenDimension?: IAllergenDimension;
+        allergenDimension?: ISKOSConcept;
     });
-    getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>;
-    setQuantityDimension(quantityDimension: ICharacteristicDimension): void;
+    getQuantityDimension(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    setQuantityDimension(quantityDimension: ISKOSConcept): void;
 }
 //# sourceMappingURL=AllergenCharacteristic.d.ts.map

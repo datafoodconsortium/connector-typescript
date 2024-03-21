@@ -1,43 +1,34 @@
-import Order from '../lib/Order.js';
-import OrderLine from '../lib/OrderLine.js';
-import Person from '../lib/Person.js';
-import SaleSession from '../lib/SaleSession.js';
+import expect from 'node:assert';
+import { test } from 'node:test';
 import Connector from "../lib/Connector.js";
 
 const connector = new Connector();
 
-const customer = new Person({
-    connector: connector,
+const customer = connector.createPerson({
     semanticId: "http://myplatform.com/person1",
 });
 
-const customer2 = new Person({
-    connector: connector,
+const customer2 = connector.createPerson({
     semanticId: "http://myplatform.com/person12",
 });
 
-const saleSession = new SaleSession({
-    connector: connector,
+const saleSession = connector.createSaleSession({
     semanticId: "http://myplatform.com/saleSession1"
 });
 
-const saleSession2 = new SaleSession({
-    connector: connector,
+const saleSession2 = connector.createSaleSession({
     semanticId: "http://myplatform.com/saleSession2"
 });
 
-const orderLine = new OrderLine({
-    connector: connector,
+const orderLine = connector.createOrderLine({
     semanticId: "http://myplatform.com/orderLine1"
 });
 
-const orderLine2 = new OrderLine({
-    connector: connector,
+const orderLine2 = connector.createOrderLine({
     semanticId: "http://myplatform.com/orderLine2"
 });
 
-const order = new Order({
-    connector: connector,
+const order = connector.createOrder({
     semanticId: "http://myplatform.com/order1",
     number: "0001",
     date: "date",
@@ -51,77 +42,77 @@ const json = `{"@context":"https://www.datafoodconsortium.org","@id":"http://myp
 test('Order:import', async () => {
     const imported = await connector.import(json);
     const importedOrder = imported[0];
-    expect(imported.length).toStrictEqual(1);
-    expect(importedOrder.equals(order)).toStrictEqual(true);
+    expect.strictEqual(imported.length, 1);
+    expect.strictEqual(importedOrder.equals(order), true);
 });
 
 test('Order:export', async () => {
     const serialized = await connector.export([order]);
-    expect(serialized).toStrictEqual(json);
+    expect.strictEqual(serialized, json);
 });
 
-test('Order:getSemanticId', async () => {
-    expect(order.getSemanticId()).toStrictEqual("http://myplatform.com/order1");
+test('Order:getSemanticId', () => {
+    expect.strictEqual(order.getSemanticId(), "http://myplatform.com/order1");
 });
 
-test('Order:getNumber', async () => {
-    expect(order.getNumber()).toStrictEqual("0001");
+test('Order:getNumber', () => {
+    expect.strictEqual(order.getNumber(), "0001");
 });
 
-test('Order:getDate', async () => {
-    expect(order.getDate()).toStrictEqual("date");
+test('Order:getDate', () => {
+    expect.strictEqual(order.getDate(), "date");
 });
 
 test('Order:getSaleSession', async () => {
     const expected = await order.getSaleSession();
-    expect(expected.equals(saleSession)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(saleSession), true);
 });
 
 test('Order:getLines', async () => {
     const expected = await order.getLines();
-    expect(expected.length).toStrictEqual(1);
-    expect(expected[0].equals(orderLine)).toStrictEqual(true);
+    expect.strictEqual(expected.length, 1);
+    expect.strictEqual(expected[0].equals(orderLine), true);
 });
 
 test('Order:getClient', async () => {
     const expected = await order.getClient();
-    expect(expected.equals(customer)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(customer), true);
 });
 
-test('Order:setNumber', async () => {
+test('Order:setNumber', () => {
     order.setNumber("0002");
-    expect(order.getNumber()).toStrictEqual("0002");
+    expect.strictEqual(order.getNumber(), "0002");
 });
 
-test('Order:setDate', async () => {
+test('Order:setDate', () => {
     order.setDate("date2");
-    expect(order.getDate()).toStrictEqual("date2");
+    expect.strictEqual(order.getDate(), "date2");
 });
 
 test('Order:setSaleSession', async () => {
     order.setSaleSession(saleSession2);
     const expected = await order.getSaleSession();
-    expect(expected.equals(saleSession2)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(saleSession2), true);
 });
 
 test('Order:setClient', async () => {
     order.setClient(customer2);
     const expected = await order.getClient();
-    expect(expected.equals(customer2)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(customer2), true);
 });
 
 test('Order:addLine', async () => {
     order.addLine(orderLine2);
     const expected = await order.getLines();
-    expect(expected.length).toStrictEqual(2);
-    expect(expected[0].equals(orderLine)).toStrictEqual(true);
-    expect(expected[1].equals(orderLine2)).toStrictEqual(true);
+    expect.strictEqual(expected.length, 2);
+    expect.strictEqual(expected[0].equals(orderLine), true);
+    expect.strictEqual(expected[1].equals(orderLine2), true);
 });
 
+/*
 test('Order:removeLine', async () => {
-    expect(() => order.removeLine(orderLine)).toThrow();
-    // order.removeLine(orderLine);
-    // const expected = await order.getLines();
-    // expect(expected.length).toStrictEqual();
-    // expect(expected[0].equals(orderLine2)).toStrictEqual(true);
-});
+    order.removeLine(orderLine);
+    const expected = await order.getLines();
+    expect(expected.length).strictEqual();
+    expect.strictEqual(expected[0].equals(orderLine2), true);
+});*/

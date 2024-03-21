@@ -1,35 +1,30 @@
 import { Semanticable } from "@virtual-assembly/semantizer";
-import IConnectorFactory from "./IConnectorFactory.js";
-import IAddress from "./IAddress.js";
-import IConnector from "./IConnector.js";
 import DatasetExt from "rdf-ext/lib/Dataset.js";
 import { DatasetCore } from '@rdfjs/types';
-import IAllergenDimension from "./IAllergenDimension.js";
-import IUnit from "./IUnit.js";
-import ICatalogItem from "./ICatalogItem.js";
-import IEnterprise from "./IEnterprise.js";
-import ICatalog from "./ICatalog.js";
-import IOffer from "./IOffer.js";
-import ISuppliedProduct from "./ISuppliedProduct.js";
-import ICustomerCategory from "./ICustomerCategory.js";
-import INutrientDimension from "./INutrientDimension.js";
-import IPrice from "./IPrice.js";
-import IOrderLine from "./IOrderLine.js";
+import IConnector from "./IConnector.js";
+import IConnectorFactory from "./IConnectorFactory.js";
 import IAgent from "./IAgent.js";
-import ISaleSession from "./ISaleSession.js";
-import IOrder from "./IOrder.js";
-import IPhysicalDimension from "./IPhysicalDimension.js";
-import IPartOrigin from "./IPartOrigin.js";
-import INatureOrigin from "./INatureOrigin.js";
-import ICertification from "./ICertification.js";
-import IGeographicalOrigin from "./IGeographicalOrigin.js";
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IAddress from "./IAddress.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import IClaim from "./IClaim.js";
-import IQuantity from "./IQuantity.js";
-import IProductType from "./IProductType.js";
+import ICatalog from "./ICatalog.js";
+import ICatalogItem from "./ICatalogItem.js";
+import ICustomerCategory from "./ICustomerCategory.js";
+import IEnterprise from "./IEnterprise.js";
+import IPrice from "./IPrice.js";
+import ISuppliedProduct from "./ISuppliedProduct.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IOffer from "./IOffer.js";
+import IOrder from "./IOrder.js";
+import IOrderLine from "./IOrderLine.js";
 import IPerson from "./IPerson.js";
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import IQuantity from "./IQuantity.js";
+import ISaleSession from "./ISaleSession.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default class ConnectorFactory implements IConnectorFactory {
     private connector;
     constructor(connector: IConnector);
@@ -45,9 +40,9 @@ export default class ConnectorFactory implements IConnectorFactory {
     }): IAddress;
     createAllergenCharacteristic(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        allergenDimension?: IAllergenDimension;
+        allergenDimension?: ISKOSConcept;
     }): IAllergenCharacteristic;
     createCatalog(parameters: {
         doNotStore?: boolean;
@@ -86,9 +81,9 @@ export default class ConnectorFactory implements IConnectorFactory {
     }): IEnterprise;
     createNutrientCharacteristic(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        nutrientDimension?: INutrientDimension;
+        nutrientDimension?: ISKOSConcept;
     }): INutrientCharacteristic;
     createOffer(parameters: {
         doNotStore?: boolean;
@@ -129,19 +124,19 @@ export default class ConnectorFactory implements IConnectorFactory {
     }): IPerson;
     createPhysicalCharacteristic(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        physicalDimension?: IPhysicalDimension;
+        physicalDimension?: ISKOSConcept;
     }): IPhysicalCharacteristic;
     createPrice(parameters: {
         other?: Semanticable;
         value?: number;
         vatRate?: number;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
     }): IPrice;
     createQuantity(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
     }): IQuantity;
     createSaleSession(parameters: {
@@ -159,22 +154,46 @@ export default class ConnectorFactory implements IConnectorFactory {
         other?: Semanticable;
         name?: string;
         description?: string;
-        productType?: IProductType;
+        productType?: ISKOSConcept;
         quantity?: IQuantity;
         alcoholPercentage?: number;
         lifetime?: string;
-        claims?: IClaim[];
+        claims?: ISKOSConcept[];
         usageOrStorageConditions?: string;
         allergenCharacteristics?: IAllergenCharacteristic[];
         nutrientCharacteristics?: INutrientCharacteristic[];
         physicalCharacteristics?: IPhysicalCharacteristic[];
-        geographicalOrigin?: IGeographicalOrigin;
+        geographicalOrigin?: ISKOSConcept;
         catalogItems?: ICatalogItem[];
-        certifications?: ICertification[];
-        natureOrigin?: INatureOrigin[];
-        partOrigin?: IPartOrigin[];
+        certifications?: ISKOSConcept[];
+        natureOrigin?: ISKOSConcept[];
+        partOrigin?: ISKOSConcept[];
         totalTheoreticalStock?: number;
     }): ISuppliedProduct;
+    createPlannedTransformation(parameters: {
+        doNotStore?: boolean;
+        semanticId?: string;
+        other?: Semanticable;
+        transformationType?: ISKOSConcept;
+        consumptionFlow?: IPlannedConsumptionFlow;
+        productionFlow?: IPlannedProductionFlow;
+    }): IPlannedTransformation;
+    createPlannedConsumptionFlow(parameters: {
+        doNotStore?: boolean;
+        semanticId?: string;
+        other?: Semanticable;
+        quantity?: IQuantity;
+        transformation?: IPlannedTransformation;
+        product?: IDefinedProduct;
+    }): IPlannedConsumptionFlow;
+    createPlannedProductionFlow(parameters: {
+        doNotStore?: boolean;
+        semanticId?: string;
+        other?: Semanticable;
+        quantity?: IQuantity;
+        transformation?: IPlannedTransformation;
+        product?: ISuppliedProduct;
+    }): IPlannedProductionFlow;
     createFromType(type: string): Semanticable | undefined;
     createFromRdfDataset(dataset: DatasetExt): Semanticable | undefined;
 }

@@ -1,7 +1,10 @@
-import { Semanticable } from "@virtual-assembly/semantizer";
+import { ISemantizer, Semanticable } from "@virtual-assembly/semantizer";
 import IConnectorFactory from "./IConnectorFactory.js";
 import IGetterOptions from "./IGetterOptions.js";
+import IConnectorExportOptions from "./IConnectorExportOptions.js";
+import IConnectorImportOptions from "./IConnectorImportOptions.js";
 import IAddress from "./IAddress";
+import IAgent from "./IAgent";
 import IAllergenCharacteristic from "./IAllergenCharacteristic";
 import ICatalog from "./ICatalog";
 import ICatalogItem from "./ICatalogItem";
@@ -16,20 +19,12 @@ import IPhysicalCharacteristic from "./IPhysicalCharacteristic";
 import IPrice from "./IPrice";
 import IQuantity from "./IQuantity";
 import ISaleSession from "./ISaleSession";
+import ISKOSConcept from "./ISKOSConcept";
 import ISuppliedProduct from "./ISuppliedProduct";
-import IUnit from "./IUnit";
-import IAllergenDimension from "./IAllergenDimension";
-import INutrientDimension from "./INutrientDimension";
-import IAgent from "./IAgent";
-import IPhysicalDimension from "./IPhysicalDimension";
-import IPartOrigin from "./IPartOrigin";
-import INatureOrigin from "./INatureOrigin";
-import ICertification from "./ICertification";
-import IGeographicalOrigin from "./IGeographicalOrigin";
-import IClaim from "./IClaim";
-import IProductType from "./IProductType";
-import IConnectorExportOptions from "./IConnectorExportOptions.js";
-import IConnectorImportOptions from "./IConnectorImportOptions.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default interface IConnector {
     createAddress(parameters: {
         doNotStore?: boolean;
@@ -42,9 +37,9 @@ export default interface IConnector {
     }): IAddress;
     createAllergenCharacteristic(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        allergenDimension?: IAllergenDimension;
+        allergenDimension?: ISKOSConcept;
     }): IAllergenCharacteristic;
     createCatalog(parameters: {
         doNotStore?: boolean;
@@ -83,9 +78,9 @@ export default interface IConnector {
     }): IEnterprise;
     createNutrientCharacteristic(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        nutrientDimension?: INutrientDimension;
+        nutrientDimension?: ISKOSConcept;
     }): INutrientCharacteristic;
     createOffer(parameters: {
         doNotStore?: boolean;
@@ -126,19 +121,19 @@ export default interface IConnector {
     }): IPerson;
     createPhysicalCharacteristic(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        physicalDimension?: IPhysicalDimension;
+        physicalDimension?: ISKOSConcept;
     }): IPhysicalCharacteristic;
     createPrice(parameters: {
         other?: Semanticable;
         value?: number;
         vatRate?: number;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
     }): IPrice;
     createQuantity(parameters: {
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
     }): IQuantity;
     createSaleSession(parameters: {
@@ -156,24 +151,49 @@ export default interface IConnector {
         other?: Semanticable;
         name?: string;
         description?: string;
-        productType?: IProductType;
+        productType?: ISKOSConcept;
         quantity?: IQuantity;
         alcoholPercentage?: number;
         lifetime?: string;
-        claims?: IClaim[];
+        claims?: ISKOSConcept[];
         usageOrStorageConditions?: string;
         allergenCharacteristics?: IAllergenCharacteristic[];
         nutrientCharacteristics?: INutrientCharacteristic[];
         physicalCharacteristics?: IPhysicalCharacteristic[];
-        geographicalOrigin?: IGeographicalOrigin;
+        geographicalOrigin?: ISKOSConcept;
         catalogItems?: ICatalogItem[];
-        certifications?: ICertification[];
-        natureOrigin?: INatureOrigin[];
-        partOrigin?: IPartOrigin[];
+        certifications?: ISKOSConcept[];
+        natureOrigin?: ISKOSConcept[];
+        partOrigin?: ISKOSConcept[];
         totalTheoreticalStock?: number;
     }): ISuppliedProduct;
+    createPlannedTransformation(parameters: {
+        doNotStore?: boolean;
+        semanticId?: string;
+        other?: Semanticable;
+        transformationType?: ISKOSConcept;
+        consumptionFlow?: IPlannedConsumptionFlow;
+        productionFlow?: IPlannedProductionFlow;
+    }): IPlannedTransformation;
+    createPlannedConsumptionFlow(parameters: {
+        doNotStore?: boolean;
+        semanticId?: string;
+        other?: Semanticable;
+        quantity?: IQuantity;
+        transformation?: IPlannedTransformation;
+        product?: IDefinedProduct;
+    }): IPlannedConsumptionFlow;
+    createPlannedProductionFlow(parameters: {
+        doNotStore?: boolean;
+        semanticId?: string;
+        other?: Semanticable;
+        quantity?: IQuantity;
+        transformation?: IPlannedTransformation;
+        product?: ISuppliedProduct;
+    }): IPlannedProductionFlow;
     export(objects: Array<Semanticable>, options?: IConnectorExportOptions): Promise<string>;
     fetch(semanticObjectId: string, options?: IGetterOptions): Promise<Semanticable | undefined>;
+    getSemantizer(): ISemantizer;
     getDefaultFactory(): IConnectorFactory;
     import(data: string, options?: IConnectorImportOptions): Promise<Array<Semanticable>>;
     importOne(data: string, options?: IConnectorImportOptions): Promise<Semanticable | undefined>;

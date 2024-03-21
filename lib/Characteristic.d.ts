@@ -1,19 +1,19 @@
+import ISKOSConcept from "./ISKOSConcept.js";
 import ICharacteristic from "./ICharacteristic.js";
-import ICharacteristicDimension from "./ICharacteristicDimension.js";
-import IUnit from "./IUnit.js";
 import QuantitativeValue from "./QuantitativeValue.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
+import IGetterOptions from "./IGetterOptions.js";
 export default abstract class Characteristic extends QuantitativeValue implements ICharacteristic {
     protected constructor(parameters: {
         connector: IConnector;
         semanticId?: string;
         semanticType?: string;
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
     });
-    abstract getQuantityDimension(): Promise<ICharacteristicDimension | undefined>;
-    abstract setQuantityDimension(quantityDimension: ICharacteristicDimension): void;
+    abstract getQuantityDimension(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    abstract setQuantityDimension(quantityDimension: ISKOSConcept): void;
 }
 //# sourceMappingURL=Characteristic.d.ts.map

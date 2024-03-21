@@ -1,1 +1,1 @@
-{"version":3,"file":"Stockable.d.ts","sourceRoot":"","sources":["../src/Stockable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,SAAS;IAEjC,kBAAkB,IAAI,MAAM,CAC3B;IACD,kBAAkB,CAAC,eAAe,EAAE,MAAM,GAAG,IAAI,CAAC;CAElD"}
+{"version":3,"file":"Stockable.d.ts","sourceRoot":"","sources":["../src/Stockable.ts"],"names":[],"mappings":"AA2BA,MAAM,CAAC,OAAO,WAAW,SAAS;IAEjC,kBAAkB,IAAI,MAAM,GAAG,SAAS,CAAC;IAEzC,kBAAkB,CAAC,eAAe,EAAE,MAAM,GAAG,IAAI,CAAC;CAElD"}

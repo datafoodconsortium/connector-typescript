@@ -1,6 +1,6 @@
 import { Semanticable } from "@virtual-assembly/semantizer";
-import IConnectorExporter from "./IConnectorExporter";
 import { ContextDefinition } from "jsonld";
+import IConnectorExporter from "./IConnectorExporter";
 import IConnectorExporterOptions from "./IConnectorExporterOptions";
 export default class ConnectorExporterJsonldStream implements IConnectorExporter {
     private context?;

@@ -1,1 +1,1 @@
-{"version":3,"file":"ISKOSLabel.d.ts","sourceRoot":"","sources":["../src/ISKOSLabel.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,UAAW,SAAQ,YAAY;IAEvD,WAAW,IAAI,MAAM,CACpB;IACD,QAAQ,IAAI,MAAM,CACjB;CAED"}
+{"version":3,"file":"ISKOSLabel.d.ts","sourceRoot":"","sources":["../src/ISKOSLabel.ts"],"names":[],"mappings":"AAyBA,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,UAAW,SAAQ,YAAY;IAEvD,WAAW,IAAI,MAAM,GAAG,SAAS,CAAC;IAElC,QAAQ,IAAI,MAAM,GAAG,SAAS,CAAC;CAE/B"}

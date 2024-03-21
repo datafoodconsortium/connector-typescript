@@ -1,0 +1,1 @@
+{"version":3,"file":"IPlannedConsumptionFlow.d.ts","sourceRoot":"","sources":["../src/IPlannedConsumptionFlow.ts"],"names":[],"mappings":"AAuBA,OAAO,eAAe,MAAM,sBAAsB,CAAA;AAClD,OAAO,YAAY,MAAM,mBAAmB,CAAA;AAI5C,MAAM,CAAC,OAAO,WAAW,uBAAwB,SAAQ,YAAY;IAEpE,kBAAkB,IAAI,OAAO,CAAC,eAAe,GAAG,SAAS,CAAC,CAAC;IAE3D,kBAAkB,CAAC,eAAe,EAAE,eAAe,GAAG,IAAI,CAAC;CAE3D"}

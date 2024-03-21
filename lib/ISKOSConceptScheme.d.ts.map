@@ -1,1 +1,1 @@
-{"version":3,"file":"ISKOSConceptScheme.d.ts","sourceRoot":"","sources":["../src/ISKOSConceptScheme.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,kBAAmB,SAAQ,YAAY;CAG/D"}
+{"version":3,"file":"ISKOSConceptScheme.d.ts","sourceRoot":"","sources":["../src/ISKOSConceptScheme.ts"],"names":[],"mappings":"AAyBA,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,kBAAmB,SAAQ,YAAY;CAG/D"}

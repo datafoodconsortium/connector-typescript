@@ -1,1 +1,1 @@
-{"version":3,"file":"IPerson.d.ts","sourceRoot":"","sources":["../src/IPerson.ts"],"names":[],"mappings":"AAAA,OAAO,UAAU,MAAM,iBAAiB,CAAA;AACxC,OAAO,UAAU,MAAM,iBAAiB,CAAA;AAExC,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,OAAQ,SAAQ,YAAY,EAAE,UAAU,EAAE,UAAU;CAG5E"}
+{"version":3,"file":"IPerson.d.ts","sourceRoot":"","sources":["../src/IPerson.ts"],"names":[],"mappings":"AAuBA,OAAO,UAAU,MAAM,iBAAiB,CAAA;AACxC,OAAO,UAAU,MAAM,iBAAiB,CAAA;AAExC,OAAO,EAAE,YAAY,EAAE,MAAM,8BAA8B,CAAA;AAE3D,MAAM,CAAC,OAAO,WAAW,OAAQ,SAAQ,YAAY,EAAE,UAAU,EAAE,UAAU;CAG5E"}

@@ -1,3 +1,6 @@
+<!-- TODO: Update this CHANGELOG before merging into connector-codegen#main -->
+<!-- TODO: Also update semver values here and in package.json etc -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -7,7 +10,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- None.
+- None
+
+## [1.0.0-alpha.9] - 2024-03-20
+
+### Changed
+
+- Update `rdf-ext` to version 2.5.1.
+- Update `@types/rdf-ext` to version 2.5.0.
+- Update `@virtual-assembly/semantizer` to version alpha.3 (use GitHub repository).
+- Generate the code from the code generator.
+- Generated from the next branch of UML data model [edac402](https://github.com/datafoodconsortium/data-model-uml/commit/edac40255591f46884e75da47e28f04adc53d97a).
+
+### Added
+
+- `Address`:
+  - latitute
+  - longitude
+  - region
+- `Agent`:
+  - logo
+- `PlannedConsumptionFlow`:
+  - quantity
+  - consumes
+- `PlannedProductionFlow`:
+  - quantity
+  - produces
+- `PlannedTransformation`:
+  - hasIncome
+  - hasOutcome
+  - hasTransformationType
+- `DefinedProduct`:
+  - image
+- `Order`:
+  - date
+  - hasFulfilmentStatus
+  - hasOrderStatus
+  - hasPaymentStatus
+  - orderNumber
+
+See the SUPPORTED.md file [comparison from main to next](https://github.com/datafoodconsortium/data-model-uml/compare/main...next#diff-25a3722bf6006b7a060d6900ea707cb596a854ea3cdb6ef3b1980531d5d85bc5).
 
 ## [1.0.0-alpha.8] - 2024-01-31
 
@@ -72,6 +114,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Index does not export Semanticable anymore.
 - Update @types/rdf-ext to version 2.2.0.
 - Git ignore .code-workspace files.
+- Update dependency to semantizer version alpha.2.
 
 ## [1.0.0-alpha.1] - 2023-03-27
 
@@ -119,7 +162,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release.
 
-[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.5...HEAD
+[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.9...HEAD
+[1.0.0-alpha.9]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.8...v1.0.0-alpha.9
 [1.0.0-alpha.8]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.7...v1.0.0-alpha.8
 [1.0.0-alpha.7]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.6...v1.0.0-alpha.7
 [1.0.0-alpha.6]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.5...v1.0.0-alpha.6

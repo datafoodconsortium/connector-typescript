@@ -1,11 +1,7 @@
-import IUnit from "./IUnit.js";
+import Quantifiable from "./Quantifiable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default interface IPrice extends Semanticable {
-    getValue(): number;
-    getVatRate(): number;
-    getUnit(): Promise<IUnit | undefined>;
-    setValue(value: number): void;
+export default interface IPrice extends Semanticable, Quantifiable {
+    getVatRate(): number | undefined;
     setVatRate(vatRate: number): void;
-    setUnit(unit: IUnit): void;
 }
 //# sourceMappingURL=IPrice.d.ts.map

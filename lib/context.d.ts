@@ -1,16 +1,37 @@
-declare const context: {
+declare const _default: {
     rdfs: string;
     skos: string;
+    dfc: string;
     dc: string;
     "dfc-b": string;
+    "dfc-p": string;
     "dfc-t": string;
     "dfc-m": string;
     "dfc-pt": string;
     "dfc-f": string;
+    "dfc-v": string;
     "dfc-b:hasUnit": {
         "@type": string;
     };
+    "dfc-b:consumes": {
+        "@type": string;
+    };
+    "dfc-b:produces": {
+        "@type": string;
+    };
+    "dfc-b:hasIncome": {
+        "@type": string;
+    };
+    "dfc-b:hasOutcome": {
+        "@type": string;
+    };
+    "dfc-b:hasTransformationType": {
+        "@type": string;
+    };
     "dfc-b:hasQuantity": {
+        "@type": string;
+    };
+    "dfc-p:hasType": {
         "@type": string;
     };
     "dfc-b:hasType": {
@@ -52,7 +73,7 @@ declare const context: {
     "dfc-b:hasAllergenDimension": {
         "@type": string;
     };
-    "dfc-b:hasNutrimentDimension": {
+    "dfc-b:hasNutrientDimension": {
         "@type": string;
     };
     "dfc-b:hasPhysicalDimension": {
@@ -71,5 +92,5 @@ declare const context: {
         "@type": string;
     };
 };
-export default context;
+export default _default;
 //# sourceMappingURL=context.d.ts.map

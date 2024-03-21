@@ -21,128 +21,208 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import IOrder from "./IOrder.js"
-import ISaleSession from "./ISaleSession.js"
 import IOrderLine from "./IOrderLine.js"
+import ISKOSConcept from "./ISKOSConcept.js"
+import ISaleSession from "./ISaleSession.js"
+import IOrder from "./IOrder.js"
 import IAgent from "./IAgent.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const ORDER_SEM_TYPE: string = "dfc-b:Order";
 
 export default class Order extends SemanticObject implements IOrder {
-	
+
 	protected connector: IConnector;
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, number?: string, date?: string, saleSession?: ISaleSession, client?: IAgent, lines?: IOrderLine[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Order";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		number?: string,
+		date?: string,
+		saleSession?: ISaleSession,
+		client?: IAgent,
+		lines?: IOrderLine[],
+		fulfilmentStatus?: ISKOSConcept,
+		orderStatus?: ISKOSConcept,
+		paymentStatus?: ISKOSConcept,
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = ORDER_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				
+		});
 		}
-		else super({ semanticId: parameters.semanticId!, semanticType: type });
-		
 		this.connector = parameters.connector;
 		
 		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.number) this.setNumber(parameters.number);
-		if (parameters.date) this.setDate(parameters.date);
-		if (parameters.saleSession) this.setSaleSession(parameters.saleSession);
-		if (parameters.client) this.setClient(parameters.client);
-		if (parameters.lines) parameters.lines.forEach(e => this.addLine(e));
+		}
+		if (parameters.number) {
+			this.setNumber(parameters.number);
+		}
+		
+		if (parameters.date) {
+			this.setDate(parameters.date);
+		}
+		
+		if (parameters.saleSession) {
+			this.setSaleSession(parameters.saleSession);
+		}
+		
+		if (parameters.client) {
+			this.setClient(parameters.client);
+		}
+		
+		if (parameters.lines) {
+			parameters.lines.forEach(e => this.addLine(e));
+		}
+		
+		if (parameters.fulfilmentStatus) {
+			this.setFulfilmentStatus(parameters.fulfilmentStatus);
+		}
+		
+		if (parameters.orderStatus) {
+			this.setOrderStatus(parameters.orderStatus);
+		}
+		
+		if (parameters.paymentStatus) {
+			this.setPaymentStatus(parameters.paymentStatus);
+		}
+		
+	}
+
+	public setPaymentStatus(paymentState: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasPaymentStatus", paymentState);
+		
+		this.connector.store(paymentState);
+	}
+
+	public async getFulfilmentStatus(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasFulfilmentStatus");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
 	}
 
 	public setDate(date: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#date";
-		this.setSemanticPropertyLiteral(property, date);
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
 	}
-	
 
-	public getNumber(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderNumber");
+	public getDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:date");
 	}
-	
 
-	public getDate(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#date");
+	public getNumber(): string | undefined {
+		return this.getSemanticProperty("dfc-b:orderNumber");
 	}
-	
+
+	public async getOrderStatus(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasOrderStatus");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
+	}
+
+	public async getPaymentStatus(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasPaymentStatus");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
+	}
+
+	public setFulfilmentStatus(fulfilmentState: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasFulfilmentStatus", fulfilmentState);
+		
+		this.connector.store(fulfilmentState);
+	}
+
+	public async getClient(options?: IGetterOptions): Promise<IAgent | undefined> {
+		let result: IAgent | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:orderedBy");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IAgent> semanticObject;
+		}
+		return result;
+	}
+
+	public setSaleSession(saleSession: ISaleSession): void {
+		this.setSemanticPropertyReference("dfc-b:belongsTo", saleSession);
+		
+		this.connector.store(saleSession);
+	}
+
+	public setClient(client: IAgent): void {
+		this.setSemanticPropertyReference("dfc-b:orderedBy", client);
+		
+		this.connector.store(client);
+	}
+
+	public async getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined> {
+		let result: ISaleSession | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:belongsTo");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISaleSession> semanticObject;
+		}
+		return result;
+	}
 
 	public addLine(line: IOrderLine): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPart";
 		if (line.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, line);
+			this.addSemanticPropertyAnonymous("dfc-b:hasPart", line);
 		}
 		else {
 			this.connector.store(line);
-			this.addSemanticPropertyReference(property, line);
+			this.addSemanticPropertyReference("dfc-b:hasPart", line);
 		}
 	}
-	
 
-	public async getClient(options?: IGetterOptions): Promise<IAgent | undefined>
-	 {
-		let result: IAgent | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderedBy");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IAgent | undefined> semanticObject;
-		}
-		return result;
-		
-	}
-	
-
-	public async getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined>
-	 {
-		let result: ISaleSession | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#belongsTo");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISaleSession | undefined> semanticObject;
-		}
-		return result;
-		
-	}
-	
-
-	public setClient(client: IAgent): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderedBy";
-		this.setSemanticPropertyReference(property, client);
-		this.connector.store(client);
-	}
-	
-
-	public async getLines(options?: IGetterOptions): Promise<Array<IOrderLine>>
-	 {
+	public async getLines(options?: IGetterOptions): Promise<IOrderLine[]> {
 		const results = new Array<IOrderLine>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPart");
+		const properties = this.getSemanticPropertyAll("dfc-b:hasPart");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOrderLine> semanticObject);
+			if (semanticObject) results.push(<IOrderLine>semanticObject);
 		}
 		return results;
 	}
-	
 
 	public setNumber(number: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#orderNumber";
-		this.setSemanticPropertyLiteral(property, number);
+		this.setSemanticPropertyLiteral("dfc-b:orderNumber", number);
 	}
-	
 
-	public setSaleSession(saleSession: ISaleSession): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#belongsTo";
-		this.setSemanticPropertyReference(property, saleSession);
-		this.connector.store(saleSession);
+	public setOrderStatus(orderState: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasOrderStatus", orderState);
+		
+		this.connector.store(orderState);
 	}
-	
-
 }

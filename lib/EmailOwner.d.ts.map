@@ -1,0 +1,1 @@
+{"version":3,"file":"EmailOwner.d.ts","sourceRoot":"","sources":["../src/EmailOwner.ts"],"names":[],"mappings":"AAuBA,OAAO,kBAAkB,MAAM,yBAAyB,CAAA;AAIxD,MAAM,CAAC,OAAO,WAAW,UAAW,SAAQ,kBAAkB;IAE7D,eAAe,CAAC,YAAY,EAAE,MAAM,GAAG,IAAI,CAAC;IAE5C,kBAAkB,CAAC,YAAY,EAAE,MAAM,GAAG,IAAI,CAAC;CAE/C"}

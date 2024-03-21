@@ -1,20 +1,20 @@
-import { Semanticable } from "@virtual-assembly/semantizer";
+import { ISemantizer, Semanticable } from "@virtual-assembly/semantizer";
+import IConnector from "./IConnector.js";
 import IConnectorExporter from "./IConnectorExporter";
+import IConnectorExportOptions from "./IConnectorExportOptions.js";
 import IConnectorFactory from "./IConnectorFactory.js";
 import IConnectorImporter from "./IConnectorImporter";
+import IConnectorImportOptions from "./IConnectorImportOptions.js";
 import IConnectorStore from "./IConnectorStore";
 import IGetterOptions from "./IGetterOptions.js";
-import ISKOSConcept from "./ISKOSConcept";
-import IConnectorImportOptions from "./IConnectorImportOptions.js";
-import IConnectorExportOptions from "./IConnectorExportOptions.js";
-import IConnector from "./IConnector.js";
 import IAddress from "./IAddress.js";
+import IAgent from "./IAgent.js";
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
 import ICustomerCategory from "./ICustomerCategory.js";
 import IEnterprise from "./IEnterprise.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import IOffer from "./IOffer.js";
 import IOrder from "./IOrder.js";
 import IOrderLine from "./IOrderLine.js";
@@ -23,22 +23,18 @@ import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
 import IPrice from "./IPrice.js";
 import IQuantity from "./IQuantity.js";
 import ISaleSession from "./ISaleSession.js";
+import ISKOSConcept from "./ISKOSConcept";
 import ISuppliedProduct from "./ISuppliedProduct.js";
-import IAllergenDimension from "./IAllergenDimension.js";
-import IUnit from "./IUnit.js";
-import INutrientDimension from "./INutrientDimension.js";
-import IAgent from "./IAgent.js";
-import IPhysicalDimension from "./IPhysicalDimension.js";
-import IPartOrigin from "./IPartOrigin.js";
-import INatureOrigin from "./INatureOrigin.js";
-import ICertification from "./ICertification.js";
-import IGeographicalOrigin from "./IGeographicalOrigin.js";
-import IClaim from "./IClaim.js";
-import IProductType from "./IProductType.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default class Connector implements IConnector {
     FACETS?: ISKOSConcept;
     MEASURES?: ISKOSConcept;
     PRODUCT_TYPES?: ISKOSConcept;
+    VOCABULARY?: ISKOSConcept;
+    private semantizer;
     private fetchFunction;
     private factory;
     private importer;
@@ -58,9 +54,9 @@ export default class Connector implements IConnector {
         doNotStore?: boolean;
     }): IAddress;
     createAllergenCharacteristic(parameters: {
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        allergenDimension?: IAllergenDimension;
+        allergenDimension?: ISKOSConcept;
     }): IAllergenCharacteristic;
     createAllergenCharacteristic(parameters: {
         other: IAllergenCharacteristic;
@@ -113,9 +109,9 @@ export default class Connector implements IConnector {
         doNotStore?: boolean;
     }): IEnterprise;
     createNutrientCharacteristic(parameters: {
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        nutrientDimension?: INutrientDimension;
+        nutrientDimension?: ISKOSConcept;
     }): INutrientCharacteristic;
     createNutrientCharacteristic(parameters: {
         other: INutrientCharacteristic;
@@ -171,9 +167,9 @@ export default class Connector implements IConnector {
         doNotStore?: boolean;
     }): IPerson;
     createPhysicalCharacteristic(parameters: {
-        unit: IUnit;
+        unit: ISKOSConcept;
         value?: number;
-        physicalDimension?: IPhysicalDimension;
+        physicalDimension?: ISKOSConcept;
     }): IPhysicalCharacteristic;
     createPhysicalCharacteristic(parameters: {
         other: IPhysicalCharacteristic;
@@ -182,14 +178,14 @@ export default class Connector implements IConnector {
     createPrice(parameters: {
         value?: number;
         vatRate?: number;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
     }): IPrice;
     createPrice(parameters: {
         other: IPrice;
         doNotStore?: boolean;
     }): IPrice;
     createQuantity(parameters: {
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
     }): IQuantity;
     createQuantity(parameters: {
@@ -212,20 +208,20 @@ export default class Connector implements IConnector {
         semanticId: string;
         name?: string;
         description?: string;
-        productType?: IProductType;
+        productType?: ISKOSConcept;
         quantity?: IQuantity;
         alcoholPercentage?: number;
         lifetime?: string;
-        claims?: IClaim[];
+        claims?: ISKOSConcept[];
         usageOrStorageConditions?: string;
         allergenCharacteristics?: IAllergenCharacteristic[];
         nutrientCharacteristics?: INutrientCharacteristic[];
         physicalCharacteristics?: IPhysicalCharacteristic[];
-        geographicalOrigin?: IGeographicalOrigin;
+        geographicalOrigin?: ISKOSConcept;
         catalogItems?: ICatalogItem[];
-        certifications?: ICertification[];
-        natureOrigin?: INatureOrigin[];
-        partOrigin?: IPartOrigin[];
+        certifications?: ISKOSConcept[];
+        natureOrigin?: ISKOSConcept[];
+        partOrigin?: ISKOSConcept[];
         totalTheoreticalStock?: number;
         doNotStore?: boolean;
     }): ISuppliedProduct;
@@ -233,7 +229,41 @@ export default class Connector implements IConnector {
         other: ISuppliedProduct;
         doNotStore?: boolean;
     }): ISuppliedProduct;
+    createPlannedTransformation(parameters: {
+        doNotStore?: boolean;
+        semanticId: string;
+        transformationType?: ISKOSConcept;
+        consumptionFlow?: IPlannedConsumptionFlow;
+        productionFlow?: IPlannedProductionFlow;
+    }): IPlannedTransformation;
+    createPlannedTransformation(parameters: {
+        doNotStore?: boolean;
+        other: IPlannedTransformation;
+    }): IPlannedTransformation;
+    createPlannedConsumptionFlow(parameters: {
+        doNotStore?: boolean;
+        semanticId: string;
+        quantity?: IQuantity;
+        transformation?: IPlannedTransformation;
+        product?: IDefinedProduct;
+    }): IPlannedConsumptionFlow;
+    createPlannedConsumptionFlow(parameters: {
+        doNotStore?: boolean;
+        other: IPlannedConsumptionFlow;
+    }): IPlannedConsumptionFlow;
+    createPlannedProductionFlow(parameters: {
+        doNotStore?: boolean;
+        semanticId: string;
+        quantity?: IQuantity;
+        transformation?: IPlannedTransformation;
+        product?: ISuppliedProduct;
+    }): IPlannedProductionFlow;
+    createPlannedProductionFlow(parameters: {
+        doNotStore?: boolean;
+        other: IPlannedProductionFlow;
+    }): IPlannedProductionFlow;
     export(objects: Array<Semanticable>, options?: IConnectorExportOptions): Promise<string>;
+    getSemantizer(): ISemantizer;
     getDefaultFactory(): IConnectorFactory;
     import(data: string, options?: IConnectorImportOptions): Promise<Array<Semanticable>>;
     importOne(data: string, options?: IConnectorImportOptions): Promise<Semanticable | undefined>;
@@ -242,7 +272,8 @@ export default class Connector implements IConnector {
     loadFacets(facets: any): Promise<void>;
     loadMeasures(measures: any): Promise<void>;
     loadProductTypes(productTypes: any): Promise<void>;
-    fetch(semanticObjectId: string, options?: IGetterOptions): Promise<Semanticable | undefined>;
+    loadVocabulary(vocabulary: any): Promise<void>;
+    fetch(semanticObject: string, options?: IGetterOptions): Promise<Semanticable | undefined>;
     setDefaultFactory(factory: IConnectorFactory): void;
     setDefaultFetchFunction(fetch: (semanticId: string) => Promise<Response>): void;
     setDefaultExporter(exporter: IConnectorExporter): void;

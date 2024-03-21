@@ -1,26 +1,31 @@
-import { Semanticable } from "@virtual-assembly/semantizer"
+// Exernal
+import { ISemantizer, Semanticable, Semantizer } from "@virtual-assembly/semantizer"
 import DatasetExt from "rdf-ext/lib/Dataset";
+
+// Static
 import ConnectorExporterJsonldStream from "./ConnectorExporterJsonldStream.js";
+import ConnectorFactory from "./ConnectorFactory.js";
 import ConnectorImporterJsonldStream from "./ConnectorImporterJsonldStream.js";
 import ConnectorStoreMap from "./ConnectorStoreMap.js";
+import context from "./context.js";
+import IConnector from "./IConnector.js";
 import IConnectorExporter from "./IConnectorExporter";
+import IConnectorExportOptions from "./IConnectorExportOptions.js";
 import IConnectorFactory from "./IConnectorFactory.js";
 import IConnectorImporter from "./IConnectorImporter";
+import IConnectorImportOptions from "./IConnectorImportOptions.js";
 import IConnectorStore from "./IConnectorStore";
 import IGetterOptions from "./IGetterOptions.js";
-import ISKOSConcept from "./ISKOSConcept";
-import context from "./context.js";
-import IConnectorImportOptions from "./IConnectorImportOptions.js";
-import IConnectorExportOptions from "./IConnectorExportOptions.js";
-import ConnectorFactory from "./ConnectorFactory.js";
-import IConnector from "./IConnector.js";
+
+// Generated Code
 import IAddress from "./IAddress.js";
+import IAgent from "./IAgent.js";
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
 import ICustomerCategory from "./ICustomerCategory.js";
 import IEnterprise from "./IEnterprise.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import IOffer from "./IOffer.js";
 import IOrder from "./IOrder.js";
 import IOrderLine from "./IOrderLine.js";
@@ -29,25 +34,21 @@ import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
 import IPrice from "./IPrice.js";
 import IQuantity from "./IQuantity.js";
 import ISaleSession from "./ISaleSession.js";
+import ISKOSConcept from "./ISKOSConcept";
 import ISuppliedProduct from "./ISuppliedProduct.js";
-import IAllergenDimension from "./IAllergenDimension.js";
-import IUnit from "./IUnit.js";
-import INutrientDimension from "./INutrientDimension.js";
-import IAgent from "./IAgent.js";
-import IPhysicalDimension from "./IPhysicalDimension.js";
-import IPartOrigin from "./IPartOrigin.js";
-import INatureOrigin from "./INatureOrigin.js";
-import ICertification from "./ICertification.js";
-import IGeographicalOrigin from "./IGeographicalOrigin.js";
-import IClaim from "./IClaim.js";
-import IProductType from "./IProductType.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 
 export default class Connector implements IConnector {
 
     public FACETS?: ISKOSConcept;
     public MEASURES?: ISKOSConcept;
     public PRODUCT_TYPES?: ISKOSConcept;
+    public VOCABULARY?: ISKOSConcept;
 
+    private semantizer: ISemantizer;
     private fetchFunction: (semanticId: string) => Promise<Response>;
     private factory: IConnectorFactory;
     private importer: IConnectorImporter;
@@ -55,6 +56,7 @@ export default class Connector implements IConnector {
     private storeObject: IConnectorStore;
 
     public constructor() {
+        this.semantizer = new Semantizer(context);
         this.storeObject = new ConnectorStoreMap();
         this.fetchFunction = async (semanticId: string) => (await fetch(semanticId));
         this.factory = new ConnectorFactory(this);
@@ -69,9 +71,9 @@ export default class Connector implements IConnector {
         return this.factory.createAddress(parameters);
     }
 
-    public createAllergenCharacteristic(parameters: {unit?: IUnit, value?: number, allergenDimension?: IAllergenDimension}): IAllergenCharacteristic
+    public createAllergenCharacteristic(parameters: {unit?: ISKOSConcept, value?: number, allergenDimension?: ISKOSConcept}): IAllergenCharacteristic
     public createAllergenCharacteristic(parameters: {other: IAllergenCharacteristic}): IAllergenCharacteristic;
-    public createAllergenCharacteristic(parameters: {other?: IAllergenCharacteristic, unit?: IUnit, value?: number, allergenDimension?: IAllergenDimension}): IAllergenCharacteristic {
+    public createAllergenCharacteristic(parameters: {other?: IAllergenCharacteristic, unit?: ISKOSConcept, value?: number, allergenDimension?: ISKOSConcept}): IAllergenCharacteristic {
         return this.factory.createAllergenCharacteristic(parameters);
     }
 
@@ -99,9 +101,9 @@ export default class Connector implements IConnector {
         return this.factory.createEnterprise(parameters);
     }
 
-    public createNutrientCharacteristic(parameters: {unit?: IUnit, value?: number, nutrientDimension?: INutrientDimension}): INutrientCharacteristic
+    public createNutrientCharacteristic(parameters: {unit?: ISKOSConcept, value?: number, nutrientDimension?: ISKOSConcept}): INutrientCharacteristic
     public createNutrientCharacteristic(parameters: {other: INutrientCharacteristic, doNotStore?: boolean}): INutrientCharacteristic
-    public createNutrientCharacteristic(parameters: {other?: INutrientCharacteristic, unit?: IUnit, value?: number, nutrientDimension?: INutrientDimension}): INutrientCharacteristic {
+    public createNutrientCharacteristic(parameters: {other?: INutrientCharacteristic, unit?: ISKOSConcept, value?: number, nutrientDimension?: ISKOSConcept}): INutrientCharacteristic {
         return this.factory.createNutrientCharacteristic(parameters);
     }
 
@@ -129,21 +131,21 @@ export default class Connector implements IConnector {
         return this.factory.createPerson(parameters);
     }
 
-    public createPhysicalCharacteristic(parameters: {unit: IUnit, value?: number, physicalDimension?: IPhysicalDimension}): IPhysicalCharacteristic
+    public createPhysicalCharacteristic(parameters: {unit: ISKOSConcept, value?: number, physicalDimension?: ISKOSConcept}): IPhysicalCharacteristic
     public createPhysicalCharacteristic(parameters: {other: IPhysicalCharacteristic, doNotStore?: boolean}): IPhysicalCharacteristic
-    public createPhysicalCharacteristic(parameters: {other?: IPhysicalCharacteristic, unit?: IUnit, value?: number, physicalDimension?: IPhysicalDimension}): IPhysicalCharacteristic {
+    public createPhysicalCharacteristic(parameters: {other?: IPhysicalCharacteristic, unit?: ISKOSConcept, value?: number, physicalDimension?: ISKOSConcept}): IPhysicalCharacteristic {
         return this.factory.createPhysicalCharacteristic(parameters);
     }
 
-    public createPrice(parameters: {value?: number, vatRate?: number, unit?: IUnit}): IPrice
+    public createPrice(parameters: {value?: number, vatRate?: number, unit?: ISKOSConcept}): IPrice
     public createPrice(parameters: {other: IPrice, doNotStore?: boolean}): IPrice
-    public createPrice(parameters: {other?: IPrice, value?: number, vatRate?: number, unit?: IUnit}): IPrice {
+    public createPrice(parameters: {other?: IPrice, value?: number, vatRate?: number, unit?: ISKOSConcept}): IPrice {
         return this.factory.createPrice(parameters);
     }
 
-    public createQuantity(parameters: {unit?: IUnit, value?: number}): IQuantity
+    public createQuantity(parameters: {unit?: ISKOSConcept, value?: number}): IQuantity
     public createQuantity(parameters: {other: IQuantity, doNotStore?: boolean}): IQuantity
-    public createQuantity(parameters: {other?: IQuantity, unit?: IUnit, value?: number}): IQuantity {
+    public createQuantity(parameters: {other?: IQuantity, unit?: ISKOSConcept, value?: number}): IQuantity {
         return this.factory.createQuantity(parameters);
     }
 
@@ -153,10 +155,28 @@ export default class Connector implements IConnector {
         return this.factory.createSaleSession(parameters);
     }
 
-    public createSuppliedProduct(parameters: {semanticId: string, name?: string, description?: string, productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[], totalTheoreticalStock?: number, doNotStore?: boolean}): ISuppliedProduct
+    public createSuppliedProduct(parameters: {semanticId: string, name?: string, description?: string, productType?: ISKOSConcept, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: ISKOSConcept[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: ISKOSConcept, catalogItems?: ICatalogItem[], certifications?: ISKOSConcept[], natureOrigin?: ISKOSConcept[], partOrigin?: ISKOSConcept[], totalTheoreticalStock?: number, doNotStore?: boolean}): ISuppliedProduct
     public createSuppliedProduct(parameters: {other: ISuppliedProduct, doNotStore?: boolean}): ISuppliedProduct
-    public createSuppliedProduct(parameters: {doNotStore?: boolean, semanticId?: string, other?: ISuppliedProduct, name?: string, description?: string, productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[], totalTheoreticalStock?: number}): ISuppliedProduct {
+    public createSuppliedProduct(parameters: {doNotStore?: boolean, semanticId?: string, other?: ISuppliedProduct, name?: string, description?: string, productType?: ISKOSConcept, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: ISKOSConcept[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: ISKOSConcept, catalogItems?: ICatalogItem[], certifications?: ISKOSConcept[], natureOrigin?: ISKOSConcept[], partOrigin?: ISKOSConcept[], totalTheoreticalStock?: number}): ISuppliedProduct {
         return this.factory.createSuppliedProduct(parameters);
+    }
+
+    public createPlannedTransformation(parameters: {doNotStore?: boolean, semanticId: string, transformationType?: ISKOSConcept, consumptionFlow?: IPlannedConsumptionFlow, productionFlow?: IPlannedProductionFlow}): IPlannedTransformation;
+    public createPlannedTransformation(parameters: {doNotStore?: boolean, other: IPlannedTransformation}): IPlannedTransformation;
+    public createPlannedTransformation(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, transformationType?: ISKOSConcept, consumptionFlow?: IPlannedConsumptionFlow, productionFlow?: IPlannedProductionFlow}): IPlannedTransformation {
+        return this.factory.createPlannedTransformation(parameters);
+    }
+
+    public createPlannedConsumptionFlow(parameters: {doNotStore?: boolean, semanticId: string, quantity?: IQuantity, transformation?: IPlannedTransformation, product?: IDefinedProduct}): IPlannedConsumptionFlow;
+    public createPlannedConsumptionFlow(parameters: {doNotStore?: boolean, other: IPlannedConsumptionFlow}): IPlannedConsumptionFlow;
+    public createPlannedConsumptionFlow(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, quantity?: IQuantity, transformation?: IPlannedTransformation, product?: IDefinedProduct}): IPlannedConsumptionFlow {
+        return this.factory.createPlannedConsumptionFlow(parameters);
+    }
+
+    public createPlannedProductionFlow(parameters: {doNotStore?: boolean, semanticId: string, quantity?: IQuantity, transformation?: IPlannedTransformation, product?: ISuppliedProduct}): IPlannedProductionFlow;
+    public createPlannedProductionFlow(parameters: {doNotStore?: boolean, other: IPlannedProductionFlow}): IPlannedProductionFlow;
+    public createPlannedProductionFlow(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, quantity?: IQuantity, transformation?: IPlannedTransformation, product?: ISuppliedProduct}): IPlannedProductionFlow {
+        return this.factory.createPlannedProductionFlow(parameters);
     }
 
     public async export(objects: Array<Semanticable>, options?: IConnectorExportOptions): Promise<string> {
@@ -165,6 +185,10 @@ export default class Connector implements IConnector {
             inputContext: options?.inputContext,
             outputContext: options?.outputContext
         });
+    }
+
+    public getSemantizer(): ISemantizer {
+        return this.semantizer;
     }
 
     public getDefaultFactory(): IConnectorFactory {
@@ -242,8 +266,9 @@ export default class Connector implements IConnector {
             const narrowers = parent.getSemanticPropertyAll(skosNarrower);
 
             narrowers.forEach((narrower: string) => {
-                const name: string = narrower.split(prefix)[1].replace('-', '_').toUpperCase();
-                const concept: Semanticable | undefined = concepts.get(narrower);
+                const expandedNarrower = this.getSemantizer().expand(narrower);
+                const name: string = expandedNarrower.split(prefix)[1].replace('-', '_').toUpperCase();
+                const concept: Semanticable | undefined = concepts.get(expandedNarrower);
                 if (concept) {
                     // @ts-ignore
                     parent[name] = concept;
@@ -254,8 +279,10 @@ export default class Connector implements IConnector {
 
         // @ts-ignore: if the conceptScheme does not exist, an exception should have be already throwned
         conceptScheme.getSemanticPropertyAll(skosHasTopConcept).forEach((topConcept: any) => {
-            const name: string = topConcept.split(prefix)[1].replace('-', '_').toUpperCase();
-            const concept: Semanticable | undefined = concepts.get(topConcept);
+            const expandedTopConcept = this.getSemantizer().expand(topConcept);
+            //const name: string = topConcept.split(prefix)[1].replace('-', '_').toUpperCase();
+            const name: string = expandedTopConcept.split(prefix)[1].replace('-', '_').toUpperCase();
+            const concept: Semanticable | undefined = concepts.get(expandedTopConcept);
             if (!concept)
                 throw new Error("The thesaurus top concept " + topConcept + " was not found.");
             // @ts-ignore
@@ -281,8 +308,14 @@ export default class Connector implements IConnector {
         this.PRODUCT_TYPES = await this.importThesaurus(productTypes, prefix);
     }
 
-    public async fetch(semanticObjectId: string, options?: IGetterOptions): Promise<Semanticable | undefined> {
+    public async loadVocabulary(vocabulary: any): Promise<void> {
+        const prefix: string = "https://github.com/datafoodconsortium/taxonomies/releases/latest/download/vocabulary.rdf#";
+        this.VOCABULARY = await this.importThesaurus(vocabulary, prefix);
+    }
+
+    public async fetch(semanticObject: string, options?: IGetterOptions): Promise<Semanticable | undefined> {
         const store: IConnectorStore = options?.store? options.store : this.storeObject;
+        const semanticObjectId = this.getSemantizer().expand(semanticObject);
 
         if (!store.has(semanticObjectId)) {
             const fetchFunction = options?.fetch? options.fetch : this.fetchFunction;

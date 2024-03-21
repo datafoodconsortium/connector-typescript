@@ -1,5 +1,5 @@
 export default interface Taxable {
-    getVatNumber(): string;
+    getVatNumber(): string | undefined;
     setVatNumber(vatNumber: string): void;
 }
 //# sourceMappingURL=Taxable.d.ts.map

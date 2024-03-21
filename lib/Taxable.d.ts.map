@@ -1,1 +1,1 @@
-{"version":3,"file":"Taxable.d.ts","sourceRoot":"","sources":["../src/Taxable.ts"],"names":[],"mappings":"AAIA,MAAM,CAAC,OAAO,WAAW,OAAO;IAE/B,YAAY,IAAI,MAAM,CACrB;IACD,YAAY,CAAC,SAAS,EAAE,MAAM,GAAG,IAAI,CAAC;CAEtC"}
+{"version":3,"file":"Taxable.d.ts","sourceRoot":"","sources":["../src/Taxable.ts"],"names":[],"mappings":"AA2BA,MAAM,CAAC,OAAO,WAAW,OAAO;IAE/B,YAAY,IAAI,MAAM,GAAG,SAAS,CAAC;IAEnC,YAAY,CAAC,SAAS,EAAE,MAAM,GAAG,IAAI,CAAC;CAEtC"}

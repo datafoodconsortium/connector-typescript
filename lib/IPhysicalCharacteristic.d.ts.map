@@ -1,1 +1,1 @@
-{"version":3,"file":"IPhysicalCharacteristic.d.ts","sourceRoot":"","sources":["../src/IPhysicalCharacteristic.ts"],"names":[],"mappings":"AAAA,OAAO,eAAe,MAAM,sBAAsB,CAAA;AAIlD,MAAM,CAAC,OAAO,WAAW,uBAAwB,SAAQ,eAAe;CAGvE"}
+{"version":3,"file":"IPhysicalCharacteristic.d.ts","sourceRoot":"","sources":["../src/IPhysicalCharacteristic.ts"],"names":[],"mappings":"AAuBA,OAAO,eAAe,MAAM,sBAAsB,CAAA;AAIlD,MAAM,CAAC,OAAO,WAAW,uBAAwB,SAAQ,eAAe;CAGvE"}

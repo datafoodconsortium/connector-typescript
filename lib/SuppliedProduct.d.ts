@@ -1,20 +1,15 @@
-import IClaim from "./IClaim.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import IPartOrigin from "./IPartOrigin.js";
-import INatureOrigin from "./INatureOrigin.js";
-import ICertification from "./ICertification.js";
-import IQuantity from "./IQuantity.js";
-import IProductType from "./IProductType.js";
-import ISuppliedProduct from "./ISuppliedProduct.js";
-import DefinedProduct from "./DefinedProduct.js";
 import ICatalogItem from "./ICatalogItem.js";
+import ISuppliedProduct from "./ISuppliedProduct.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import DefinedProduct from "./DefinedProduct.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IQuantity from "./IQuantity.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import IGeographicalOrigin from "./IGeographicalOrigin.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 export default class SuppliedProduct extends DefinedProduct implements ISuppliedProduct {
-    getTotalTheoreticalStock(): number;
+    getTotalTheoreticalStock(): number | undefined;
     setTotalTheoreticalStock(totalTheoreticalStock: number): void;
     constructor(parameters: {
         connector: IConnector;
@@ -22,22 +17,22 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
         other?: Semanticable;
         name?: string;
         description?: string;
-        images?: string[];
-        productType?: IProductType;
+        productType?: ISKOSConcept;
         quantity?: IQuantity;
         alcoholPercentage?: number;
         lifetime?: string;
-        claims?: IClaim[];
+        claims?: ISKOSConcept[];
         usageOrStorageConditions?: string;
         allergenCharacteristics?: IAllergenCharacteristic[];
         nutrientCharacteristics?: INutrientCharacteristic[];
         physicalCharacteristics?: IPhysicalCharacteristic[];
-        geographicalOrigin?: IGeographicalOrigin;
+        geographicalOrigin?: ISKOSConcept;
         catalogItems?: ICatalogItem[];
-        certifications?: ICertification[];
-        natureOrigin?: INatureOrigin[];
-        partOrigin?: IPartOrigin[];
+        certifications?: ISKOSConcept[];
+        natureOrigin?: ISKOSConcept[];
+        partOrigin?: ISKOSConcept[];
         totalTheoreticalStock?: number;
+        images?: string[];
         doNotStore?: boolean;
     });
 }

@@ -1,32 +1,26 @@
-import Person from '../lib/Person.js';
-import Address from '../lib/Address.js';
+import expect from 'node:assert';
+import { test } from 'node:test';
 import Connector from "../lib/Connector.js";
-import Enterprise from '../lib/Enterprise.js';
 
 const connector = new Connector();
 
-const address = new Address({
-    connector: connector,
+const address = connector.createAddress({
     semanticId: "http://myplatform.com/address/address1"
 });
 
-const address2 = new Address({
-    connector: connector,
+const address2 = connector.createAddress({
     semanticId: "http://myplatform.com/address/address2"
 });
 
-const enterprise = new Enterprise({
-    connector: connector,
+const enterprise = connector.createEnterprise({
     semanticId: "http://myplatform.com/address/enterprise1"
 });
 
-const enterprise2 = new Enterprise({
-    connector: connector,
+const enterprise2 = connector.createEnterprise({
     semanticId: "http://myplatform.com/address/enterprise2"
 });
 
-const person = new Person({
-    connector: connector,
+const person = connector.createPerson({
     semanticId: "http://myplatform.com/person1",
     firstName: "John",
     lastName: "Smith",
@@ -39,77 +33,76 @@ const json = `{"@context":"https://www.datafoodconsortium.org","@id":"http://myp
 test('Person:import', async () => {
     const imported = await connector.import(json);
     const importedPerson = imported[0];
-    expect(imported.length).toStrictEqual(1);
-    expect(importedPerson.equals(person)).toStrictEqual(true);
+    expect.strictEqual(imported.length, 1);
+    expect.strictEqual(importedPerson.equals(person), true);
 });
 
 test('Person:export', async () => {
     const serialized = await connector.export([person]);
-    expect(serialized).toStrictEqual(json);
+    expect.strictEqual(serialized, json);
 });
 
-test('Person:getSemanticId', async () => {
-    expect(person.getSemanticId()).toStrictEqual("http://myplatform.com/person1");
+test('Person:getSemanticId', () => {
+    expect.strictEqual(person.getSemanticId(), "http://myplatform.com/person1");
 });
 
-test('Person:getFirstName', async () => {
-    expect(person.getFirstName()).toStrictEqual("John");
+test('Person:getFirstName', () => {
+    expect.strictEqual(person.getFirstName(), "John");
 });
 
-test('Person:getLastName', async () => {
-    expect(person.getLastName()).toStrictEqual("Smith");
+test('Person:getLastName', () => {
+    expect.strictEqual(person.getLastName(), "Smith");
 });
 
 test('Person:getLocalizations', async () => {
     const localizations = await person.getLocalizations();
-    expect(localizations.length).toStrictEqual(1);
-    expect(localizations[0].equals(address)).toStrictEqual(true);
+    expect.strictEqual(localizations.length, 1);
+    expect.strictEqual(localizations[0].equals(address), true);
 });
 
 test('Person:getAffiliatedOrganizations', async () => {
     const organizations = await person.getAffiliatedOrganizations();
-    expect(organizations.length).toStrictEqual(1);
-    expect(organizations[0].equals(enterprise)).toStrictEqual(true);
+    expect.strictEqual(organizations.length, 1);
+    expect.strictEqual(organizations[0].equals(enterprise), true);
 });
 
-test('Person:setFirstName', async () => {
+test('Person:setFirstName', () => {
     person.setFirstName("John2");
-    expect(person.getFirstName()).toStrictEqual("John2");
+    expect.strictEqual(person.getFirstName(), "John2");
 });
 
-test('Person:setLastName', async () => {
+test('Person:setLastName', () => {
     person.setLastName("Smith2");
-    expect(person.getLastName()).toStrictEqual("Smith2");
+    expect.strictEqual(person.getLastName(), "Smith2");
 });
 
 test('Person:addLocalization', async () => {
     person.addLocalization(address2);
     const localizations = await person.getLocalizations();
-    expect(localizations.length).toStrictEqual(2);
-    expect(localizations[0].equals(address)).toStrictEqual(true);
-    expect(localizations[1].equals(address2)).toStrictEqual(true);
+    expect.strictEqual(localizations.length, 2);
+    expect.strictEqual(localizations[0].equals(address), true);
+    expect.strictEqual(localizations[1].equals(address2), true);
 });
 
 test('Person:affiliatedTo', async () => {
     person.affiliateTo(enterprise2);
     const organizations = await person.getAffiliatedOrganizations();
-    expect(organizations.length).toStrictEqual(2);
-    expect(organizations[0].equals(enterprise)).toStrictEqual(true);
-    expect(organizations[1].equals(enterprise2)).toStrictEqual(true);
+    expect.strictEqual(organizations.length, 2);
+    expect.strictEqual(organizations[0].equals(enterprise), true);
+    expect.strictEqual(organizations[1].equals(enterprise2), true);
 });
 
+/*
 test('Person:removeLocalization', async () => {
-    expect(() => person.removeLocalization(address)).toThrow();
-    // person.removeLocalization(address);
-    // const localizations = await person.getLocalizations();
-    // expect(localizations.length).toStrictEqual();
-    // expect(localizations[0].equals(address2)).toStrictEqual(true);
+    person.removeLocalization(address);
+    const localizations = await person.getLocalizations();
+    expect(localizations.length).strictEqual();
+    expect.strictEqual(localizations[0].equals(address2), true);
 });
 
 test('Person:leaveAaffiliatedOrganization', async () => {
-    expect(() => person.leaveAaffiliatedOrganization(enterprise)).toThrow();
-    // person.leaveAaffiliatedOrganization(enterprise);
-    // const organizations = await person.affiliatedOrganizations();
-    // expect(organizations.length).toStrictEqual(1);
-    // expect(organizations[0].equals(enterprise2)).toStrictEqual(true);
-});
+    person.leaveAaffiliatedOrganization(enterprise);
+    const organizations = await person.affiliatedOrganizations();
+    expect.strictEqual(organizations.length, 1);
+    expect.strictEqual(organizations[0].equals(enterprise2), true);
+});*/

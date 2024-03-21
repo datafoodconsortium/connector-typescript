@@ -1,8 +1,6 @@
-import Characteristic from "./Characteristic.js";
-import IPhysicalDimension from "./IPhysicalDimension.js";
-import IUnit from "./IUnit.js";
-import ICharacteristicDimension from "./ICharacteristicDimension.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import Characteristic from "./Characteristic.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -12,11 +10,11 @@ export default class PhysicalCharacteristic extends Characteristic implements IP
         semanticId?: string;
         semanticType?: string;
         other?: Semanticable;
-        unit?: IUnit;
+        unit?: ISKOSConcept;
         value?: number;
-        physicalDimension?: IPhysicalDimension;
+        physicalDimension?: ISKOSConcept;
     });
-    getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>;
-    setQuantityDimension(quantityDimension: ICharacteristicDimension): void;
+    getQuantityDimension(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    setQuantityDimension(quantityDimension: ISKOSConcept): void;
 }
 //# sourceMappingURL=PhysicalCharacteristic.d.ts.map

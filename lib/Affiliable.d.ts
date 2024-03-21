@@ -1,6 +1,6 @@
 import IEnterprise from "./IEnterprise.js";
 export default interface Affiliable {
-    getAffiliatedOrganizations(): Promise<Array<IEnterprise>>;
+    getAffiliatedOrganizations(): Promise<IEnterprise[]>;
     affiliateTo(organization: IEnterprise): void;
     leaveAffiliatedOrganization(organization: IEnterprise): void;
 }

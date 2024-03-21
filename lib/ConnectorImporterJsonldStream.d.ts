@@ -1,5 +1,5 @@
-import IConnectorImporter from "./IConnectorImporter";
 import DatasetExt from "rdf-ext/lib/Dataset";
+import IConnectorImporter from "./IConnectorImporter";
 import IConnectorImporterOptions from "./IConnectorImporterOptions";
 export default class ConnectorImporterJsonldStream implements IConnectorImporter {
     private context;

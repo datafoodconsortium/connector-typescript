@@ -1,14 +1,15 @@
-import Price from '../lib/Price.js';
+import * as fs from 'fs';
+import expect from 'node:assert';
+import { test } from 'node:test';
 import Connector from "../lib/Connector.js";
-import measures from '../test/thesaurus/measures.json' assert { type: 'json' };
+const measures = JSON.parse(fs.readFileSync('./test/thesaurus/measures.json'));
 
 const connector = new Connector();
 await connector.loadMeasures(JSON.stringify(measures));
 
 const euro = connector.MEASURES.UNIT.CURRENCYUNIT.EURO;
 
-const price = new Price({
-    connector: connector,
+const price = connector.createPrice({
     value: 2.54,
     vatRate: 8.0,
     unit: euro
@@ -19,43 +20,43 @@ const json = `{"@context":"https://www.datafoodconsortium.org","@id":"_:b1","@ty
 test('Price:import', async () => {
     const imported = await connector.import(json);
     const importedPrice = imported[0];
-    expect(imported.length).toStrictEqual(1);
-    expect(importedPrice.equals(price)).toStrictEqual(true);
+    expect.strictEqual(imported.length, 1);
+    expect.strictEqual(importedPrice.equals(price), true);
 });
 
 test('Price:export', async () => {
     const serialized = await connector.export([price]);
-    expect(serialized).toStrictEqual(json);
+    expect.strictEqual(serialized, json);
 });
 
-test('Price:getSemanticId', async () => {
-    expect(price.getSemanticId()).toStrictEqual(undefined);
+test('Price:getSemanticId', () => {
+    expect.strictEqual(price.getSemanticId(), undefined);
 });
 
-test('Price:getValue', async () => {
-    expect(price.getValue()).toStrictEqual(2.54);
+test('Price:getQuantityValue', () => {
+    expect.strictEqual(price.getQuantityValue(), 2.54);
 });
 
-test('Price:getVatRate', async () => {
-    expect(price.getVatRate()).toStrictEqual(8);
+test('Price:getVatRate', () => {
+    expect.strictEqual(price.getVatRate(), 8);
 });
 
-test('Price:getUnit', async () => {
-    expect(await price.getUnit()).toStrictEqual(euro);
+test('Price:getQuantityUnit', async () => {
+    expect.strictEqual(await price.getQuantityUnit(), euro);
 });
 
-test('Price:setValue', async () => {
-    price.setValue(3);
-    expect(price.getValue()).toStrictEqual(3);
+test('Price:setQuantityValue', () => {
+    price.setQuantityValue(3);
+    expect.strictEqual(price.getQuantityValue(), 3);
 });
 
-test('Price:setVatRate', async () => {
+test('Price:setVatRate', () => {
     price.setVatRate(19);
-    expect(price.getVatRate()).toStrictEqual(19);
+    expect.strictEqual(price.getVatRate(), 19);
 });
 
-test('Price:setUnit', async () => {
+test('Price:setQuantityUnit', async () => {
     const dollar = connector.MEASURES.UNIT.CURRENCYUNIT.USDOLLAR;
-    price.setUnit(dollar);
-    expect(await price.getUnit()).toStrictEqual(dollar);
+    price.setQuantityUnit(dollar);
+    expect.strictEqual(await price.getQuantityUnit(), dollar);
 });

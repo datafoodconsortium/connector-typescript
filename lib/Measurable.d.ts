@@ -1,6 +1,6 @@
-import ICharacteristicDimension from "./ICharacteristicDimension.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 export default interface Measurable {
-    getQuantityDimension(): Promise<ICharacteristicDimension | undefined>;
-    setQuantityDimension(quantityDimension: ICharacteristicDimension): void;
+    getQuantityDimension(): Promise<ISKOSConcept | undefined>;
+    setQuantityDimension(quantityDimension: ISKOSConcept): void;
 }
 //# sourceMappingURL=Measurable.d.ts.map

@@ -1,1 +1,1 @@
-{"version":3,"file":"Measurable.d.ts","sourceRoot":"","sources":["../src/Measurable.ts"],"names":[],"mappings":"AAAA,OAAO,wBAAwB,MAAM,+BAA+B,CAAA;AAKpE,MAAM,CAAC,OAAO,WAAW,UAAU;IAElC,oBAAoB,IAAI,OAAO,CAAC,wBAAwB,GAAG,SAAS,CAAC,CACpE;IACD,oBAAoB,CAAC,iBAAiB,EAAE,wBAAwB,GAAG,IAAI,CAAC;CAExE"}
+{"version":3,"file":"Measurable.d.ts","sourceRoot":"","sources":["../src/Measurable.ts"],"names":[],"mappings":"AAuBA,OAAO,YAAY,MAAM,mBAAmB,CAAA;AAI5C,MAAM,CAAC,OAAO,WAAW,UAAU;IAElC,oBAAoB,IAAI,OAAO,CAAC,YAAY,GAAG,SAAS,CAAC,CAAC;IAE1D,oBAAoB,CAAC,iBAAiB,EAAE,YAAY,GAAG,IAAI,CAAC;CAE5D"}

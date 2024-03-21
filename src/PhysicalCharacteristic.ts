@@ -21,55 +21,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import Characteristic from "./Characteristic.js"
-import IPhysicalDimension from "./IPhysicalDimension.js"
-import IUnit from "./IUnit.js"
-import ICharacteristicDimension from "./ICharacteristicDimension.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import Characteristic from "./Characteristic.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const PHYSICAL_CHARACTERISTIC_SEM_TYPE: string = "dfc-b:PhysicalCharacteristic";
 
 export default class PhysicalCharacteristic extends Characteristic implements IPhysicalCharacteristic {
-	
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, semanticType?: string, other?: Semanticable, unit?: IUnit, value?: number, physicalDimension?: IPhysicalDimension}) {
-		const type: string = parameters.semanticType? parameters.semanticType: "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#PhysicalCharacteristic";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		semanticType?: string,
+		other?: Semanticable,
+		unit?: ISKOSConcept,
+		value?: number,
+		physicalDimension?: ISKOSConcept,
+	}) {
+		
+		const type: string = parameters.semanticType ? parameters.semanticType : PHYSICAL_CHARACTERISTIC_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				unit: parameters.unit,
+				value: parameters.value
+		});
 		}
-		else super({ connector: parameters.connector, semanticId: parameters.semanticId!, semanticType: type, unit: parameters.unit, value: parameters.value });
 		
 		
+		if (parameters.physicalDimension) {
+			this.setQuantityDimension(parameters.physicalDimension);
+		}
 		
-		
-		if (parameters.physicalDimension) this.setQuantityDimension(parameters.physicalDimension);
 	}
 
-	public async getQuantityDimension(options?: IGetterOptions): Promise<ICharacteristicDimension | undefined>
-	 {
-		let result: ICharacteristicDimension | undefined = undefined;
-		const semanticId = this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPhysicalDimension");
+	public async getQuantityDimension(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasPhysicalDimension");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ICharacteristicDimension | undefined> semanticObject;
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
 		}
 		return result;
-		
 	}
-	
 
-	public setQuantityDimension(quantityDimension: ICharacteristicDimension): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#hasPhysicalDimension";
-		this.setSemanticPropertyReference(property, quantityDimension);
+	public setQuantityDimension(quantityDimension: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasPhysicalDimension", quantityDimension);
+		
 		this.connector.store(quantityDimension);
 	}
-	
-
-
 }

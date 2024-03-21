@@ -1,6 +1,6 @@
 export default interface Personable {
-    getFirstName(): string;
-    getLastName(): string;
+    getFirstName(): string | undefined;
+    getLastName(): string | undefined;
     setFirstName(firstName: string): void;
     setLastName(lastName: string): void;
 }

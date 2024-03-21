@@ -1,4 +1,3 @@
-
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnectorStore from "./IConnectorStore";
 

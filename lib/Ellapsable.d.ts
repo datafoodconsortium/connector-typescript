@@ -1,6 +1,6 @@
 export default interface Ellapsable {
-    getBeginDate(): string;
-    getEndDate(): string;
+    getBeginDate(): string | undefined;
+    getEndDate(): string | undefined;
     setBeginDate(beginDate: string): void;
     setEndDate(endDate: string): void;
 }

@@ -21,89 +21,106 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import IPerson from "./IPerson.js"
-import Agent from "./Agent.js"
 import IAddress from "./IAddress.js"
 import IEnterprise from "./IEnterprise.js"
+import IPerson from "./IPerson.js"
+import Agent from "./Agent.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const PERSON_SEM_TYPE: string = "dfc-b:Person";
 
 export default class Person extends Agent implements IPerson {
-	
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, firstName?: string, lastName?: string, localizations?: IAddress[], organizations?: IEnterprise[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Person";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		firstName?: string,
+		lastName?: string,
+		localizations?: IAddress[],
+		organizations?: IEnterprise[],
+		logo?: string,
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = PERSON_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				localizations: parameters.localizations,
+				logo: parameters.logo
+		});
 		}
-		else super({ connector: parameters.connector, semanticId: parameters.semanticId!, semanticType: type, localizations: parameters.localizations });
 		
 		
-		
-		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.firstName) this.setFirstName(parameters.firstName);
-		if (parameters.lastName) this.setLastName(parameters.lastName);
-		if (parameters.organizations) parameters.organizations.forEach(e => this.affiliateTo(e));
+		}
+		if (parameters.firstName) {
+			this.setFirstName(parameters.firstName);
+		}
+		
+		if (parameters.lastName) {
+			this.setLastName(parameters.lastName);
+		}
+		
+		if (parameters.organizations) {
+			parameters.organizations.forEach(e => this.affiliateTo(e));
+		}
+		
 	}
 
-	public getLastName(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#familyName");
+	public getFirstName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:firstName");
 	}
-	
 
-	public getFirstName(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#firstName");
+	public getLastName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:familyName");
 	}
-	
 
 	public setLastName(lastName: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#familyName";
-		this.setSemanticPropertyLiteral(property, lastName);
+		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
 	}
-	
-
-	public setFirstName(firstName: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#firstName";
-		this.setSemanticPropertyLiteral(property, firstName);
-	}
-	
-	public affiliateTo(organization: IEnterprise): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#affiliates";
-		if (organization.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, organization);
-		}
-		else {
-			this.connector.store(organization);
-			this.addSemanticPropertyReference(property, organization);
-		}
-	}
-	
 
 	public leaveAffiliatedOrganization(organization: IEnterprise): void {
 		throw new Error("Not yet implemented.");
 	}
-	
 
-	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<Array<IEnterprise>>
-	 {
+	public setFirstName(firstName: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
+	}
+
+	public affiliateTo(organization: IEnterprise): void {
+		if (organization.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:affiliates", organization);
+		}
+		else {
+			this.connector.store(organization);
+			this.addSemanticPropertyReference("dfc-b:affiliates", organization);
+		}
+	}
+
+	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<IEnterprise[]> {
 		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#affiliates");
+		const properties = this.getSemanticPropertyAll("dfc-b:affiliates");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IEnterprise> semanticObject);
+			if (semanticObject) results.push(<IEnterprise>semanticObject);
 		}
 		return results;
 	}
-	
-
 }

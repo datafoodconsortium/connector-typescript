@@ -1,32 +1,27 @@
-import Offer from '../lib/Offer.js';
-import Price from '../lib/Price.js';
-import CustomerCategory from '../lib/CustomerCategory.js';
-import SuppliedProduct from '../lib/SuppliedProduct.js';
+import * as fs from 'fs';
+import expect from 'node:assert';
+import { test } from 'node:test';
 import Connector from "../lib/Connector.js";
-import measures from '../test/thesaurus/measures.json' assert { type: 'json' };
+const measures = JSON.parse(fs.readFileSync('./test/thesaurus/measures.json'));
 
 const connector = new Connector();
 await connector.loadMeasures(JSON.stringify(measures));
 
-const customerCategory = new CustomerCategory({
-    connector: connector,
+const customerCategory = connector.createCustomerCategory({
     semanticId: "http://myplatform.com/customerCategory1"
 });
 
-const suppliedProduct = new SuppliedProduct({
-    connector: connector,
+const suppliedProduct = connector.createSuppliedProduct({
     semanticId: "http://myplatform.com/suppliedProduct1"
 });
 
-const price = new Price({
-    connector: connector,
+const price = connector.createPrice({
     value: 2.54,
     vatRate: 8.0,
     unit: connector.MEASURES.UNIT.CURRENCYUNIT.EURO
 });
 
-const offer = new Offer({
-    connector: connector,
+const offer = connector.createOffer({
     semanticId: "http://myplatform.com/offer1",
     offeredItem: suppliedProduct,
     offeredTo: customerCategory,
@@ -39,65 +34,62 @@ const json = `{"@context":"https://www.datafoodconsortium.org","@graph":[{"@id":
 test('Offer:import', async () => {
     const imported = await connector.import(json);
     const importedOffer = imported[0];
-    expect(imported.length).toStrictEqual(1);
-    expect(importedOffer.equals(offer)).toStrictEqual(true);
+    expect.strictEqual(imported.length, 1);
+    expect.strictEqual(importedOffer.equals(offer), true);
 });
 
 test('Offer:export', async () => {
     const serialized = await connector.export([offer]);
-    expect(serialized).toStrictEqual(json);
+    expect.strictEqual(serialized, json);
 });
 
-test('Offer:getSemanticId', async () => {
-    expect(offer.getSemanticId()).toStrictEqual("http://myplatform.com/offer1");
+test('Offer:getSemanticId', () => {
+    expect.strictEqual(offer.getSemanticId(), "http://myplatform.com/offer1");
 });
 
 test('Offer:getOfferedItem', async () => {
     const expected = await offer.getOfferedItem();
-    expect(expected.equals(suppliedProduct)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(suppliedProduct), true);
 });
 
 test('Offer:getOfferedTo', async () => {
     const expected = await offer.getCustomerCategory();
-    expect(expected.equals(customerCategory)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(customerCategory), true);
 });
 
 test('Offer:getPrice', async () => {
     const expected = await offer.getPrice();
-    expect(expected.equals(price)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(price), true);
 });
 
-test('Offer:getStockLimitation', async () => {
-    expect(offer.getStockLimitation()).toStrictEqual(4.21);
+test('Offer:getStockLimitation', () => {
+    expect.strictEqual(offer.getStockLimitation(), 4.21);
 });
 
 test('Offer:setOfferedItem', async () => {
-    const expected = new SuppliedProduct({
-        connector: connector,
+    const expected = connector.createSuppliedProduct({
         semanticId: "http://myplatform.com/suppliedProductSet"
     });
 
     offer.setOfferedItem(expected);
     
     const received = await offer.getOfferedItem();
-    expect(received.equals(expected)).toStrictEqual(true);
+    expect.strictEqual(received.equals(expected), true);
 });
 
 test('Offer:setOfferedTo', async () => {
-    const expected = new CustomerCategory({
-        connector: connector,
+    const expected = connector.createCustomerCategory({
         semanticId: "http://myplatform.com/customerCategory1"
     });
 
     offer.setCustomerCategory(expected);
     
     const received = await offer.getCustomerCategory();
-    expect(received.equals(expected)).toStrictEqual(true);
+    expect.strictEqual(received.equals(expected), true);
 });
 
 test('Offer:setPrice', async () => {
-    const expected = new Price({
-        connector: connector,
+    const expected = connector.createPrice({
         value: 3,
         vatRate: 19.0,
         unit: connector.MEASURES.UNIT.CURRENCYUNIT.EURO
@@ -106,10 +98,10 @@ test('Offer:setPrice', async () => {
     offer.setPrice(expected);
     
     const received = await offer.getPrice();
-    expect(received.equals(expected)).toStrictEqual(true);
+    expect.strictEqual(received.equals(expected), true);
 });
 
 test('Offer:setStockLimitation', async () => {
     offer.setStockLimitation(5);
-    expect(offer.getStockLimitation()).toStrictEqual(5);
+    expect.strictEqual(offer.getStockLimitation(), 5);
 });

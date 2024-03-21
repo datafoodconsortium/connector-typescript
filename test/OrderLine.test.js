@@ -1,32 +1,27 @@
-import Offer from '../lib/Offer.js';
-import Order from '../lib/Order.js';
-import Price from '../lib/Price.js';
-import OrderLine from '../lib/OrderLine.js';
+import * as fs from 'fs';
+import expect from 'node:assert';
+import { test } from 'node:test';
 import Connector from "../lib/Connector.js";
-import measures from '../test/thesaurus/measures.json' assert { type: 'json' };
+const measures = JSON.parse(fs.readFileSync('./test/thesaurus/measures.json'));
 
 const connector = new Connector();
 await connector.loadMeasures(JSON.stringify(measures));
 
-const offer = new Offer({
-    connector: connector,
+const offer = connector.createOffer({
     semanticId: "http://myplatform.com/offer1"
 });
 
-const order = new Order({
-    connector: connector,
+const order = connector.createOrder({
     semanticId: "http://myplatform.com/order1"
 });
 
-const price = new Price({
-    connector: connector,
+const price = connector.createPrice({
     value: 5.42,
     vatRate: 19.9,
     unit: connector.MEASURES.UNIT.CURRENCYUNIT.EURO
 });
 
-const orderLine = new OrderLine({
-    connector: connector,
+const orderLine = connector.createOrderLine({
     semanticId: "http://myplatform.com/orderLine1",
     order: order,
     offer: offer,
@@ -39,71 +34,68 @@ const json = `{"@context":"https://www.datafoodconsortium.org","@graph":[{"@id":
 test('OrderLine:import', async () => {
     const imported = await connector.import(json);
     const importedOrderLine = imported[0];
-    expect(imported.length).toStrictEqual(1);
-    expect(importedOrderLine.equals(orderLine)).toStrictEqual(true);
+    expect.strictEqual(imported.length, 1);
+    expect.strictEqual(importedOrderLine.equals(orderLine), true);
 });
 
 test('OrderLine:export', async () => {
     const serialized = await connector.export([orderLine]);
-    expect(serialized).toStrictEqual(json);
+    expect.strictEqual(serialized, json);
 });
 
-test('OrderLine:getSemanticId', async () => {
-    expect(orderLine.getSemanticId()).toStrictEqual("http://myplatform.com/orderLine1");
+test('OrderLine:getSemanticId', () => {
+    expect.strictEqual(orderLine.getSemanticId(), "http://myplatform.com/orderLine1");
 });
 
 test('OrderLine:getOrder', async () => {
     const expected = await orderLine.getOrder();
-    expect(expected.equals(order)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(order), true);
 });
 
 test('OrderLine:getOffer', async () => {
     const expected = await orderLine.getOffer();
-    expect(expected.equals(offer)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(offer), true);
 });
 
 test('OrderLine:getPrice', async () => {
     const expected = await orderLine.getPrice();
-    expect(expected.equals(price)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(price), true);
 });
 
-test('OrderLine:getQuantity', async () => {
-    expect(orderLine.getQuantity()).toStrictEqual(2);
+test('OrderLine:getQuantity', () => {
+    expect.strictEqual(orderLine.getQuantity(), 2);
 });
 
 test('OrderLine:setOrder', async () => {
-    const order2 = new Order({
-        connector: connector,
+    const order2 = connector.createOrder({
         semanticId: "http://myplatform.com/order2"
     });
     orderLine.setOrder(order2);
     const expected = await orderLine.getOrder();
-    expect(expected.equals(order2)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(order2), true);
 });
 
 test('OrderLine:setOffer', async () => {
-    const offer2 = new Offer({
-        connector: connector,
+    const offer2 = connector.createOffer({
         semanticId: "http://myplatform.com/offer2"
     });
     orderLine.setOffer(offer2);
     const expected = await orderLine.getOffer();
-    expect(expected.equals(offer2)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(offer2), true);
 });
 
 test('OrderLine:setPrice', async () => {
-    const price2 = new Price({
-        connector: connector,
+    const price2 = connector.createPrice({
         value: 2.8,
         vatRate: 7,
         unit: connector.MEASURES.UNIT.CURRENCYUNIT.EURO
     });
     orderLine.setPrice(price2);
     const expected = await orderLine.getPrice();
-    expect(expected.equals(price2)).toStrictEqual(true);
+    expect.strictEqual(expected.equals(price2), true);
 });
 
 test('OrderLine:setQuantity', async () => {
     orderLine.setQuantity(3.3);
-    expect(orderLine.getQuantity()).toStrictEqual(3.3);
+    expect.strictEqual(orderLine.getQuantity(), 3.3);
 });

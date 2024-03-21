@@ -21,56 +21,98 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import IClaim from "./IClaim.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import IPartOrigin from "./IPartOrigin.js"
-import INatureOrigin from "./INatureOrigin.js"
-import ICertification from "./ICertification.js"
-import IQuantity from "./IQuantity.js"
-import IProductType from "./IProductType.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
-import DefinedProduct from "./DefinedProduct.js"
 import ICatalogItem from "./ICatalogItem.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import ISKOSConcept from "./ISKOSConcept.js"
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import DefinedProduct from "./DefinedProduct.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import IQuantity from "./IQuantity.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
-import IGeographicalOrigin from "./IGeographicalOrigin.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const SUPPLIED_PRODUCT_SEM_TYPE: string = "dfc-b:SuppliedProduct";
 
 export default class SuppliedProduct extends DefinedProduct implements ISuppliedProduct {
-	
 
-	public getTotalTheoreticalStock(): number
-	 {
-		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#totalTheoreticalStock"));
+	public getTotalTheoreticalStock(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:totalTheoreticalStock"));
 	}
-	
 
 	public setTotalTheoreticalStock(totalTheoreticalStock: number): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#totalTheoreticalStock";
-		this.setSemanticPropertyLiteral(property, totalTheoreticalStock);
+		this.setSemanticPropertyLiteral("dfc-b:totalTheoreticalStock", totalTheoreticalStock);
 	}
-	
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, name?: string, description?: string, images?: string[], productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[], totalTheoreticalStock?: number, doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SuppliedProduct";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		name?: string,
+		description?: string,
+		productType?: ISKOSConcept,
+		quantity?: IQuantity,
+		alcoholPercentage?: number,
+		lifetime?: string,
+		claims?: ISKOSConcept[],
+		usageOrStorageConditions?: string,
+		allergenCharacteristics?: IAllergenCharacteristic[],
+		nutrientCharacteristics?: INutrientCharacteristic[],
+		physicalCharacteristics?: IPhysicalCharacteristic[],
+		geographicalOrigin?: ISKOSConcept,
+		catalogItems?: ICatalogItem[],
+		certifications?: ISKOSConcept[],
+		natureOrigin?: ISKOSConcept[],
+		partOrigin?: ISKOSConcept[],
+		totalTheoreticalStock?: number,
+		images?: string[],
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = SUPPLIED_PRODUCT_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ connector: parameters.connector, semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				connector: parameters.connector,
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				name: parameters.name,
+				description: parameters.description,
+				productType: parameters.productType,
+				quantity: parameters.quantity,
+				alcoholPercentage: parameters.alcoholPercentage,
+				lifetime: parameters.lifetime,
+				claims: parameters.claims,
+				usageOrStorageConditions: parameters.usageOrStorageConditions,
+				allergenCharacteristics: parameters.allergenCharacteristics,
+				nutrientCharacteristics: parameters.nutrientCharacteristics,
+				physicalCharacteristics: parameters.physicalCharacteristics,
+				geographicalOrigin: parameters.geographicalOrigin,
+				catalogItems: parameters.catalogItems,
+				certifications: parameters.certifications,
+				natureOrigin: parameters.natureOrigin,
+				partOrigin: parameters.partOrigin,
+				images: parameters.images
+		});
 		}
-		else super({ connector: parameters.connector, semanticId: parameters.semanticId!, semanticType: type, name: parameters.name, description: parameters.description, images: parameters.images, productType: parameters.productType, quantity: parameters.quantity, alcoholPercentage: parameters.alcoholPercentage, lifetime: parameters.lifetime, claims: parameters.claims, usageOrStorageConditions: parameters.usageOrStorageConditions, allergenCharacteristics: parameters.allergenCharacteristics, nutrientCharacteristics: parameters.nutrientCharacteristics, physicalCharacteristics: parameters.physicalCharacteristics, geographicalOrigin: parameters.geographicalOrigin, catalogItems: parameters.catalogItems, certifications: parameters.certifications, natureOrigin: parameters.natureOrigin, partOrigin: parameters.partOrigin });
 		
 		
-		
-		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.totalTheoreticalStock || parameters.totalTheoreticalStock === 0) this.setTotalTheoreticalStock(parameters.totalTheoreticalStock);
+		}
+		if (parameters.totalTheoreticalStock || parameters.totalTheoreticalStock === 0) {
+			this.setTotalTheoreticalStock(parameters.totalTheoreticalStock);
+		}
+		
 	}
-
 }

@@ -21,96 +21,113 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import IOffer from "./IOffer.js"
 import ISaleSession from "./ISaleSession.js"
+import IOffer from "./IOffer.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const SALE_SESSION_SEM_TYPE: string = "dfc-b:SaleSession";
 
 export default class SaleSession extends SemanticObject implements ISaleSession {
-	
+
 	protected connector: IConnector;
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, beginDate?: string, endDate?: string, quantity?: number, offers?: IOffer[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#SaleSession";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		beginDate?: string,
+		endDate?: string,
+		quantity?: number,
+		offers?: IOffer[],
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = SALE_SESSION_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				
+		});
 		}
-		else super({ semanticId: parameters.semanticId!, semanticType: type });
-		
 		this.connector = parameters.connector;
 		
 		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.beginDate) this.setBeginDate(parameters.beginDate);
-		if (parameters.endDate) this.setEndDate(parameters.endDate);
-		if (parameters.quantity || parameters.quantity === 0) this.setQuantity(parameters.quantity);
-		if (parameters.offers) parameters.offers.forEach(e => this.addOffer(e));
+		}
+		if (parameters.beginDate) {
+			this.setBeginDate(parameters.beginDate);
+		}
+		
+		if (parameters.endDate) {
+			this.setEndDate(parameters.endDate);
+		}
+		
+		if (parameters.quantity || parameters.quantity === 0) {
+			this.setQuantity(parameters.quantity);
+		}
+		
+		if (parameters.offers) {
+			parameters.offers.forEach(e => this.addOffer(e));
+		}
+		
 	}
 
-	public getBeginDate(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#beginDate");
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:beginDate");
 	}
-	
-
-	public getEndDate(): string
-	 {
-		return this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#endDate");
-	}
-	
-
-	public setBeginDate(beginDate: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#beginDate";
-		this.setSemanticPropertyLiteral(property, beginDate);
-	}
-	
-
-	public setEndDate(endDate: string): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#endDate";
-		this.setSemanticPropertyLiteral(property, endDate);
-	}
-	
-	public setQuantity(quantity: number): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#quantity";
-		this.setSemanticPropertyLiteral(property, quantity);
-	}
-	
 
 	public addOffer(offer: IOffer): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#lists";
 		if (offer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, offer);
+			this.addSemanticPropertyAnonymous("dfc-b:lists", offer);
 		}
 		else {
 			this.connector.store(offer);
-			this.addSemanticPropertyReference(property, offer);
+			this.addSemanticPropertyReference("dfc-b:lists", offer);
 		}
 	}
-	
 
-	public async getOffers(options?: IGetterOptions): Promise<Array<IOffer>>
-	 {
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	}
+
+	public setQuantity(quantity: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
+	}
+
+	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {
 		const results = new Array<IOffer>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#lists");
+		const properties = this.getSemanticPropertyAll("dfc-b:lists");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOffer> semanticObject);
+			if (semanticObject) results.push(<IOffer>semanticObject);
 		}
 		return results;
 	}
-	
 
-	public getQuantity(): number
-	 {
-		return Number(this.getSemanticProperty("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#quantity"));
+	public getQuantity(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:quantity"));
 	}
-	
 
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
+	}
+
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
+	}
 }

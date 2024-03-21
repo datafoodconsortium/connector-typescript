@@ -1,6 +1,6 @@
 import ISuppliedProduct from "./ISuppliedProduct.js";
 export default interface ProductSupplier {
-    getSuppliedProducts(): Promise<Array<ISuppliedProduct>>;
+    getSuppliedProducts(): Promise<ISuppliedProduct[]>;
     supplyProduct(suppliedProduct: ISuppliedProduct): void;
     unsupplyProduct(suppliedProduct: ISuppliedProduct): void;
 }

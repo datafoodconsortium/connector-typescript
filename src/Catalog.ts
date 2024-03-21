@@ -21,90 +21,104 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
-import IEnterprise from "./IEnterprise.js"
-import ICatalog from "./ICatalog.js"
-import Catalogable from "./Catalogable.js"
 import ICatalogItem from "./ICatalogItem.js"
+import ICatalog from "./ICatalog.js"
+import IEnterprise from "./IEnterprise.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
-import IGetterOptions from "./IGetterOptions.js"
+import IGetterOptions from "./IGetterOptions.js";
+
+const CATALOG_SEM_TYPE: string = "dfc-b:Catalog";
 
 export default class Catalog extends SemanticObject implements ICatalog {
-	
+
 	protected connector: IConnector;
 
-	public constructor(parameters: {connector: IConnector, semanticId?: string, other?: Semanticable, maintainers?: IEnterprise[], items?: ICatalogItem[], doNotStore?: boolean}) {
-		const type: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#Catalog";
+	public constructor(parameters: {
+		connector: IConnector,
+		semanticId?: string,
+		other?: Semanticable,
+		maintainers?: IEnterprise[],
+		items?: ICatalogItem[],
+		doNotStore?: boolean,
+	}) {
+		
+		const type: string = CATALOG_SEM_TYPE;
 		
 		if (parameters.other) {
-			super({ semanticId: parameters.semanticId!, other: parameters.other });
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				other: parameters.other,
+			});
 			if (!parameters.other.isSemanticTypeOf(type))
 				throw new Error("Can't create the semantic object of type " + type + " from a copy: the copy is of type " + parameters.other.getSemanticType() + ".");
+		} else {
+			super({
+				semantizer: parameters.connector.getSemantizer(),
+				semanticId: parameters.semanticId!,
+				semanticType: type,
+				
+		});
 		}
-		else super({ semanticId: parameters.semanticId!, semanticType: type });
-		
 		this.connector = parameters.connector;
 		
 		
-		if (!parameters.doNotStore)
+		if (!parameters.doNotStore) {
 			this.connector.store(this);
-		if (parameters.maintainers) parameters.maintainers.forEach(e => this.addMaintainer(e));
-		if (parameters.items) parameters.items.forEach(e => this.addItem(e));
+		}
+		if (parameters.maintainers) {
+			parameters.maintainers.forEach(e => this.addMaintainer(e));
+		}
+		
+		if (parameters.items) {
+			parameters.items.forEach(e => this.addItem(e));
+		}
+		
 	}
 
-	public async getItems(options?: IGetterOptions): Promise<Array<ICatalogItem>>
-	 {
+	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
 		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#lists");
+		const properties = this.getSemanticPropertyAll("dfc-b:lists");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalogItem> semanticObject);
+			if (semanticObject) results.push(<ICatalogItem>semanticObject);
 		}
 		return results;
 	}
-	
 
 	public addMaintainer(maintainer: IEnterprise): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#maintainedBy";
 		if (maintainer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, maintainer);
+			this.addSemanticPropertyAnonymous("dfc-b:maintainedBy", maintainer);
 		}
 		else {
 			this.connector.store(maintainer);
-			this.addSemanticPropertyReference(property, maintainer);
+			this.addSemanticPropertyReference("dfc-b:maintainedBy", maintainer);
 		}
 	}
-	
+
+	public addItem(item: ICatalogItem): void {
+		if (item.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:lists", item);
+		}
+		else {
+			this.connector.store(item);
+			this.addSemanticPropertyReference("dfc-b:lists", item);
+		}
+	}
 
 	public removeItem(item: ICatalogItem): void {
 		throw new Error("Not yet implemented.");
 	}
-	
 
-	public async getMaintainers(options?: IGetterOptions): Promise<Array<IEnterprise>>
-	 {
+	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
 		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#maintainedBy");
+		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IEnterprise> semanticObject);
+			if (semanticObject) results.push(<IEnterprise>semanticObject);
 		}
 		return results;
 	}
-	
-
-	public addItem(item: ICatalogItem): void {
-		const property: string = "https://github.com/datafoodconsortium/ontology/releases/latest/download/DFC_BusinessOntology.owl#lists";
-		if (item.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous(property, item);
-		}
-		else {
-			this.connector.store(item);
-			this.addSemanticPropertyReference(property, item);
-		}
-	}
-	
-
 }

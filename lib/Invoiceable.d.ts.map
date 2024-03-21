@@ -1,1 +1,1 @@
-{"version":3,"file":"Invoiceable.d.ts","sourceRoot":"","sources":["../src/Invoiceable.ts"],"names":[],"mappings":"AAAA,OAAO,SAAS,MAAM,gBAAgB,CAAA;AAItC,MAAM,CAAC,OAAO,WAAW,WAAW;IAEnC,SAAS,IAAI,OAAO,CAAC,KAAK,CAAC,SAAS,CAAC,CAAC,CACrC;CAED"}
+{"version":3,"file":"Invoiceable.d.ts","sourceRoot":"","sources":["../src/Invoiceable.ts"],"names":[],"mappings":"AAuBA,OAAO,SAAS,MAAM,gBAAgB,CAAA;AAItC,MAAM,CAAC,OAAO,WAAW,WAAW;IAEnC,SAAS,IAAI,OAAO,CAAC,SAAS,EAAE,CAAC,CAAC;CAElC"}

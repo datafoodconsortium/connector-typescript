@@ -1,52 +1,57 @@
+// External
 import { Semanticable } from "@virtual-assembly/semantizer";
+import DatasetExt from "rdf-ext/lib/Dataset.js";
+import { DatasetCore } from '@rdfjs/types';
+
+// Static
+import IConnector from "./IConnector.js";
+import IConnectorFactory from "./IConnectorFactory.js";
+
+// Generated Classes
 import Address from "./Address.js";
-import Catalog from "./Catalog.js";
-import SaleSession from "./SaleSession.js";
-import Order from "./Order.js";
-import OrderLine from "./OrderLine.js";
 import AllergenCharacteristic from "./AllergenCharacteristic.js";
+import Catalog from "./Catalog.js";
 import CatalogItem from "./CatalogItem.js";
 import CustomerCategory from "./CustomerCategory.js";
 import Enterprise from "./Enterprise.js";
-import IConnectorFactory from "./IConnectorFactory.js";
 import NutrientCharacteristic from "./NutrientCharacteristic.js";
 import Offer from "./Offer.js";
+import Order from "./Order.js";
+import OrderLine from "./OrderLine.js";
 import Person from "./Person.js";
 import PhysicalCharacteristic from "./PhysicalCharacteristic.js";
 import Price from "./Price.js";
 import QuantitativeValue from "./QuantitativeValue.js";
+import SaleSession from "./SaleSession.js";
 import SKOSConcept from "./SKOSConcept.js";
 import SuppliedProduct from "./SuppliedProduct.js";
-import IAddress from "./IAddress.js";
-import IConnector from "./IConnector.js";
-import DatasetExt from "rdf-ext/lib/Dataset.js";
-import { DatasetCore } from '@rdfjs/types';
-import IAllergenDimension from "./IAllergenDimension.js";
-import IUnit from "./IUnit.js";
-import ICatalogItem from "./ICatalogItem.js";
-import IEnterprise from "./IEnterprise.js";
-import ICatalog from "./ICatalog.js";
-import IOffer from "./IOffer.js";
-import ISuppliedProduct from "./ISuppliedProduct.js";
-import ICustomerCategory from "./ICustomerCategory.js";
-import INutrientDimension from "./INutrientDimension.js";
-import IPrice from "./IPrice.js";
-import IOrderLine from "./IOrderLine.js";
+import PlannedTransformation from "./PlannedTransformation.js";
+import PlannedConsumptionFlow from "./PlannedConsumptionFlow.js";
+import PlannedProductionFlow from "./PlannedProductionFlow.js";
+
+// Generated Interfaces
 import IAgent from "./IAgent.js";
-import ISaleSession from "./ISaleSession.js";
-import IOrder from "./IOrder.js";
-import IPhysicalDimension from "./IPhysicalDimension.js";
-import IPartOrigin from "./IPartOrigin.js";
-import INatureOrigin from "./INatureOrigin.js";
-import ICertification from "./ICertification.js";
-import IGeographicalOrigin from "./IGeographicalOrigin.js";
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IAddress from "./IAddress.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import IClaim from "./IClaim.js";
-import IQuantity from "./IQuantity.js";
-import IProductType from "./IProductType.js";
+import ICatalog from "./ICatalog.js";
+import ICatalogItem from "./ICatalogItem.js";
+import ICustomerCategory from "./ICustomerCategory.js";
+import IEnterprise from "./IEnterprise.js";
+import IPrice from "./IPrice.js";
+import ISuppliedProduct from "./ISuppliedProduct.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IOffer from "./IOffer.js";
+import IOrder from "./IOrder.js";
+import IOrderLine from "./IOrderLine.js";
 import IPerson from "./IPerson.js";
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import IQuantity from "./IQuantity.js";
+import ISaleSession from "./ISaleSession.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 
 export default class ConnectorFactory implements IConnectorFactory {
 
@@ -66,7 +71,7 @@ export default class ConnectorFactory implements IConnectorFactory {
         return new Address({ connector: this.connector, ...parameters });
     }
 
-    public createAllergenCharacteristic(parameters: {other?: Semanticable, unit?: IUnit, value?: number, allergenDimension?: IAllergenDimension}): IAllergenCharacteristic {
+    public createAllergenCharacteristic(parameters: {other?: Semanticable, unit?: ISKOSConcept, value?: number, allergenDimension?: ISKOSConcept}): IAllergenCharacteristic {
         return new AllergenCharacteristic({ connector: this.connector, ...parameters });
     }
 
@@ -86,7 +91,7 @@ export default class ConnectorFactory implements IConnectorFactory {
         return new Enterprise({ connector: this.connector, ...parameters });
     }
 
-    public createNutrientCharacteristic(parameters: {other?: Semanticable, unit?: IUnit, value?: number, nutrientDimension?: INutrientDimension}): INutrientCharacteristic {
+    public createNutrientCharacteristic(parameters: {other?: Semanticable, unit?: ISKOSConcept, value?: number, nutrientDimension?: ISKOSConcept}): INutrientCharacteristic {
         return new NutrientCharacteristic({ connector: this.connector, ...parameters });
     }
 
@@ -106,15 +111,15 @@ export default class ConnectorFactory implements IConnectorFactory {
         return new Person({ connector: this.connector, ...parameters });
     }
 
-    public createPhysicalCharacteristic(parameters: {other?: Semanticable, unit?: IUnit, value?: number, physicalDimension?: IPhysicalDimension}): IPhysicalCharacteristic {
+    public createPhysicalCharacteristic(parameters: {other?: Semanticable, unit?: ISKOSConcept, value?: number, physicalDimension?: ISKOSConcept }): IPhysicalCharacteristic {
         return new PhysicalCharacteristic({ connector: this.connector, ...parameters });
     }
 
-    public createPrice(parameters: {other?: Semanticable, value?: number, vatRate?: number, unit?: IUnit}): IPrice {
+    public createPrice(parameters: {other?: Semanticable, value?: number, vatRate?: number, unit?: ISKOSConcept}): IPrice {
         return new Price({ connector: this.connector, ...parameters });
     }
 
-    public createQuantity(parameters: {other?: Semanticable, unit?: IUnit, value?: number}): IQuantity {
+    public createQuantity(parameters: {other?: Semanticable, unit?: ISKOSConcept, value?: number}): IQuantity {
         return new QuantitativeValue({ connector: this.connector, ...parameters });
     }
 
@@ -122,8 +127,20 @@ export default class ConnectorFactory implements IConnectorFactory {
         return new SaleSession({ connector: this.connector, ...parameters });
     }
 
-    public createSuppliedProduct(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, name?: string, description?: string, productType?: IProductType, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: IClaim[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: IGeographicalOrigin, catalogItems?: ICatalogItem[], certifications?: ICertification[], natureOrigin?: INatureOrigin[], partOrigin?: IPartOrigin[], totalTheoreticalStock?: number}): ISuppliedProduct {
+    public createSuppliedProduct(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, name?: string, description?: string, productType?: ISKOSConcept, quantity?: IQuantity, alcoholPercentage?: number, lifetime?: string, claims?: ISKOSConcept[], usageOrStorageConditions?: string, allergenCharacteristics?: IAllergenCharacteristic[], nutrientCharacteristics?: INutrientCharacteristic[], physicalCharacteristics?: IPhysicalCharacteristic[], geographicalOrigin?: ISKOSConcept, catalogItems?: ICatalogItem[], certifications?: ISKOSConcept[], natureOrigin?: ISKOSConcept[], partOrigin?: ISKOSConcept[], totalTheoreticalStock?: number}): ISuppliedProduct {
         return new SuppliedProduct({ connector: this.connector, ...parameters });
+    }
+
+    public createPlannedTransformation(parameters: {doNotStore?: boolean, semanticId?: string,other?: Semanticable, transformationType?: ISKOSConcept, consumptionFlow?: IPlannedConsumptionFlow, productionFlow?: IPlannedProductionFlow}): IPlannedTransformation {
+        return new PlannedTransformation({ connector: this.connector, ...parameters });
+    }
+
+    public createPlannedConsumptionFlow(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, quantity?: IQuantity, transformation?: IPlannedTransformation, product?: IDefinedProduct}): IPlannedConsumptionFlow {
+        return new PlannedConsumptionFlow({ connector: this.connector, ...parameters });
+    }
+
+    public createPlannedProductionFlow(parameters: {doNotStore?: boolean, semanticId?: string, other?: Semanticable, quantity?: IQuantity, transformation?: IPlannedTransformation, product?: ISuppliedProduct}): IPlannedProductionFlow {
+        return new PlannedProductionFlow({ connector: this.connector, ...parameters });
     }
 
     public createFromType(type: string): Semanticable | undefined {
@@ -190,6 +207,18 @@ export default class ConnectorFactory implements IConnectorFactory {
                 result = this.createOrderLine({ semanticId: "" });
                 break;
 
+            case prefix + "AsPlannedTransformation":
+                result = this.createPlannedTransformation({ semanticId: "" });
+                break;
+            
+            case prefix + "AsPlannedConsumptionFlow":
+                result = this.createPlannedConsumptionFlow({ semanticId: "" });
+                break;
+            
+            case prefix + "AsPlannedProductionFlow":
+                result = this.createPlannedProductionFlow({ semanticId: "" });
+                break;
+
             case prefix + "SaleSession":
                 result = this.createSaleSession({ semanticId: "" });
                 break;
@@ -207,7 +236,7 @@ export default class ConnectorFactory implements IConnectorFactory {
             default:
                 throw new Error(`Unknown type "${type}"`);
         }
-
+    
         return result;
     }
 
