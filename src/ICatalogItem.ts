@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Stockable from "./Stockable.js"
 import Offerable from "./Offerable.js"
 import Catalogable from "./Catalogable.js"
+import Stockable from "./Stockable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ICatalogItem extends Semanticable, Catalogable, Offerable, Stockable {
+export default interface ICatalogItem extends Semanticable, Stockable, Offerable, Catalogable {
 
 	getSku(): string | undefined;
 

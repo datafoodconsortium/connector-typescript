@@ -1,7 +1,7 @@
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import ISKOSConcept from "./ISKOSConcept.js";
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 export default interface Manufacturable {
     getAlcoholPercentage(): number | undefined;
     getLifetime(): string | undefined;

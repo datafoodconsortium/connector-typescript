@@ -1,1 +1,1 @@
-{"version":3,"file":"MainContactOwner.d.ts","sourceRoot":"","sources":["../src/MainContactOwner.ts"],"names":[],"mappings":"AAuBA,OAAO,oBAAoB,MAAM,2BAA2B,CAAA;AAC5D,OAAO,OAAO,MAAM,cAAc,CAAA;AAIlC,MAAM,CAAC,OAAO,WAAW,gBAAiB,SAAQ,oBAAoB;IAErE,cAAc,CAAC,WAAW,EAAE,OAAO,GAAG,IAAI,CAAC;CAE3C"}
+{"version":3,"file":"MainContactOwner.d.ts","sourceRoot":"","sources":["../src/MainContactOwner.ts"],"names":[],"mappings":"AAuBA,OAAO,OAAO,MAAM,cAAc,CAAA;AAClC,OAAO,oBAAoB,MAAM,2BAA2B,CAAA;AAI5D,MAAM,CAAC,OAAO,WAAW,gBAAiB,SAAQ,oBAAoB;IAErE,cAAc,CAAC,WAAW,EAAE,OAAO,GAAG,IAAI,CAAC;CAE3C"}

@@ -101,32 +101,8 @@ export default class Address extends SemanticObject implements IAddress {
 		
 	}
 
-	public getCountry(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasCountry");
-	}
-
-	public getCity(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasCity");
-	}
-
-	public setLatitude(latitude: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:latitude", latitude);
-	}
-
-	public getStreet(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasStreet");
-	}
-
 	public setPostalCode(postalCode: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:hasPostalCode", postalCode);
-	}
-
-	public getLongitude(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:longitude"));
-	}
-
-	public getRegion(): string | undefined {
-		return this.getSemanticProperty("dfc-b:region");
 	}
 
 	public setCountry(country: string): void {
@@ -137,23 +113,47 @@ export default class Address extends SemanticObject implements IAddress {
 		return Number(this.getSemanticProperty("dfc-b:latitude"));
 	}
 
-	public setStreet(street: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:hasStreet", street);
+	public getRegion(): string | undefined {
+		return this.getSemanticProperty("dfc-b:region");
 	}
 
-	public setLongitude(longitude: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:longitude", longitude);
-	}
-
-	public getPostalCode(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasPostalCode");
+	public setLatitude(latitude: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:latitude", latitude);
 	}
 
 	public setRegion(region: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:region", region);
 	}
 
+	public getPostalCode(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasPostalCode");
+	}
+
+	public getCountry(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasCountry");
+	}
+
 	public setCity(city: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:hasCity", city);
+	}
+
+	public setLongitude(longitude: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:longitude", longitude);
+	}
+
+	public getLongitude(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:longitude"));
+	}
+
+	public setStreet(street: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasStreet", street);
+	}
+
+	public getStreet(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasStreet");
+	}
+
+	public getCity(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasCity");
 	}
 }

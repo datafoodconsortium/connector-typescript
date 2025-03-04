@@ -1,5 +1,5 @@
-import IFlow from "./IFlow.js";
 import IQuantity from "./IQuantity.js";
+import IFlow from "./IFlow.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";

@@ -22,8 +22,8 @@
  * SOFTWARE.
 */
 import ISKOSConcept from "./ISKOSConcept.js"
-import ICharacteristic from "./ICharacteristic.js"
 import QuantitativeValue from "./QuantitativeValue.js"
+import ICharacteristic from "./ICharacteristic.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";

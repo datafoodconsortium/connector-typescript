@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IOrder from "./IOrder.js"
-import IPrice from "./IPrice.js"
 import Describable from "./Describable.js"
+import IPrice from "./IPrice.js"
+import IOrder from "./IOrder.js"
 import IOffer from "./IOffer.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"

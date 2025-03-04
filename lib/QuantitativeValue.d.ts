@@ -15,8 +15,8 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
         value?: number;
     });
     getQuantityValue(): number | undefined;
-    setQuantityUnit(quantityUnit: ISKOSConcept): void;
-    getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
     setQuantityValue(quantityValue: number): void;
+    getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    setQuantityUnit(quantityUnit: ISKOSConcept): void;
 }
 //# sourceMappingURL=QuantitativeValue.d.ts.map

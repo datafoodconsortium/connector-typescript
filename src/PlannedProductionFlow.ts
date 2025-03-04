@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPlannedTransformation from "./IPlannedTransformation.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
-import Flow from "./Flow.js"
-import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
 import IQuantity from "./IQuantity.js"
+import IPlannedTransformation from "./IPlannedTransformation.js"
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
 import IPlannedFlow from "./IPlannedFlow.js"
+import Flow from "./Flow.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -34,7 +34,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const PLANNED_PRODUCTION_FLOW_SEM_TYPE: string = "dfc-b:AsPlannedProductionFlow";
 
-export default class PlannedProductionFlow extends Flow implements IPlannedProductionFlow, IPlannedFlow {
+export default class PlannedProductionFlow extends Flow implements IPlannedFlow, IPlannedProductionFlow {
 
 	public constructor(parameters: {
 		connector: IConnector,
@@ -79,16 +79,6 @@ export default class PlannedProductionFlow extends Flow implements IPlannedProdu
 		
 	}
 
-	public async getProducedProduct(options?: IGetterOptions): Promise<ISuppliedProduct | undefined> {
-		let result: ISuppliedProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:produces");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISuppliedProduct> semanticObject;
-		}
-		return result;
-	}
-
 	public async getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined> {
 		let result: IPlannedTransformation | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:outcomeOf");
@@ -99,15 +89,25 @@ export default class PlannedProductionFlow extends Flow implements IPlannedProdu
 		return result;
 	}
 
-	public setPlannedTransformation(plannedTransformation: IPlannedTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:outcomeOf", plannedTransformation);
-		
-		this.connector.store(plannedTransformation);
-	}
-
 	public setProducedProduct(producedProduct: ISuppliedProduct): void {
 		this.setSemanticPropertyReference("dfc-b:produces", producedProduct);
 		
 		this.connector.store(producedProduct);
+	}
+
+	public async getProducedProduct(options?: IGetterOptions): Promise<ISuppliedProduct | undefined> {
+		let result: ISuppliedProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:produces");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISuppliedProduct> semanticObject;
+		}
+		return result;
+	}
+
+	public setPlannedTransformation(plannedTransformation: IPlannedTransformation): void {
+		this.setSemanticPropertyReference("dfc-b:outcomeOf", plannedTransformation);
+		
+		this.connector.store(plannedTransformation);
 	}
 }

@@ -12,7 +12,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None
 
-## [1.0.0-alpha.9] - 2024-03-20
+## [1.0.0-alpha.10] - 2025-03-01
+
+### Changed
+- Ensure the entry point, `src/index.ts`, is always regenerated on fresh builds.
+- Fix setters for array properties so that all items are replaced.
+- Regenerate source and distribution code from the next branch of UML data model
+  [621e823](https://github.com/datafoodconsortium/data-model-uml/commit/621e823c21c79a58b117bae97132da9140e47be6).
+
+### Added
+- `DefinedProduct`:
+  - hasVariant
+  - isVariantOf
+
+## [1.0.0-alpha.9] - 2024-03-21
 
 ### Changed
 
@@ -162,7 +175,8 @@ See the SUPPORTED.md file [comparison from main to next](https://github.com/data
 
 - Initial release.
 
-[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.9...HEAD
+[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.10...HEAD
+[1.0.0-alpha.10]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.9...v1.0.0-alpha.10
 [1.0.0-alpha.9]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.8...v1.0.0-alpha.9
 [1.0.0-alpha.8]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.7...v1.0.0-alpha.8
 [1.0.0-alpha.7]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.6...v1.0.0-alpha.7

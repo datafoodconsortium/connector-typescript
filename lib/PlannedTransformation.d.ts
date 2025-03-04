@@ -18,14 +18,14 @@ export default class PlannedTransformation extends SemanticObject implements IPl
         doNotStore?: boolean;
     });
     setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void;
+    getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]>;
+    getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]>;
     removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
     addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
-    getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
-    getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]>;
-    setTransformationType(transformationType: ISKOSConcept): void;
-    setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void;
-    getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]>;
     addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
+    setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void;
+    getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
     removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
+    setTransformationType(transformationType: ISKOSConcept): void;
 }
 //# sourceMappingURL=PlannedTransformation.d.ts.map

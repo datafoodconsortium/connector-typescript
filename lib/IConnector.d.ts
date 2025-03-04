@@ -199,5 +199,6 @@ export default interface IConnector {
     importOne(data: string, options?: IConnectorImportOptions): Promise<Semanticable | undefined>;
     importOneTyped<Type>(data: string, options?: IConnectorImportOptions): Promise<Type | undefined>;
     store(semanticObject: Semanticable): void;
+    removeFromStore(semanticObjectId: string): void;
 }
 //# sourceMappingURL=IConnector.d.ts.map

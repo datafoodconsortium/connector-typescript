@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Groupable from "./Groupable.js"
 import Describable from "./Describable.js"
+import Groupable from "./Groupable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
