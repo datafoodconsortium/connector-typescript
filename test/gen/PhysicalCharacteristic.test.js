@@ -23,32 +23,32 @@ const json = `{
 test('PhysicalCharacteristic', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const xlpoqfyems = new SKOSConcept({ connector, semanticId: 'http://base.com/esiiyamwxj' });
+		const kaqvaeakda = new SKOSConcept({ connector, semanticId: 'http://base.com/sfgfzwsfez' });
 		
-		const zqhuiujwin = new SKOSConcept({ connector, semanticId: 'http://base.com/ssnzsbtdna' });
+		const nsmnmkjtji = new SKOSConcept({ connector, semanticId: 'http://base.com/tonkqivpip' });
 		const obj = new PhysicalCharacteristic({
 			connector,
-			unit: xlpoqfyems,
-			value: 0.22298849,
-			physicalDimension: zqhuiujwin
+			unit: kaqvaeakda,
+			value: 0.62692815,
+			physicalDimension: nsmnmkjtji
 		});
 
 		
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = xlpoqfyems;
+		const expectedUnit = kaqvaeakda;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.22298849;
+		const expectedValue = 0.62692815;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});
 
 		const actualPhysicalDimension = await obj.getQuantityDimension();
-		const expectedPhysicalDimension = zqhuiujwin;
+		const expectedPhysicalDimension = nsmnmkjtji;
 		await t.test(`#physicalDimension`, () => {
 			assertSemanticEqual(actualPhysicalDimension, expectedPhysicalDimension);
 		});

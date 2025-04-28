@@ -26,35 +26,35 @@ test('Person', async (t) => {
 		const connector = new Connector();
 		
 		
-		const xevkcehmhs = [new Address({ connector, semanticId: 'http://base.com/ntbcswzcds' })];
-		const nvclnedpai = [new Enterprise({ connector, semanticId: 'http://base.com/bftazyawng' })];
+		const puqnkdodqq = [new Address({ connector, semanticId: 'http://base.com/mduqqscavw' })];
+		const iebvuzxybv = [new Enterprise({ connector, semanticId: 'http://base.com/ntjlhnwpxy' })];
 		
 		const obj = new Person({
 			connector,
 			semanticId: "http://example.org/obj",
-			firstName: "ouanknwnbl",
-			lastName: "upbcbnbvlv",
-			localizations: xevkcehmhs,
-			organizations: nvclnedpai,
-			logo: "byuvqaaxhf"
+			firstName: "ixliuqvowe",
+			lastName: "bjwvjodjzs",
+			localizations: puqnkdodqq,
+			organizations: iebvuzxybv,
+			logo: "uaxilajuus"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualFirstName = obj.getFirstName();
-		const expectedFirstName = "ouanknwnbl";
+		const expectedFirstName = "ixliuqvowe";
 		await t.test(`#firstName`, () => {
 			assert.strictEqual(actualFirstName, expectedFirstName);
 		});
 
 		const actualLastName = obj.getLastName();
-		const expectedLastName = "upbcbnbvlv";
+		const expectedLastName = "bjwvjodjzs";
 		await t.test(`#lastName`, () => {
 			assert.strictEqual(actualLastName, expectedLastName);
 		});
 
 		const actualLocalizations = await obj.getLocalizations();
-		const expectedLocalizations = xevkcehmhs;
+		const expectedLocalizations = puqnkdodqq;
 		await actualLocalizations.forEach((actual, i) => {
 			t.test(`#localizations[${i}]`, () => {
 				assert.strictEqual(actual, expectedLocalizations[i]);
@@ -62,7 +62,7 @@ test('Person', async (t) => {
 		});
 
 		const actualOrganizations = await obj.getAffiliatedOrganizations();
-		const expectedOrganizations = nvclnedpai;
+		const expectedOrganizations = iebvuzxybv;
 		await actualOrganizations.forEach((actual, i) => {
 			t.test(`#organizations[${i}]`, () => {
 				assert.strictEqual(actual, expectedOrganizations[i]);
@@ -70,7 +70,7 @@ test('Person', async (t) => {
 		});
 
 		const actualLogo = obj.getLogo();
-		const expectedLogo = "byuvqaaxhf";
+		const expectedLogo = "uaxilajuus";
 		await t.test(`#logo`, () => {
 			assert.strictEqual(actualLogo, expectedLogo);
 		});

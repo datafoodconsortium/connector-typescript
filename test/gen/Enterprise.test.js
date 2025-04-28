@@ -33,42 +33,42 @@ test('Enterprise', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
 		
-		const dovpenakmi = [new Address({ connector, semanticId: 'http://base.com/smunowxmao' })];
+		const yfwvhrceha = [new Address({ connector, semanticId: 'http://base.com/phkaldoswb' })];
 		
 		
-		const wgqwxgutoz = [new CustomerCategory({ connector, semanticId: 'http://base.com/xuzvokfjpn' })];
-		const krwdiuswln = [new Catalog({ connector, semanticId: 'http://base.com/qzgybhgcwe' })];
-		const ghozbmjimo = [new CatalogItem({ connector, semanticId: 'http://base.com/vdgzjfqaez' })];
-		const khhtabqdnh = [new SuppliedProduct({ connector, semanticId: 'http://base.com/snwkfnamle' })];
-		const aukjthcjfx = [new TechnicalProduct({ connector, semanticId: 'http://base.com/iothzcvynh' })];
-		const kecxyudcux = new Person({ connector, semanticId: 'http://base.com/ciuvpiyhcy' });
+		const bcdkexfugi = [new CustomerCategory({ connector, semanticId: 'http://base.com/jpgsztgudc' })];
+		const wunnrhszog = [new Catalog({ connector, semanticId: 'http://base.com/hihtamgfhk' })];
+		const mnzqbrdmmm = [new CatalogItem({ connector, semanticId: 'http://base.com/adtpxhadbh' })];
+		const jaqepjozgj = [new SuppliedProduct({ connector, semanticId: 'http://base.com/odacrarenl' })];
+		const azwjspdjvo = [new TechnicalProduct({ connector, semanticId: 'http://base.com/nwpisbpjfl' })];
+		const iwjlgoyusd = new Person({ connector, semanticId: 'http://base.com/pvkdsprrrq' });
 		
 		const obj = new Enterprise({
 			connector,
 			semanticId: "http://example.org/obj",
-			name: "jinpqijtys",
-			localizations: dovpenakmi,
-			description: "ckkwtzihbo",
-			vatNumber: "lgxuhuiisl",
-			customerCategories: wgqwxgutoz,
-			catalogs: krwdiuswln,
-			catalogItems: ghozbmjimo,
-			suppliedProducts: khhtabqdnh,
-			technicalProducts: aukjthcjfx,
-			mainContact: kecxyudcux,
-			logo: "qjxrjenjsv"
+			name: "wudrtohxux",
+			localizations: yfwvhrceha,
+			description: "ujzumelkeg",
+			vatNumber: "ngiohclurw",
+			customerCategories: bcdkexfugi,
+			catalogs: wunnrhszog,
+			catalogItems: mnzqbrdmmm,
+			suppliedProducts: jaqepjozgj,
+			technicalProducts: azwjspdjvo,
+			mainContact: iwjlgoyusd,
+			logo: "aqsjjmurxt"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualName = obj.getName();
-		const expectedName = "jinpqijtys";
+		const expectedName = "wudrtohxux";
 		await t.test(`#name`, () => {
 			assert.strictEqual(actualName, expectedName);
 		});
 
 		const actualLocalizations = await obj.getLocalizations();
-		const expectedLocalizations = dovpenakmi;
+		const expectedLocalizations = yfwvhrceha;
 		await actualLocalizations.forEach((actual, i) => {
 			t.test(`#localizations[${i}]`, () => {
 				assert.strictEqual(actual, expectedLocalizations[i]);
@@ -76,19 +76,19 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualDescription = obj.getDescription();
-		const expectedDescription = "ckkwtzihbo";
+		const expectedDescription = "ujzumelkeg";
 		await t.test(`#description`, () => {
 			assert.strictEqual(actualDescription, expectedDescription);
 		});
 
 		const actualVatNumber = obj.getVatNumber();
-		const expectedVatNumber = "lgxuhuiisl";
+		const expectedVatNumber = "ngiohclurw";
 		await t.test(`#vatNumber`, () => {
 			assert.strictEqual(actualVatNumber, expectedVatNumber);
 		});
 
 		const actualCustomerCategories = await obj.getCustomerCategories();
-		const expectedCustomerCategories = wgqwxgutoz;
+		const expectedCustomerCategories = bcdkexfugi;
 		await actualCustomerCategories.forEach((actual, i) => {
 			t.test(`#customerCategories[${i}]`, () => {
 				assert.strictEqual(actual, expectedCustomerCategories[i]);
@@ -96,7 +96,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualCatalogs = await obj.getMaintainedCatalogs();
-		const expectedCatalogs = krwdiuswln;
+		const expectedCatalogs = wunnrhszog;
 		await actualCatalogs.forEach((actual, i) => {
 			t.test(`#catalogs[${i}]`, () => {
 				assert.strictEqual(actual, expectedCatalogs[i]);
@@ -104,7 +104,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualCatalogItems = await obj.getManagedCatalogItems();
-		const expectedCatalogItems = ghozbmjimo;
+		const expectedCatalogItems = mnzqbrdmmm;
 		await actualCatalogItems.forEach((actual, i) => {
 			t.test(`#catalogItems[${i}]`, () => {
 				assert.strictEqual(actual, expectedCatalogItems[i]);
@@ -112,7 +112,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualSuppliedProducts = await obj.getSuppliedProducts();
-		const expectedSuppliedProducts = khhtabqdnh;
+		const expectedSuppliedProducts = jaqepjozgj;
 		await actualSuppliedProducts.forEach((actual, i) => {
 			t.test(`#suppliedProducts[${i}]`, () => {
 				assert.strictEqual(actual, expectedSuppliedProducts[i]);
@@ -120,7 +120,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualTechnicalProducts = await obj.getProposedTechnicalProducts();
-		const expectedTechnicalProducts = aukjthcjfx;
+		const expectedTechnicalProducts = azwjspdjvo;
 		await actualTechnicalProducts.forEach((actual, i) => {
 			t.test(`#technicalProducts[${i}]`, () => {
 				assert.strictEqual(actual, expectedTechnicalProducts[i]);
@@ -128,13 +128,13 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualMainContact = await obj.getMainContact();
-		const expectedMainContact = kecxyudcux;
+		const expectedMainContact = iwjlgoyusd;
 		await t.test(`#mainContact`, () => {
 			assertSemanticEqual(actualMainContact, expectedMainContact);
 		});
 
 		const actualLogo = obj.getLogo();
-		const expectedLogo = "qjxrjenjsv";
+		const expectedLogo = "aqsjjmurxt";
 		await t.test(`#logo`, () => {
 			assert.strictEqual(actualLogo, expectedLogo);
 		});

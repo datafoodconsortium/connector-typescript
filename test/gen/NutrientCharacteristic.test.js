@@ -23,32 +23,32 @@ const json = `{
 test('NutrientCharacteristic', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const sdgsgrcrfa = new SKOSConcept({ connector, semanticId: 'http://base.com/zmbjixzzvn' });
+		const wiazxelvuw = new SKOSConcept({ connector, semanticId: 'http://base.com/tmgxkyniox' });
 		
-		const jnomjzhgqy = new SKOSConcept({ connector, semanticId: 'http://base.com/xjmcgdmdce' });
+		const qxnwqxcqut = new SKOSConcept({ connector, semanticId: 'http://base.com/bwnmmfwtbr' });
 		const obj = new NutrientCharacteristic({
 			connector,
-			unit: sdgsgrcrfa,
-			value: 0.9677519,
-			nutrientDimension: jnomjzhgqy
+			unit: wiazxelvuw,
+			value: 0.83304316,
+			nutrientDimension: qxnwqxcqut
 		});
 
 		
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = sdgsgrcrfa;
+		const expectedUnit = wiazxelvuw;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.9677519;
+		const expectedValue = 0.83304316;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});
 
 		const actualNutrientDimension = await obj.getQuantityDimension();
-		const expectedNutrientDimension = jnomjzhgqy;
+		const expectedNutrientDimension = qxnwqxcqut;
 		await t.test(`#nutrientDimension`, () => {
 			assertSemanticEqual(actualNutrientDimension, expectedNutrientDimension);
 		});

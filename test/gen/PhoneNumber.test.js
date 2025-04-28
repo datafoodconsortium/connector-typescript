@@ -26,20 +26,20 @@ test('PhoneNumber', async (t) => {
 		const obj = new PhoneNumber({
 			connector,
 			semanticId: "http://example.org/obj",
-			countryCode: -1497823684,
-			phoneNumber: "rtoooclpmr"
+			countryCode: -858054546,
+			phoneNumber: "vsmooqnedc"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualCountryCode = obj.getCountryCode();
-		const expectedCountryCode = -1497823684;
+		const expectedCountryCode = -858054546;
 		await t.test(`#countryCode`, () => {
 			assert.strictEqual(actualCountryCode, expectedCountryCode);
 		});
 
 		const actualPhoneNumber = obj.getNumber();
-		const expectedPhoneNumber = "rtoooclpmr";
+		const expectedPhoneNumber = "vsmooqnedc";
 		await t.test(`#phoneNumber`, () => {
 			assert.strictEqual(actualPhoneNumber, expectedPhoneNumber);
 		});

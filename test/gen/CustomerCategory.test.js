@@ -25,13 +25,13 @@ test('CustomerCategory', async (t) => {
 		const obj = new CustomerCategory({
 			connector,
 			semanticId: "http://example.org/obj",
-			description: "moprqxhsrn"
+			description: "trnipjadmx"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualDescription = obj.getDescription();
-		const expectedDescription = "moprqxhsrn";
+		const expectedDescription = "trnipjadmx";
 		await t.test(`#description`, () => {
 			assert.strictEqual(actualDescription, expectedDescription);
 		});
