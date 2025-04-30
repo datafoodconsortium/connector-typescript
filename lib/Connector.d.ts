@@ -7,6 +7,7 @@ import IConnectorImporter from "./IConnectorImporter";
 import IConnectorImportOptions from "./IConnectorImportOptions.js";
 import IConnectorStore from "./IConnectorStore";
 import IGetterOptions from "./IGetterOptions.js";
+import type { Observer } from "./observer.js";
 import IAddress from "./IAddress.js";
 import IAgent from "./IAgent.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
@@ -29,11 +30,23 @@ import IPlannedTransformation from "./IPlannedTransformation.js";
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
 import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
 import IDefinedProduct from "./IDefinedProduct.js";
+declare const ConnectorObservables: {
+    readonly export: "exporter";
+    readonly import: "importer";
+};
+type ConnectorObservables = typeof ConnectorObservables;
+type ConnectorObservableKeys = keyof ConnectorObservables;
+type ConnectorObservableMethods = ConnectorObservables[ConnectorObservableKeys];
+type ConnectorObservableStrings = ConnectorObservableKeys | ConnectorObservableMethods;
 export default class Connector implements IConnector {
     FACETS?: ISKOSConcept;
     MEASURES?: ISKOSConcept;
     PRODUCT_TYPES?: ISKOSConcept;
     VOCABULARY?: ISKOSConcept;
+    OBSERVABLES: {
+        readonly export: "exporter";
+        readonly import: "importer";
+    };
     private semantizer;
     private fetchFunction;
     private factory;
@@ -265,6 +278,7 @@ export default class Connector implements IConnector {
     export(objects: Array<Semanticable>, options?: IConnectorExportOptions): Promise<string>;
     getSemantizer(): ISemantizer;
     getDefaultFactory(): IConnectorFactory;
+    subscribe(event: ConnectorObservableStrings, observer: Observer<any>): import("./observer.js").Subscription;
     import(data: string, options?: IConnectorImportOptions): Promise<Array<Semanticable>>;
     importOne(data: string, options?: IConnectorImportOptions): Promise<Semanticable | undefined>;
     importOneTyped<Type>(data: string, options?: IConnectorImportOptions): Promise<Type | undefined>;
@@ -282,4 +296,5 @@ export default class Connector implements IConnector {
     store(semanticObject: Semanticable): void;
     removeFromStore(semanticObjectId: string): void;
 }
+export {};
 //# sourceMappingURL=Connector.d.ts.map

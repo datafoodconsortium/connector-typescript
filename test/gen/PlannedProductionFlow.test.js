@@ -26,33 +26,33 @@ const json = `{
 test('PlannedProductionFlow', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const cswpitcacp = new Quantity({ connector });
-		const dtphhkfrkr = new PlannedTransformation({ connector, semanticId: 'http://base.com/vkvahmjaoy' });
-		const izybrfybpd = new SuppliedProduct({ connector, semanticId: 'http://base.com/sbxjhatefb' });
+		const rzekqnppav = new Quantity({ connector });
+		const evjnsokimm = new PlannedTransformation({ connector, semanticId: 'http://base.com/ysrbzuzowl' });
+		const zsbiihkkfk = new SuppliedProduct({ connector, semanticId: 'http://base.com/ayiuururvt' });
 		const obj = new PlannedProductionFlow({
 			connector,
 			semanticId: "http://example.org/obj",
-			quantity: cswpitcacp,
-			transformation: dtphhkfrkr,
-			product: izybrfybpd
+			quantity: rzekqnppav,
+			transformation: evjnsokimm,
+			product: zsbiihkkfk
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
-		const expectedQuantity = cswpitcacp;
+		const expectedQuantity = rzekqnppav;
 		const actualQuantity = obj.getQuantity();
 		await t.test(`#quantity`, () => {
 			assertSemanticEqual(actualQuantity, expectedQuantity);
 		});
 
 		const actualTransformation = await obj.getPlannedTransformation();
-		const expectedTransformation = dtphhkfrkr;
+		const expectedTransformation = evjnsokimm;
 		await t.test(`#transformation`, () => {
 			assertSemanticEqual(actualTransformation, expectedTransformation);
 		});
 
 		const actualProduct = await obj.getProducedProduct();
-		const expectedProduct = izybrfybpd;
+		const expectedProduct = zsbiihkkfk;
 		await t.test(`#product`, () => {
 			assertSemanticEqual(actualProduct, expectedProduct);
 		});

@@ -24,41 +24,41 @@ const json = `{
 test('Offer', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const zlhufswcuw = new CatalogItem({ connector, semanticId: 'http://base.com/bsgmdfxhbs' });
-		const xcxnslvwlw = new CustomerCategory({ connector, semanticId: 'http://base.com/tzqutvmpfs' });
-		const rwcqthjljs = new Price({ connector });
+		const cjvfpchawb = new CatalogItem({ connector, semanticId: 'http://base.com/qhioouthxo' });
+		const systkbeeuh = new CustomerCategory({ connector, semanticId: 'http://base.com/abqccvodoi' });
+		const dhrgjxgebq = new Price({ connector });
 		
 		const obj = new Offer({
 			connector,
 			semanticId: "http://example.org/obj",
-			offeredItem: zlhufswcuw,
-			offeredTo: xcxnslvwlw,
-			price: rwcqthjljs,
-			stockLimitation: 0.86219156
+			offeredItem: cjvfpchawb,
+			offeredTo: systkbeeuh,
+			price: dhrgjxgebq,
+			stockLimitation: 0.9290217
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualOfferedItem = await obj.getOfferedItem();
-		const expectedOfferedItem = zlhufswcuw;
+		const expectedOfferedItem = cjvfpchawb;
 		await t.test(`#offeredItem`, () => {
 			assertSemanticEqual(actualOfferedItem, expectedOfferedItem);
 		});
 
 		const actualOfferedTo = await obj.getCustomerCategory();
-		const expectedOfferedTo = xcxnslvwlw;
+		const expectedOfferedTo = systkbeeuh;
 		await t.test(`#offeredTo`, () => {
 			assertSemanticEqual(actualOfferedTo, expectedOfferedTo);
 		});
 
-		const expectedPrice = rwcqthjljs;
+		const expectedPrice = dhrgjxgebq;
 		const actualPrice = obj.getPrice();
 		await t.test(`#price`, () => {
 			assertSemanticEqual(actualPrice, expectedPrice);
 		});
 
 		const actualStockLimitation = obj.getStockLimitation();
-		const expectedStockLimitation = 0.86219156;
+		const expectedStockLimitation = 0.9290217;
 		await t.test(`#stockLimitation`, () => {
 			assert.strictEqual(actualStockLimitation, expectedStockLimitation);
 		});
