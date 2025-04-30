@@ -25,40 +25,40 @@ test('OrderLine', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
 		
-		const urixybvzte = new Price({ connector });
-		const jnmqaefpsp = new Offer({ connector, semanticId: 'http://base.com/hostxrqtem' });
-		const glxdebzjup = new Order({ connector, semanticId: 'http://base.com/nagehmejrm' });
+		const hwcxzaqosq = new Price({ connector });
+		const mdqlrktupb = new Offer({ connector, semanticId: 'http://base.com/klahqzxqdk' });
+		const wjjrbodgqy = new Order({ connector, semanticId: 'http://base.com/mvcyolsvez' });
 		const obj = new OrderLine({
 			connector,
 			semanticId: "http://example.org/obj",
-			quantity: 0.6644994,
-			price: urixybvzte,
-			offer: jnmqaefpsp,
-			order: glxdebzjup
+			quantity: 0.1248315,
+			price: hwcxzaqosq,
+			offer: mdqlrktupb,
+			order: wjjrbodgqy
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualQuantity = obj.getQuantity();
-		const expectedQuantity = 0.6644994;
+		const expectedQuantity = 0.1248315;
 		await t.test(`#quantity`, () => {
 			assert.strictEqual(actualQuantity, expectedQuantity);
 		});
 
-		const expectedPrice = urixybvzte;
+		const expectedPrice = hwcxzaqosq;
 		const actualPrice = obj.getPrice();
 		await t.test(`#price`, () => {
 			assertSemanticEqual(actualPrice, expectedPrice);
 		});
 
 		const actualOffer = await obj.getOffer();
-		const expectedOffer = jnmqaefpsp;
+		const expectedOffer = mdqlrktupb;
 		await t.test(`#offer`, () => {
 			assertSemanticEqual(actualOffer, expectedOffer);
 		});
 
 		const actualOrder = await obj.getOrder();
-		const expectedOrder = glxdebzjup;
+		const expectedOrder = wjjrbodgqy;
 		await t.test(`#order`, () => {
 			assertSemanticEqual(actualOrder, expectedOrder);
 		});

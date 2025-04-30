@@ -31,55 +31,55 @@ test('Address', async (t) => {
 		const obj = new Address({
 			connector,
 			semanticId: "http://example.org/obj",
-			street: "yqnpbuefpv",
-			postalCode: "swawtlsfet",
-			city: "kzpnlyarlx",
-			country: "gttpkesxxe",
-			latitude: 0.13530248,
-			longitude: 0.6261853,
-			region: "apbgawnvha"
+			street: "qhwrbypzxf",
+			postalCode: "nybxedtcyl",
+			city: "ppaalbiuce",
+			country: "uuvfknglvy",
+			latitude: 0.200288,
+			longitude: 0.7728007,
+			region: "lexmtztshj"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualStreet = obj.getStreet();
-		const expectedStreet = "yqnpbuefpv";
+		const expectedStreet = "qhwrbypzxf";
 		await t.test(`#street`, () => {
 			assert.strictEqual(actualStreet, expectedStreet);
 		});
 
 		const actualPostalCode = obj.getPostalCode();
-		const expectedPostalCode = "swawtlsfet";
+		const expectedPostalCode = "nybxedtcyl";
 		await t.test(`#postalCode`, () => {
 			assert.strictEqual(actualPostalCode, expectedPostalCode);
 		});
 
 		const actualCity = obj.getCity();
-		const expectedCity = "kzpnlyarlx";
+		const expectedCity = "ppaalbiuce";
 		await t.test(`#city`, () => {
 			assert.strictEqual(actualCity, expectedCity);
 		});
 
 		const actualCountry = obj.getCountry();
-		const expectedCountry = "gttpkesxxe";
+		const expectedCountry = "uuvfknglvy";
 		await t.test(`#country`, () => {
 			assert.strictEqual(actualCountry, expectedCountry);
 		});
 
 		const actualLatitude = obj.getLatitude();
-		const expectedLatitude = 0.13530248;
+		const expectedLatitude = 0.200288;
 		await t.test(`#latitude`, () => {
 			assert.strictEqual(actualLatitude, expectedLatitude);
 		});
 
 		const actualLongitude = obj.getLongitude();
-		const expectedLongitude = 0.6261853;
+		const expectedLongitude = 0.7728007;
 		await t.test(`#longitude`, () => {
 			assert.strictEqual(actualLongitude, expectedLongitude);
 		});
 
 		const actualRegion = obj.getRegion();
-		const expectedRegion = "apbgawnvha";
+		const expectedRegion = "lexmtztshj";
 		await t.test(`#region`, () => {
 			assert.strictEqual(actualRegion, expectedRegion);
 		});

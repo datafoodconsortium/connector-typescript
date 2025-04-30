@@ -1,7 +1,8 @@
 import DatasetExt from "rdf-ext/lib/Dataset";
 import IConnectorImporter from "./IConnectorImporter";
 import IConnectorImporterOptions from "./IConnectorImporterOptions";
-export default class ConnectorImporterJsonldStream implements IConnectorImporter {
+import { Observable } from "./observer.js";
+export default class ConnectorImporterJsonldStream extends Observable<DatasetExt[]> implements IConnectorImporter {
     private context;
     private documentLoader;
     constructor(parameters?: {

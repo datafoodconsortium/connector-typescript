@@ -24,30 +24,30 @@ test('Price', async (t) => {
 		const connector = new Connector();
 		
 		
-		const xnwakvzqxy = new SKOSConcept({ connector, semanticId: 'http://base.com/uzmdxtzmko' });
+		const ssoapnxoco = new SKOSConcept({ connector, semanticId: 'http://base.com/sruouvuwso' });
 		const obj = new Price({
 			connector,
-			value: 0.8633917,
-			vatRate: 0.44676906,
-			unit: xnwakvzqxy
+			value: 0.720377,
+			vatRate: 0.016867816,
+			unit: ssoapnxoco
 		});
 
 		
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.8633917;
+		const expectedValue = 0.720377;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});
 
 		const actualVatRate = obj.getVatRate();
-		const expectedVatRate = 0.44676906;
+		const expectedVatRate = 0.016867816;
 		await t.test(`#vatRate`, () => {
 			assert.strictEqual(actualVatRate, expectedVatRate);
 		});
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = xnwakvzqxy;
+		const expectedUnit = ssoapnxoco;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
