@@ -1,6 +1,9 @@
 import DatasetExt from "rdf-ext/lib/Dataset";
 import IConnectorImporterOptions from "./IConnectorImporterOptions";
-export default interface IConnectorImporter {
+import { Observable, Subscription } from "./observer";
+import IConnectorImportObserver from "./IConnectorImportObserver";
+export default interface IConnectorImporter extends Observable<DatasetExt[]> {
     import(data: string, options?: IConnectorImporterOptions): Promise<Array<DatasetExt>>;
+    subscribe(observer: IConnectorImportObserver): Subscription;
 }
 //# sourceMappingURL=IConnectorImporter.d.ts.map

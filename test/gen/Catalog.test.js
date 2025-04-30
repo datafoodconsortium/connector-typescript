@@ -23,19 +23,19 @@ const json = `{
 test('Catalog', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const jrfabwpyqo = [new Enterprise({ connector, semanticId: 'http://base.com/ocmyydvfps' })];
-		const beajwiadka = [new CatalogItem({ connector, semanticId: 'http://base.com/hrsqzgoesk' })];
+		const hdcsiiptbg = [new Enterprise({ connector, semanticId: 'http://base.com/tpkdszebjp' })];
+		const ryyoatybbg = [new CatalogItem({ connector, semanticId: 'http://base.com/mmydfqaedb' })];
 		const obj = new Catalog({
 			connector,
 			semanticId: "http://example.org/obj",
-			maintainers: jrfabwpyqo,
-			items: beajwiadka
+			maintainers: hdcsiiptbg,
+			items: ryyoatybbg
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualMaintainers = await obj.getMaintainers();
-		const expectedMaintainers = jrfabwpyqo;
+		const expectedMaintainers = hdcsiiptbg;
 		await actualMaintainers.forEach((actual, i) => {
 			t.test(`#maintainers[${i}]`, () => {
 				assert.strictEqual(actual, expectedMaintainers[i]);
@@ -43,7 +43,7 @@ test('Catalog', async (t) => {
 		});
 
 		const actualItems = await obj.getItems();
-		const expectedItems = beajwiadka;
+		const expectedItems = ryyoatybbg;
 		await actualItems.forEach((actual, i) => {
 			t.test(`#items[${i}]`, () => {
 				assert.strictEqual(actual, expectedItems[i]);

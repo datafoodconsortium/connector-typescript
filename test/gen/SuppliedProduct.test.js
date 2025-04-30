@@ -30,85 +30,85 @@ test('SuppliedProduct', async (t) => {
 		const connector = new Connector();
 		
 		
-		const bdptzahqny = new SKOSConcept({ connector, semanticId: 'http://base.com/tfestdrnhw' });
-		const idrrgmzfos = new Quantity({ connector });
+		const gfkbelwfwr = new SKOSConcept({ connector, semanticId: 'http://base.com/szsufcrmyi' });
+		const nmboynlwpp = new Quantity({ connector });
 		
 		
-		const ysqowhtmfo = [new SKOSConcept({ connector, semanticId: 'http://base.com/evpznfrbqr' })];
+		const vttguusiet = [new SKOSConcept({ connector, semanticId: 'http://base.com/uzchtljtye' })];
 		
-		const xoxsnxegfg = [new AllergenCharacteristic({ connector })];
-		const aghkkzpseb = [new NutrientCharacteristic({ connector })];
-		const ryuwwnebhq = [new PhysicalCharacteristic({ connector })];
-		const yzaxrnxosv = new SKOSConcept({ connector, semanticId: 'http://base.com/vbjssxydoh' });
-		const xucirghlrc = [new CatalogItem({ connector, semanticId: 'http://base.com/ohmndagent' })];
-		const pbjrmctjkk = [new SKOSConcept({ connector, semanticId: 'http://base.com/howfejhmyj' })];
-		const jqwxrsqcqq = [new SKOSConcept({ connector, semanticId: 'http://base.com/nyurjnawua' })];
-		const mcyjxklsia = [new SKOSConcept({ connector, semanticId: 'http://base.com/hfqjghvgky' })];
+		const bupfmmqqkk = [new AllergenCharacteristic({ connector })];
+		const pevifzymlf = [new NutrientCharacteristic({ connector })];
+		const wmdbsxkjlm = [new PhysicalCharacteristic({ connector })];
+		const sobplzjvkp = new SKOSConcept({ connector, semanticId: 'http://base.com/babhkeqoal' });
+		const srqoxztarp = [new CatalogItem({ connector, semanticId: 'http://base.com/hrkebfzxsb' })];
+		const voudvchgux = [new SKOSConcept({ connector, semanticId: 'http://base.com/maumagnmqb' })];
+		const phpuxxcnpr = [new SKOSConcept({ connector, semanticId: 'http://base.com/lqwjpjtxwb' })];
+		const kvirvnrfjf = [new SKOSConcept({ connector, semanticId: 'http://base.com/uevjruxqig' })];
 		
 		
 		const obj = new SuppliedProduct({
 			connector,
 			semanticId: "http://example.org/obj",
-			name: "ihpommmqwb",
-			description: "npfgwjzruk",
-			productType: bdptzahqny,
-			quantity: idrrgmzfos,
-			alcoholPercentage: 0.06546688,
-			lifetime: "uvswhkxcsv",
-			claims: ysqowhtmfo,
-			usageOrStorageConditions: "yabcmhstvu",
-			allergenCharacteristics: xoxsnxegfg,
-			nutrientCharacteristics: aghkkzpseb,
-			physicalCharacteristics: ryuwwnebhq,
-			geographicalOrigin: yzaxrnxosv,
-			catalogItems: xucirghlrc,
-			certifications: pbjrmctjkk,
-			natureOrigin: jqwxrsqcqq,
-			partOrigin: mcyjxklsia,
-			totalTheoreticalStock: 0.73022735,
-			images: "igfvjrnxhp"
+			name: "ioqmsowexn",
+			description: "viidrzolhh",
+			productType: gfkbelwfwr,
+			quantity: nmboynlwpp,
+			alcoholPercentage: 0.8295435,
+			lifetime: "utkclizwuk",
+			claims: vttguusiet,
+			usageOrStorageConditions: "bgdnkjdggm",
+			allergenCharacteristics: bupfmmqqkk,
+			nutrientCharacteristics: pevifzymlf,
+			physicalCharacteristics: wmdbsxkjlm,
+			geographicalOrigin: sobplzjvkp,
+			catalogItems: srqoxztarp,
+			certifications: voudvchgux,
+			natureOrigin: phpuxxcnpr,
+			partOrigin: kvirvnrfjf,
+			totalTheoreticalStock: 0.4190001,
+			images: "rmnepaoabu"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualName = obj.getName();
-		const expectedName = "ihpommmqwb";
+		const expectedName = "ioqmsowexn";
 		await t.test(`#name`, () => {
 			assert.strictEqual(actualName, expectedName);
 		});
 
 		const actualDescription = obj.getDescription();
-		const expectedDescription = "npfgwjzruk";
+		const expectedDescription = "viidrzolhh";
 		await t.test(`#description`, () => {
 			assert.strictEqual(actualDescription, expectedDescription);
 		});
 
 		const actualProductType = await obj.getProductType();
-		const expectedProductType = bdptzahqny;
+		const expectedProductType = gfkbelwfwr;
 		await t.test(`#productType`, () => {
 			assertSemanticEqual(actualProductType, expectedProductType);
 		});
 
-		const expectedQuantity = idrrgmzfos;
+		const expectedQuantity = nmboynlwpp;
 		const actualQuantity = obj.getQuantity();
 		await t.test(`#quantity`, () => {
 			assertSemanticEqual(actualQuantity, expectedQuantity);
 		});
 
 		const actualAlcoholPercentage = obj.getAlcoholPercentage();
-		const expectedAlcoholPercentage = 0.06546688;
+		const expectedAlcoholPercentage = 0.8295435;
 		await t.test(`#alcoholPercentage`, () => {
 			assert.strictEqual(actualAlcoholPercentage, expectedAlcoholPercentage);
 		});
 
 		const actualLifetime = obj.getLifetime();
-		const expectedLifetime = "uvswhkxcsv";
+		const expectedLifetime = "utkclizwuk";
 		await t.test(`#lifetime`, () => {
 			assert.strictEqual(actualLifetime, expectedLifetime);
 		});
 
 		const actualClaims = await obj.getClaims();
-		const expectedClaims = ysqowhtmfo;
+		const expectedClaims = vttguusiet;
 		await actualClaims.forEach((actual, i) => {
 			t.test(`#claims[${i}]`, () => {
 				assert.strictEqual(actual, expectedClaims[i]);
@@ -116,12 +116,12 @@ test('SuppliedProduct', async (t) => {
 		});
 
 		const actualUsageOrStorageConditions = obj.getUsageOrStorageConditions();
-		const expectedUsageOrStorageConditions = "yabcmhstvu";
+		const expectedUsageOrStorageConditions = "bgdnkjdggm";
 		await t.test(`#usageOrStorageConditions`, () => {
 			assert.strictEqual(actualUsageOrStorageConditions, expectedUsageOrStorageConditions);
 		});
 
-		const expectedAllergenCharacteristics = xoxsnxegfg;
+		const expectedAllergenCharacteristics = bupfmmqqkk;
 		const actualAllergenCharacteristics = await obj.getAllergenCharacteristics();
 		await actualAllergenCharacteristics.forEach((actual, i) => {
 			t.test(`#allergenCharacteristics[${i}]`, () => {
@@ -129,7 +129,7 @@ test('SuppliedProduct', async (t) => {
 			});
 		});
 
-		const expectedNutrientCharacteristics = aghkkzpseb;
+		const expectedNutrientCharacteristics = pevifzymlf;
 		const actualNutrientCharacteristics = await obj.getNutrientCharacteristics();
 		await actualNutrientCharacteristics.forEach((actual, i) => {
 			t.test(`#nutrientCharacteristics[${i}]`, () => {
@@ -137,7 +137,7 @@ test('SuppliedProduct', async (t) => {
 			});
 		});
 
-		const expectedPhysicalCharacteristics = ryuwwnebhq;
+		const expectedPhysicalCharacteristics = wmdbsxkjlm;
 		const actualPhysicalCharacteristics = await obj.getPhysicalCharacteristics();
 		await actualPhysicalCharacteristics.forEach((actual, i) => {
 			t.test(`#physicalCharacteristics[${i}]`, () => {
@@ -146,13 +146,13 @@ test('SuppliedProduct', async (t) => {
 		});
 
 		const actualGeographicalOrigin = await obj.getGeographicalOrigin();
-		const expectedGeographicalOrigin = yzaxrnxosv;
+		const expectedGeographicalOrigin = sobplzjvkp;
 		await t.test(`#geographicalOrigin`, () => {
 			assertSemanticEqual(actualGeographicalOrigin, expectedGeographicalOrigin);
 		});
 
 		const actualCatalogItems = await obj.getCatalogItems();
-		const expectedCatalogItems = xucirghlrc;
+		const expectedCatalogItems = srqoxztarp;
 		await actualCatalogItems.forEach((actual, i) => {
 			t.test(`#catalogItems[${i}]`, () => {
 				assert.strictEqual(actual, expectedCatalogItems[i]);
@@ -160,7 +160,7 @@ test('SuppliedProduct', async (t) => {
 		});
 
 		const actualCertifications = await obj.getCertifications();
-		const expectedCertifications = pbjrmctjkk;
+		const expectedCertifications = voudvchgux;
 		await actualCertifications.forEach((actual, i) => {
 			t.test(`#certifications[${i}]`, () => {
 				assert.strictEqual(actual, expectedCertifications[i]);
@@ -168,7 +168,7 @@ test('SuppliedProduct', async (t) => {
 		});
 
 		const actualNatureOrigin = await obj.getNatureOrigin();
-		const expectedNatureOrigin = jqwxrsqcqq;
+		const expectedNatureOrigin = phpuxxcnpr;
 		await actualNatureOrigin.forEach((actual, i) => {
 			t.test(`#natureOrigin[${i}]`, () => {
 				assert.strictEqual(actual, expectedNatureOrigin[i]);
@@ -176,7 +176,7 @@ test('SuppliedProduct', async (t) => {
 		});
 
 		const actualPartOrigin = await obj.getPartOrigin();
-		const expectedPartOrigin = mcyjxklsia;
+		const expectedPartOrigin = kvirvnrfjf;
 		await actualPartOrigin.forEach((actual, i) => {
 			t.test(`#partOrigin[${i}]`, () => {
 				assert.strictEqual(actual, expectedPartOrigin[i]);
@@ -184,13 +184,13 @@ test('SuppliedProduct', async (t) => {
 		});
 
 		const actualTotalTheoreticalStock = obj.getTotalTheoreticalStock();
-		const expectedTotalTheoreticalStock = 0.73022735;
+		const expectedTotalTheoreticalStock = 0.4190001;
 		await t.test(`#totalTheoreticalStock`, () => {
 			assert.strictEqual(actualTotalTheoreticalStock, expectedTotalTheoreticalStock);
 		});
 
 		const actualImages = obj.getImages();
-		const expectedImages = "igfvjrnxhp";
+		const expectedImages = "rmnepaoabu";
 		await t.test(`#images`, () => {
 			assert.strictEqual(actualImages, expectedImages);
 		});
