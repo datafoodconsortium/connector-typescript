@@ -24,43 +24,43 @@ const json = `{
 test('CatalogItem', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const ndeccjdfna = new TechnicalProduct({ connector, semanticId: 'http://base.com/otdqiykqap' });
+		const psrplnyhko = new TechnicalProduct({ connector, semanticId: 'http://base.com/dqqyxdllab' });
 		
 		
-		const dychfyuizu = [new Offer({ connector, semanticId: 'http://base.com/yoejptpcje' })];
-		const lciltioihh = [new Catalog({ connector, semanticId: 'http://base.com/akkvywzwey' })];
+		const gojcpeeduh = [new Offer({ connector, semanticId: 'http://base.com/utxskiqqmn' })];
+		const rzsykhsipd = [new Catalog({ connector, semanticId: 'http://base.com/poxzkixgkv' })];
 		const obj = new CatalogItem({
 			connector,
 			semanticId: "http://example.org/obj",
-			product: ndeccjdfna,
-			sku: "vpnhycnctz",
-			stockLimitation: 0.46346068,
-			offers: dychfyuizu,
-			catalogs: lciltioihh
+			product: psrplnyhko,
+			sku: "rvdhmpzrab",
+			stockLimitation: 0.71107,
+			offers: gojcpeeduh,
+			catalogs: rzsykhsipd
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualProduct = await obj.getOfferedProduct();
-		const expectedProduct = ndeccjdfna;
+		const expectedProduct = psrplnyhko;
 		await t.test(`#product`, () => {
 			assertSemanticEqual(actualProduct, expectedProduct);
 		});
 
 		const actualSku = obj.getSku();
-		const expectedSku = "vpnhycnctz";
+		const expectedSku = "rvdhmpzrab";
 		await t.test(`#sku`, () => {
 			assert.strictEqual(actualSku, expectedSku);
 		});
 
 		const actualStockLimitation = obj.getStockLimitation();
-		const expectedStockLimitation = 0.46346068;
+		const expectedStockLimitation = 0.71107;
 		await t.test(`#stockLimitation`, () => {
 			assert.strictEqual(actualStockLimitation, expectedStockLimitation);
 		});
 
 		const actualOffers = await obj.getOfferers();
-		const expectedOffers = dychfyuizu;
+		const expectedOffers = gojcpeeduh;
 		await actualOffers.forEach((actual, i) => {
 			t.test(`#offers[${i}]`, () => {
 				assert.strictEqual(actual, expectedOffers[i]);
@@ -68,7 +68,7 @@ test('CatalogItem', async (t) => {
 		});
 
 		const actualCatalogs = await obj.getCatalogs();
-		const expectedCatalogs = lciltioihh;
+		const expectedCatalogs = rzsykhsipd;
 		await actualCatalogs.forEach((actual, i) => {
 			t.test(`#catalogs[${i}]`, () => {
 				assert.strictEqual(actual, expectedCatalogs[i]);

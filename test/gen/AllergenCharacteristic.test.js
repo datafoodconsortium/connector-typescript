@@ -23,32 +23,32 @@ const json = `{
 test('AllergenCharacteristic', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const bzbzotdhmj = new SKOSConcept({ connector, semanticId: 'http://base.com/guxodrkybz' });
+		const xdseuqlmwe = new SKOSConcept({ connector, semanticId: 'http://base.com/mfnhwvqypl' });
 		
-		const okvofkobsa = new SKOSConcept({ connector, semanticId: 'http://base.com/tcaazxsufn' });
+		const wrjlzqwyvg = new SKOSConcept({ connector, semanticId: 'http://base.com/ajlecuaxaf' });
 		const obj = new AllergenCharacteristic({
 			connector,
-			unit: bzbzotdhmj,
-			value: 0.5452212,
-			allergenDimension: okvofkobsa
+			unit: xdseuqlmwe,
+			value: 0.88846236,
+			allergenDimension: wrjlzqwyvg
 		});
 
 		
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = bzbzotdhmj;
+		const expectedUnit = xdseuqlmwe;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.5452212;
+		const expectedValue = 0.88846236;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});
 
 		const actualAllergenDimension = await obj.getQuantityDimension();
-		const expectedAllergenDimension = okvofkobsa;
+		const expectedAllergenDimension = wrjlzqwyvg;
 		await t.test(`#allergenDimension`, () => {
 			assertSemanticEqual(actualAllergenDimension, expectedAllergenDimension);
 		});
