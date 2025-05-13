@@ -11,7 +11,7 @@ export default class CustomerCategory extends SemanticObject implements ICustome
         description?: string;
         doNotStore?: boolean;
     });
-    setDescription(description: string): void;
     getDescription(): string | undefined;
+    setDescription(description: string): void;
 }
 //# sourceMappingURL=CustomerCategory.d.ts.map

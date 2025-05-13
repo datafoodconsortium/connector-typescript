@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
 import ISKOSConcept from "./ISKOSConcept.js"
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

@@ -1,1 +1,0 @@
-{"version":3,"file":"terms.js","sourceRoot":"","sources":["../src/terms.ts"],"names":[],"mappings":"AAAA,oBAAoB;AAEpB,MAAM,OAAO,GAAG;IACZ,OAAO,EAAE,SAAS;CACrB,CAAA;AAED,MAAM,UAAU,GAAG,EAElB,CAAA;AAED,MAAM,KAAK,GAAG;IACV,KAAK,EAAE,OAAO;IACd,QAAQ,EAAE,UAAU;CACvB,CAAA;AAED,eAAe,KAAK,CAAC"}

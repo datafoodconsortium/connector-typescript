@@ -280,5 +280,6 @@ export default class Connector implements IConnector {
     setDefaultImporter(importer: IConnectorImporter): void;
     setDefaultStore(store: IConnectorStore): void;
     store(semanticObject: Semanticable): void;
+    removeFromStore(semanticObjectId: string): void;
 }
 //# sourceMappingURL=Connector.d.ts.map

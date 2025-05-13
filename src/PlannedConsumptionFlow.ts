@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPlannedTransformation from "./IPlannedTransformation.js"
+import IQuantity from "./IQuantity.js"
 import IDefinedProduct from "./IDefinedProduct.js"
+import IPlannedTransformation from "./IPlannedTransformation.js"
+import IPlannedFlow from "./IPlannedFlow.js"
 import Flow from "./Flow.js"
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
-import IQuantity from "./IQuantity.js"
-import IPlannedFlow from "./IPlannedFlow.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -79,22 +79,6 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedCons
 		
 	}
 
-	public setConsumedProduct(consumedProduct: IDefinedProduct): void {
-		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
-		
-		this.connector.store(consumedProduct);
-	}
-
-	public async getConsumedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
-		let result: IDefinedProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:consumes");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IDefinedProduct> semanticObject;
-		}
-		return result;
-	}
-
 	public async getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined> {
 		let result: IPlannedTransformation | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:incomeOf");
@@ -109,5 +93,21 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedCons
 		this.setSemanticPropertyReference("dfc-b:incomeOf", plannedTransformation);
 		
 		this.connector.store(plannedTransformation);
+	}
+
+	public setConsumedProduct(consumedProduct: IDefinedProduct): void {
+		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
+		
+		this.connector.store(consumedProduct);
+	}
+
+	public async getConsumedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
+		let result: IDefinedProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:consumes");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IDefinedProduct> semanticObject;
+		}
+		return result;
 	}
 }

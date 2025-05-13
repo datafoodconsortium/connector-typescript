@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalogItem from "./ICatalogItem.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
 import DefinedProduct from "./DefinedProduct.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
 import IQuantity from "./IQuantity.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import ISKOSConcept from "./ISKOSConcept.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import ICatalogItem from "./ICatalogItem.js"
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";

@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Certifiable from "./Certifiable.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import Proposable from "./Proposable.js"
 import Describable from "./Describable.js"
-import Nameable from "./Nameable.js"
 import IQuantity from "./IQuantity.js"
+import Proposable from "./Proposable.js"
+import Nameable from "./Nameable.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import Manufacturable from "./Manufacturable.js"
+import Certifiable from "./Certifiable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IDefinedProduct extends Semanticable, Describable, Certifiable, Proposable, Nameable, Manufacturable {
+export default interface IDefinedProduct extends Semanticable, Manufacturable, Proposable, Nameable, Describable, Certifiable {
 
 	addClaim(claim: ISKOSConcept): void;
 
@@ -52,5 +52,21 @@ export default interface IDefinedProduct extends Semanticable, Describable, Cert
 	removeImage(image: string): void;
 
 	getImages(): string[];
+
+	addVariant(variant: IDefinedProduct): void;
+
+	getVariants(): Promise<IDefinedProduct[]>;
+
+	setVariants(variants: IDefinedProduct[]): void;
+
+	removeVariant(variant: IDefinedProduct): void;
+
+	addIsVariantOf(parent: IDefinedProduct): void;
+
+	getIsVariantOf(): Promise<IDefinedProduct[]>;
+
+	setIsVariantOf(parents: IDefinedProduct[]): void;
+
+	removeIsVariantOf(parent: IDefinedProduct): void;
 
 }

@@ -16,13 +16,13 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
         offers?: IOffer[];
         doNotStore?: boolean;
     });
-    getBeginDate(): string | undefined;
-    addOffer(offer: IOffer): void;
     setEndDate(endDate: string): void;
+    getQuantity(): number | undefined;
+    setBeginDate(beginDate: string): void;
+    getBeginDate(): string | undefined;
+    getEndDate(): string | undefined;
     setQuantity(quantity: number): void;
     getOffers(options?: IGetterOptions): Promise<IOffer[]>;
-    getQuantity(): number | undefined;
-    getEndDate(): string | undefined;
-    setBeginDate(beginDate: string): void;
+    addOffer(offer: IOffer): void;
 }
 //# sourceMappingURL=SaleSession.d.ts.map

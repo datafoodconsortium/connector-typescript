@@ -12,9 +12,9 @@ export default class SocialMedia extends SemanticObject implements ISocialMedia 
         url?: string;
         doNotStore?: boolean;
     });
-    setName(name: string): void;
-    setUrl(url: string): void;
     getName(): string | undefined;
+    setName(name: string): void;
     getUrl(): string | undefined;
+    setUrl(url: string): void;
 }
 //# sourceMappingURL=SocialMedia.d.ts.map

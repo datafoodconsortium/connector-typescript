@@ -1,7 +1,7 @@
-import IAddress from "./IAddress.js";
-import IEnterprise from "./IEnterprise.js";
 import IPerson from "./IPerson.js";
+import IAddress from "./IAddress.js";
 import Agent from "./Agent.js";
+import IEnterprise from "./IEnterprise.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -17,12 +17,12 @@ export default class Person extends Agent implements IPerson {
         logo?: string;
         doNotStore?: boolean;
     });
-    getFirstName(): string | undefined;
-    getLastName(): string | undefined;
-    setLastName(lastName: string): void;
-    leaveAffiliatedOrganization(organization: IEnterprise): void;
-    setFirstName(firstName: string): void;
-    affiliateTo(organization: IEnterprise): void;
     getAffiliatedOrganizations(options?: IGetterOptions): Promise<IEnterprise[]>;
+    getFirstName(): string | undefined;
+    affiliateTo(organization: IEnterprise): void;
+    setFirstName(firstName: string): void;
+    leaveAffiliatedOrganization(organization: IEnterprise): void;
+    setLastName(lastName: string): void;
+    getLastName(): string | undefined;
 }
 //# sourceMappingURL=Person.d.ts.map

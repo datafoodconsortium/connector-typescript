@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IAddress from "./IAddress.js"
-import IEnterprise from "./IEnterprise.js"
 import IPerson from "./IPerson.js"
+import IAddress from "./IAddress.js"
 import Agent from "./Agent.js"
+import IEnterprise from "./IEnterprise.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -84,24 +84,18 @@ export default class Person extends Agent implements IPerson {
 		
 	}
 
+	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<IEnterprise[]> {
+		const results = new Array<IEnterprise>();
+		const properties = this.getSemanticPropertyAll("dfc-b:affiliates");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IEnterprise>semanticObject);
+		}
+		return results;
+	}
+
 	public getFirstName(): string | undefined {
 		return this.getSemanticProperty("dfc-b:firstName");
-	}
-
-	public getLastName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:familyName");
-	}
-
-	public setLastName(lastName: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
-	}
-
-	public leaveAffiliatedOrganization(organization: IEnterprise): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setFirstName(firstName: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
 	}
 
 	public affiliateTo(organization: IEnterprise): void {
@@ -114,13 +108,19 @@ export default class Person extends Agent implements IPerson {
 		}
 	}
 
-	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<IEnterprise[]> {
-		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("dfc-b:affiliates");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IEnterprise>semanticObject);
-		}
-		return results;
+	public setFirstName(firstName: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
+	}
+
+	public leaveAffiliatedOrganization(organization: IEnterprise): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setLastName(lastName: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
+	}
+
+	public getLastName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:familyName");
 	}
 }
