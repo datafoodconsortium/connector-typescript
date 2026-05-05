@@ -9,7 +9,7 @@ import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
 import ICustomerCategory from "./ICustomerCategory.js";
-import IEnterprise from "./IEnterprise.js";
+import IOrganization from "./IOrganization.js";
 import IPrice from "./IPrice.js";
 import ISuppliedProduct from "./ISuppliedProduct.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
@@ -48,7 +48,7 @@ export default class ConnectorFactory implements IConnectorFactory {
         doNotStore?: boolean;
         semanticId?: string;
         other?: Semanticable;
-        maintainers?: IEnterprise[];
+        maintainers?: IOrganization[];
         items?: ICatalogItem[];
     }): ICatalog;
     createCatalogItem(parameters: {
@@ -67,7 +67,7 @@ export default class ConnectorFactory implements IConnectorFactory {
         other?: Semanticable;
         description?: string;
     }): ICustomerCategory;
-    createEnterprise(parameters: {
+    createOrganization(parameters: {
         doNotStore?: boolean;
         semanticId?: string;
         other?: Semanticable;
@@ -78,7 +78,7 @@ export default class ConnectorFactory implements IConnectorFactory {
         catalogs?: ICatalog[];
         catalogItems?: ICatalogItem[];
         suppliedProducts?: ISuppliedProduct[];
-    }): IEnterprise;
+    }): IOrganization;
     createNutrientCharacteristic(parameters: {
         other?: Semanticable;
         unit?: ISKOSConcept;
@@ -120,7 +120,7 @@ export default class ConnectorFactory implements IConnectorFactory {
         firstName?: string;
         lastName?: string;
         localizations?: IAddress[];
-        organizations?: IEnterprise[];
+        organizations?: IOrganization[];
     }): IPerson;
     createPhysicalCharacteristic(parameters: {
         other?: Semanticable;

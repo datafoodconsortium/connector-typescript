@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPhoneNumber from "./IPhoneNumber.js"
 import ContactableByPhone from "./ContactableByPhone.js"
+import IPhoneNumber from "./IPhoneNumber.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -31,5 +31,7 @@ export default interface PhoneNumberOwner extends ContactableByPhone {
 	addPhoneNumber(phoneNumber: IPhoneNumber): void;
 
 	removePhoneNumber(phoneNumber: IPhoneNumber): void;
+
+	setPhoneNumbers(phoneNumbers: IPhoneNumber[]): void;
 
 }

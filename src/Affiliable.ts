@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IEnterprise from "./IEnterprise.js"
+import IOrganization from "./IOrganization.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Affiliable {
 
-	getAffiliatedOrganizations(): Promise<IEnterprise[]>;
+	getAffiliatedOrganizations(): Promise<IOrganization[]>;
 
-	affiliateTo(organization: IEnterprise): void;
+	affiliateTo(organization: IOrganization): void;
 
-	leaveAffiliatedOrganization(organization: IEnterprise): void;
+	leaveAffiliatedOrganization(organization: IOrganization): void;
 
 }

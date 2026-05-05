@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import ICatalog from "./ICatalog.js"
 import ICatalogItem from "./ICatalogItem.js"
 import IDefinedProduct from "./IDefinedProduct.js"
-import ICatalog from "./ICatalog.js"
 import IOffer from "./IOffer.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -94,38 +94,8 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
 		
 	}
 
-	public async getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
-		let result: IDefinedProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:references");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IDefinedProduct> semanticObject;
-		}
-		return result;
-	}
-
 	public getSku(): string | undefined {
 		return this.getSemanticProperty("dfc-b:sku");
-	}
-
-	public addOffer(offer: IOffer): void {
-		if (offer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:offeredThrough", offer);
-		}
-		else {
-			this.connector.store(offer);
-			this.addSemanticPropertyReference("dfc-b:offeredThrough", offer);
-		}
-	}
-
-	public registerInCatalog(repository: ICatalog): void {
-		if (repository.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:listedIn", repository);
-		}
-		else {
-			this.connector.store(repository);
-			this.addSemanticPropertyReference("dfc-b:listedIn", repository);
-		}
 	}
 
 	public async getCatalogs(options?: IGetterOptions): Promise<ICatalog[]> {
@@ -142,14 +112,6 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
 		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
 	}
 
-	public setSku(sku: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:sku", sku);
-	}
-
-	public setStockLimitation(stockLimitation: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
-	}
-
 	public async getOfferers(options?: IGetterOptions): Promise<IOffer[]> {
 		const results = new Array<IOffer>();
 		const properties = this.getSemanticPropertyAll("dfc-b:offeredThrough");
@@ -160,9 +122,47 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
 		return results;
 	}
 
+	public setSku(sku: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:sku", sku);
+	}
+
+	public setStockLimitation(stockLimitation: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
+	}
+
+	public async getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
+		let result: IDefinedProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:references");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IDefinedProduct> semanticObject;
+		}
+		return result;
+	}
+
+	public registerInCatalog(repository: ICatalog): void {
+		if (repository.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:listedIn", repository);
+		}
+		else {
+			this.connector.store(repository);
+			this.addSemanticPropertyReference("dfc-b:listedIn", repository);
+		}
+	}
+
 	public setOfferedProduct(offeredProduct: IDefinedProduct): void {
 		this.setSemanticPropertyReference("dfc-b:references", offeredProduct);
 		
 		this.connector.store(offeredProduct);
+	}
+
+	public addOffer(offer: IOffer): void {
+		if (offer.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:offeredThrough", offer);
+		}
+		else {
+			this.connector.store(offer);
+			this.addSemanticPropertyReference("dfc-b:offeredThrough", offer);
+		}
 	}
 }

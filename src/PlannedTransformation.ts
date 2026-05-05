@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPlannedTransformation from "./IPlannedTransformation.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
+import IPlannedTransformation from "./IPlannedTransformation.js"
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -84,32 +84,32 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 		
 	}
 
-	public setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void {
-		
+	public addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
+		if (plannedConsumptionFlow.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasIncome", plannedConsumptionFlow);
+		}
+		else {
+			this.connector.store(plannedConsumptionFlow);
+			this.addSemanticPropertyReference("dfc-b:hasIncome", plannedConsumptionFlow);
+		}
 	}
 
 	public removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void {
-		if (plannedProductionFlow.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasOutcome", plannedProductionFlow);
-		}
-		else {
-			this.connector.store(plannedProductionFlow);
-			this.addSemanticPropertyReference("dfc-b:hasOutcome", plannedProductionFlow);
-		}
+	public removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void {
+		throw new Error("Not yet implemented.");
 	}
 
-	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
-		let result: ISKOSConcept | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISKOSConcept> semanticObject;
-		}
-		return result;
+	public setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasIncome").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		plannedConsumptionFlows.forEach((plannedTransformation) => {
+			this.addSemanticPropertyReference("dfc-b:hasIncome", plannedTransformation, true);
+			this.connector.store(plannedTransformation);
+		});
 	}
 
 	public async getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]> {
@@ -122,14 +122,14 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 		return results;
 	}
 
-	public setTransformationType(transformationType: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasTransformationType", transformationType);
-		
-		this.connector.store(transformationType);
-	}
-
-	public setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void {
-		
+	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
 	}
 
 	public async getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]> {
@@ -142,17 +142,29 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 		return results;
 	}
 
-	public addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
-		if (plannedConsumptionFlow.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasIncome", plannedConsumptionFlow);
-		}
-		else {
-			this.connector.store(plannedConsumptionFlow);
-			this.addSemanticPropertyReference("dfc-b:hasIncome", plannedConsumptionFlow);
-		}
+	public setTransformationType(transformationType: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasTransformationType", transformationType);
+		
+		this.connector.store(transformationType);
 	}
 
-	public removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void {
-		throw new Error("Not yet implemented.");
+	public setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasOutcome").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		plannedProductionFlows.forEach((plannedTransformation) => {
+			this.addSemanticPropertyReference("dfc-b:hasOutcome", plannedTransformation, true);
+			this.connector.store(plannedTransformation);
+		});
+	}
+
+	public addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void {
+		if (plannedProductionFlow.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasOutcome", plannedProductionFlow);
+		}
+		else {
+			this.connector.store(plannedProductionFlow);
+			this.addSemanticPropertyReference("dfc-b:hasOutcome", plannedProductionFlow);
+		}
 	}
 }

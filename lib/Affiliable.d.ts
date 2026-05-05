@@ -1,7 +1,7 @@
-import IEnterprise from "./IEnterprise.js";
+import IOrganization from "./IOrganization.js";
 export default interface Affiliable {
-    getAffiliatedOrganizations(): Promise<IEnterprise[]>;
-    affiliateTo(organization: IEnterprise): void;
-    leaveAffiliatedOrganization(organization: IEnterprise): void;
+    getAffiliatedOrganizations(): Promise<IOrganization[]>;
+    affiliateTo(organization: IOrganization): void;
+    leaveAffiliatedOrganization(organization: IOrganization): void;
 }
 //# sourceMappingURL=Affiliable.d.ts.map

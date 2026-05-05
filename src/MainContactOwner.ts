@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ManagedByMainContact from "./ManagedByMainContact.js"
 import IPerson from "./IPerson.js"
+import ManagedByMainContact from "./ManagedByMainContact.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

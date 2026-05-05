@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalogItem from "./ICatalogItem.js"
+import IOrganization from "./IOrganization.js"
 import ICatalog from "./ICatalog.js"
-import IEnterprise from "./IEnterprise.js"
+import ICatalogItem from "./ICatalogItem.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -39,8 +39,10 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		connector: IConnector,
 		semanticId?: string,
 		other?: Semanticable,
-		maintainers?: IEnterprise[],
+		maintainers?: IOrganization[],
 		items?: ICatalogItem[],
+		beginDate?: string,
+		endDate?: string,
 		doNotStore?: boolean,
 	}) {
 		
@@ -76,26 +78,22 @@ export default class Catalog extends SemanticObject implements ICatalog {
 			parameters.items.forEach(e => this.addItem(e));
 		}
 		
+		if (parameters.beginDate) {
+			this.setBeginDate(parameters.beginDate);
+		}
+		
+		if (parameters.endDate) {
+			this.setEndDate(parameters.endDate);
+		}
+		
 	}
 
-	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
-		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("dfc-b:lists");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalogItem>semanticObject);
-		}
-		return results;
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
 	}
 
-	public addMaintainer(maintainer: IEnterprise): void {
-		if (maintainer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:maintainedBy", maintainer);
-		}
-		else {
-			this.connector.store(maintainer);
-			this.addSemanticPropertyReference("dfc-b:maintainedBy", maintainer);
-		}
+	public removeItem(item: ICatalogItem): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public addItem(item: ICatalogItem): void {
@@ -108,16 +106,44 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		}
 	}
 
-	public removeItem(item: ICatalogItem): void {
-		throw new Error("Not yet implemented.");
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:beginDate");
 	}
 
-	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
-		const results = new Array<IEnterprise>();
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	}
+
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
+	}
+
+	public async getMaintainers(options?: IGetterOptions): Promise<IOrganization[]> {
+		const results = new Array<IOrganization>();
 		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IEnterprise>semanticObject);
+			if (semanticObject) results.push(<IOrganization>semanticObject);
+		}
+		return results;
+	}
+
+	public addMaintainer(maintainer: IOrganization): void {
+		if (maintainer.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:maintainedBy", maintainer);
+		}
+		else {
+			this.connector.store(maintainer);
+			this.addSemanticPropertyReference("dfc-b:maintainedBy", maintainer);
+		}
+	}
+
+	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
+		const results = new Array<ICatalogItem>();
+		const properties = this.getSemanticPropertyAll("dfc-b:lists");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICatalogItem>semanticObject);
 		}
 		return results;
 	}

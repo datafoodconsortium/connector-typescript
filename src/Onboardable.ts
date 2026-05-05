@@ -31,4 +31,8 @@ export default interface Onboardable {
 
 	addCustomerCategory(customerCategory: ICustomerCategory): void;
 
+	removeCustomerCategory(customerCategory: ICustomerCategory): void;
+
+	setCustomerCategories(customerCategories: ICustomerCategory[]): void;
+
 }

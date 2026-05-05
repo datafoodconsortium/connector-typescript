@@ -9,7 +9,7 @@ import IAllergenCharacteristic from "./IAllergenCharacteristic";
 import ICatalog from "./ICatalog";
 import ICatalogItem from "./ICatalogItem";
 import ICustomerCategory from "./ICustomerCategory";
-import IEnterprise from "./IEnterprise";
+import IOrganization from "./IOrganization";
 import INutrientCharacteristic from "./INutrientCharacteristic";
 import IOffer from "./IOffer";
 import IOrder from "./IOrder";
@@ -45,7 +45,7 @@ export default interface IConnector {
         doNotStore?: boolean;
         semanticId?: string;
         other?: Semanticable;
-        maintainers?: IEnterprise[];
+        maintainers?: IOrganization[];
         items?: ICatalogItem[];
     }): ICatalog;
     createCatalogItem(parameters: {
@@ -64,7 +64,7 @@ export default interface IConnector {
         other?: Semanticable;
         description?: string;
     }): ICustomerCategory;
-    createEnterprise(parameters: {
+    createOrganization(parameters: {
         doNotStore?: boolean;
         semanticId?: string;
         other?: Semanticable;
@@ -75,7 +75,7 @@ export default interface IConnector {
         catalogs?: ICatalog[];
         catalogItems?: ICatalogItem[];
         suppliedProducts?: ISuppliedProduct[];
-    }): IEnterprise;
+    }): IOrganization;
     createNutrientCharacteristic(parameters: {
         other?: Semanticable;
         unit?: ISKOSConcept;
@@ -117,7 +117,7 @@ export default interface IConnector {
         firstName?: string;
         lastName?: string;
         localizations?: IAddress[];
-        organizations?: IEnterprise[];
+        organizations?: IOrganization[];
     }): IPerson;
     createPhysicalCharacteristic(parameters: {
         other?: Semanticable;
@@ -199,5 +199,6 @@ export default interface IConnector {
     importOne(data: string, options?: IConnectorImportOptions): Promise<Semanticable | undefined>;
     importOneTyped<Type>(data: string, options?: IConnectorImportOptions): Promise<Type | undefined>;
     store(semanticObject: Semanticable): void;
+    removeFromStore(semanticObjectId: string): void;
 }
 //# sourceMappingURL=IConnector.d.ts.map

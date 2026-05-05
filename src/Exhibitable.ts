@@ -27,8 +27,12 @@ import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface Exhibitable {
 
-	getImage(): string | undefined;
+	getImages(): string[];
 
-	setImage(image: string): void;
+	setImages(image: string[]): void;
+
+	addImage(image: string): void;
+
+	removeImage(image: string): void;
 
 }

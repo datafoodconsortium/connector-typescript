@@ -7,7 +7,7 @@ import IAllergenCharacteristic from "./IAllergenCharacteristic";
 import ICatalog from "./ICatalog";
 import ICatalogItem from "./ICatalogItem";
 import ICustomerCategory from "./ICustomerCategory";
-import IEnterprise from "./IEnterprise";
+import IOrganization from "./IOrganization";
 import INutrientCharacteristic from "./INutrientCharacteristic";
 import IOffer from "./IOffer";
 import IOrder from "./IOrder";
@@ -46,7 +46,7 @@ export default interface IConnectorFactory {
         doNotStore?: boolean;
         semanticId?: string;
         other?: Semanticable;
-        maintainers?: IEnterprise[];
+        maintainers?: IOrganization[];
         items?: ICatalogItem[];
     }): ICatalog;
     createCatalogItem(parameters: {
@@ -65,7 +65,7 @@ export default interface IConnectorFactory {
         other?: Semanticable;
         description?: string;
     }): ICustomerCategory;
-    createEnterprise(parameters: {
+    createOrganization(parameters: {
         doNotStore?: boolean;
         semanticId?: string;
         other?: Semanticable;
@@ -76,7 +76,7 @@ export default interface IConnectorFactory {
         catalogs?: ICatalog[];
         catalogItems?: ICatalogItem[];
         suppliedProducts?: ISuppliedProduct[];
-    }): IEnterprise;
+    }): IOrganization;
     createNutrientCharacteristic(parameters: {
         other?: Semanticable;
         unit?: ISKOSConcept;
@@ -118,7 +118,7 @@ export default interface IConnectorFactory {
         firstName?: string;
         lastName?: string;
         localizations?: IAddress[];
-        organizations?: IEnterprise[];
+        organizations?: IOrganization[];
     }): IPerson;
     createPhysicalCharacteristic(parameters: {
         other?: Semanticable;

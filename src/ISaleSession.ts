@@ -21,12 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IHostingPlace from "./IHostingPlace.js"
 import Ellapsable from "./Ellapsable.js"
 import IOffer from "./IOffer.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ISaleSession extends Semanticable, Ellapsable {
+export default interface ISaleSession extends Semanticable, Ellapsable, IHostingPlace {
 
 	getQuantity(): number | undefined;
 
@@ -35,5 +36,9 @@ export default interface ISaleSession extends Semanticable, Ellapsable {
 	getOffers(): Promise<IOffer[]>;
 
 	addOffer(offer: IOffer): void;
+
+	setOffers(offers: IOffer[]): void;
+
+	removeOffer(offer: IOffer): void;
 
 }

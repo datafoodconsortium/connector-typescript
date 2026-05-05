@@ -1,5 +1,7 @@
 export default interface Exhibitable {
-    getImage(): string | undefined;
-    setImage(image: string): void;
+    getImages(): string[];
+    setImages(image: string[]): void;
+    addImage(image: string): void;
+    removeImage(image: string): void;
 }
 //# sourceMappingURL=Exhibitable.d.ts.map

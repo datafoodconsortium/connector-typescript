@@ -1,0 +1,1 @@
+{"version":3,"file":"IGeoJsonGeometry.d.ts","sourceRoot":"","sources":["../src/IGeoJsonGeometry.ts"],"names":[],"mappings":"AA2BA,MAAM,CAAC,OAAO,WAAW,gBAAgB;IAExC,cAAc,IAAI,MAAM,EAAE,CAAC;IAE3B,cAAc,CAAC,WAAW,EAAE,MAAM,EAAE,GAAG,IAAI,CAAC;IAE5C,aAAa,CAAC,UAAU,EAAE,MAAM,GAAG,IAAI,CAAC;IAExC,gBAAgB,CAAC,UAAU,EAAE,MAAM,GAAG,IAAI,CAAC;CAE3C"}

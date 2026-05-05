@@ -21,11 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import Ellapsable from "./Ellapsable.js"
 import Browsable from "./Browsable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ICatalog extends Semanticable, Browsable {
+export default interface ICatalog extends Semanticable, Ellapsable, Browsable {
 
 
 }

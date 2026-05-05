@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IAgent from "./IAgent.js"
 import ICustomerCategory from "./ICustomerCategory.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -38,6 +39,7 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 		semanticId?: string,
 		other?: Semanticable,
 		description?: string,
+		members?: IAgent[],
 		doNotStore?: boolean,
 	}) {
 		
@@ -69,13 +71,51 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 			this.setDescription(parameters.description);
 		}
 		
+		if (parameters.members) {
+			parameters.members.forEach(e => this.addMember(e));
+		}
+		
+	}
+
+	public addMember(member: IAgent): void {
+		if (member.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:isMemberOf", member);
+		}
+		else {
+			this.connector.store(member);
+			this.addSemanticPropertyReference("dfc-b:isMemberOf", member);
+		}
+	}
+
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
 	}
 
 	public setDescription(description: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
+	public removeMember(member: IAgent): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setMembers(members: IAgent[]): void {
+		this.getSemanticPropertyAll("dfc-b:isMemberOf").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		members.forEach((customerCategory) => {
+			this.addSemanticPropertyReference("dfc-b:isMemberOf", customerCategory, true);
+			this.connector.store(customerCategory);
+		});
+	}
+
+	public async getMembers(options?: IGetterOptions): Promise<IAgent[]> {
+		const results = new Array<IAgent>();
+		const properties = this.getSemanticPropertyAll("dfc-b:isMemberOf");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IAgent>semanticObject);
+		}
+		return results;
 	}
 }

@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalogItem from "./ICatalogItem.js"
-import ICustomerCategory from "./ICustomerCategory.js"
 import IPrice from "./IPrice.js"
+import ICustomerCategory from "./ICustomerCategory.js"
+import ICatalogItem from "./ICatalogItem.js"
 import IOffer from "./IOffer.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -89,6 +89,12 @@ export default class Offer extends SemanticObject implements IOffer {
 		
 	}
 
+	public setCustomerCategory(customerCategory: ICustomerCategory): void {
+		this.setSemanticPropertyReference("dfc-b:offeredTo", customerCategory);
+		
+		this.connector.store(customerCategory);
+	}
+
 	public async getOfferedItem(options?: IGetterOptions): Promise<ICatalogItem | undefined> {
 		let result: ICatalogItem | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:offeredItem");
@@ -97,27 +103,6 @@ export default class Offer extends SemanticObject implements IOffer {
 			if (semanticObject) result = <ICatalogItem> semanticObject;
 		}
 		return result;
-	}
-
-	public setCustomerCategory(customerCategory: ICustomerCategory): void {
-		this.setSemanticPropertyReference("dfc-b:offeredTo", customerCategory);
-		
-		this.connector.store(customerCategory);
-	}
-
-	public async getCustomerCategory(options?: IGetterOptions): Promise<ICustomerCategory | undefined> {
-		let result: ICustomerCategory | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:offeredTo");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ICustomerCategory> semanticObject;
-		}
-		return result;
-	}
-
-	public getPrice(): IPrice | undefined {
-		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
-		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 
 	public setPrice(price: IPrice): void {
@@ -129,13 +114,28 @@ export default class Offer extends SemanticObject implements IOffer {
 		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
 	}
 
-	public setStockLimitation(stockLimitation: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
-	}
-
 	public setOfferedItem(offeredItem: ICatalogItem): void {
 		this.setSemanticPropertyReference("dfc-b:offeredItem", offeredItem);
 		
 		this.connector.store(offeredItem);
+	}
+
+	public getPrice(): IPrice | undefined {
+		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
+		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
+	}
+
+	public setStockLimitation(stockLimitation: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
+	}
+
+	public async getCustomerCategory(options?: IGetterOptions): Promise<ICustomerCategory | undefined> {
+		let result: ICustomerCategory | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:offeredTo");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ICustomerCategory> semanticObject;
+		}
+		return result;
 	}
 }

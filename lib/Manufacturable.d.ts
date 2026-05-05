@@ -1,7 +1,7 @@
-import ISKOSConcept from "./ISKOSConcept.js";
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 export default interface Manufacturable {
     getAlcoholPercentage(): number | undefined;
     getLifetime(): string | undefined;

@@ -74,16 +74,6 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
 		
 	}
 
-	public getQuantityValue(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:value"));
-	}
-
-	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
-		
-		this.connector.store(quantityUnit);
-	}
-
 	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
 		let result: ISKOSConcept | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:hasUnit");
@@ -94,7 +84,17 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
 		return result;
 	}
 
+	public getQuantityValue(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:value"));
+	}
+
 	public setQuantityValue(quantityValue: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
+	}
+
+	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
+		
+		this.connector.store(quantityUnit);
 	}
 }

@@ -21,17 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Certifiable from "./Certifiable.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import Proposable from "./Proposable.js"
-import Describable from "./Describable.js"
 import Nameable from "./Nameable.js"
-import IQuantity from "./IQuantity.js"
+import Certifiable from "./Certifiable.js"
 import Manufacturable from "./Manufacturable.js"
+import Describable from "./Describable.js"
+import IQuantity from "./IQuantity.js"
+import IProductOption from "./IProductOption.js"
+import Exhibitable from "./Exhibitable.js"
+import Proposable from "./Proposable.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IDefinedProduct extends Semanticable, Describable, Certifiable, Proposable, Nameable, Manufacturable {
+export default interface IDefinedProduct extends Semanticable, Describable, Nameable, Exhibitable, Certifiable, Proposable, Manufacturable {
 
 	addClaim(claim: ISKOSConcept): void;
 
@@ -47,10 +49,20 @@ export default interface IDefinedProduct extends Semanticable, Describable, Cert
 
 	removeClaim(claim: ISKOSConcept): void;
 
-	addImage(image: string): void;
+	addVariant(variant: IDefinedProduct): void;
 
-	removeImage(image: string): void;
+	getVariants(): Promise<IDefinedProduct[]>;
 
-	getImages(): string[];
+	setVariants(variants: IDefinedProduct[]): void;
+
+	removeVariant(variant: IDefinedProduct): void;
+
+	addReferenceProductOption(referenceProductOption: IProductOption): void;
+
+	getReferenceProductOptions(): Promise<IProductOption[]>;
+
+	setReferenceProductOptions(referenceProductOptions: IProductOption[]): void;
+
+	removeReferenceProductOption(referenceProductOption: IProductOption): void;
 
 }

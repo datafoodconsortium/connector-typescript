@@ -13,7 +13,7 @@ import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
 import ICustomerCategory from "./ICustomerCategory.js";
-import IEnterprise from "./IEnterprise.js";
+import IOrganization from "./IOrganization.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import IOffer from "./IOffer.js";
 import IOrder from "./IOrder.js";
@@ -63,7 +63,7 @@ export default class Connector implements IConnector {
     }): IAllergenCharacteristic;
     createCatalog(parameters: {
         semanticId: string;
-        maintainers?: IEnterprise[];
+        maintainers?: IOrganization[];
         items?: ICatalogItem[];
         doNotStore?: boolean;
     }): ICatalog;
@@ -93,7 +93,7 @@ export default class Connector implements IConnector {
         other: ICustomerCategory;
         doNotStore?: boolean;
     }): ICustomerCategory;
-    createEnterprise(parameters: {
+    createOrganization(parameters: {
         semanticId: string;
         localizations?: IAddress[];
         description?: string;
@@ -103,11 +103,11 @@ export default class Connector implements IConnector {
         catalogItems?: ICatalogItem[];
         suppliedProducts?: ISuppliedProduct[];
         doNotStore?: boolean;
-    }): IEnterprise;
-    createEnterprise(parameters: {
-        other: IEnterprise;
+    }): IOrganization;
+    createOrganization(parameters: {
+        other: IOrganization;
         doNotStore?: boolean;
-    }): IEnterprise;
+    }): IOrganization;
     createNutrientCharacteristic(parameters: {
         unit?: ISKOSConcept;
         value?: number;
@@ -159,7 +159,7 @@ export default class Connector implements IConnector {
         firstName?: string;
         lastName?: string;
         localizations?: IAddress[];
-        organizations?: IEnterprise[];
+        organizations?: IOrganization[];
         doNotStore?: boolean;
     }): IPerson;
     createPerson(parameters: {
@@ -280,5 +280,6 @@ export default class Connector implements IConnector {
     setDefaultImporter(importer: IConnectorImporter): void;
     setDefaultStore(store: IConnectorStore): void;
     store(semanticObject: Semanticable): void;
+    removeFromStore(semanticObjectId: string): void;
 }
 //# sourceMappingURL=Connector.d.ts.map

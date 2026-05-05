@@ -1,0 +1,1 @@
+{"version":3,"file":"IRealizedConsumptionFlow.d.ts","sourceRoot":"","sources":["../src/IRealizedConsumptionFlow.ts"],"names":[],"mappings":"AAuBA,OAAO,aAAa,MAAM,oBAAoB,CAAA;AAC9C,OAAO,gBAAgB,MAAM,uBAAuB,CAAA;AAIpD,MAAM,CAAC,OAAO,WAAW,wBAAyB,SAAQ,aAAa;IAEtE,kBAAkB,IAAI,OAAO,CAAC,gBAAgB,GAAG,SAAS,CAAC,CAAC;IAE5D,kBAAkB,CAAC,eAAe,EAAE,gBAAgB,GAAG,IAAI,CAAC;CAE5D"}

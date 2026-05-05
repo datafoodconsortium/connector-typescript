@@ -17,19 +17,19 @@ export default class Address extends SemanticObject implements IAddress {
         region?: string;
         doNotStore?: boolean;
     });
-    getCountry(): string | undefined;
     getCity(): string | undefined;
-    setLatitude(latitude: number): void;
-    getStreet(): string | undefined;
     setPostalCode(postalCode: string): void;
+    setLatitude(latitude: number): void;
     getLongitude(): number | undefined;
+    getStreet(): string | undefined;
+    getLatitude(): number | undefined;
     getRegion(): string | undefined;
     setCountry(country: string): void;
-    getLatitude(): number | undefined;
     setStreet(street: string): void;
-    setLongitude(longitude: number): void;
+    setCity(city: string): void;
+    getCountry(): string | undefined;
     getPostalCode(): string | undefined;
     setRegion(region: string): void;
-    setCity(city: string): void;
+    setLongitude(longitude: number): void;
 }
 //# sourceMappingURL=Address.d.ts.map
