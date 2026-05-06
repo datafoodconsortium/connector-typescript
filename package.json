@@ -12,7 +12,7 @@
   },
   "scripts": {
     "build": "tsc -p .",
-    "test": "node --test test"
+    "test": "node --test"
   },
   "dependencies": {
     "@rdfjs/serializer-jsonld-ext": "^4.0.0",
