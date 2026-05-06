@@ -9,13 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - None
 
-## [1.0.0-alpha.11] 2026-05-06
+## [1.0.0-alpha.12] 2026-05-06
 
 ### Fixed
 
 - Rename `hasIncome` -> `hasInput` and `hasOutcome` -> `hasOutput` in `AsPlannedTransformation`.
 - Rename `incomeOf` > `inputOf` in `AsPlannedConsumptionFlow`.
 - Rename `outcomeOf` -> `outpufOf` in `AsPlannedProductionFlow`.
+
+## [1.0.0-alpha.11] 2025-05-27
+
+NPM alignment release (same as 1.0.0-alpha.10).
 
 ## [1.0.0-alpha.10] - 2025-04-28
 
@@ -183,7 +187,8 @@ See the SUPPORTED.md file [comparison from main to next](https://github.com/data
 
 - Initial release.
 
-[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.11...HEAD
+[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.12...HEAD
+[1.0.0-alpha.12]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.11...v1.0.0-alpha.12
 [1.0.0-alpha.11]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.10...v1.0.0-alpha.11
 [1.0.0-alpha.10]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.9...v1.0.0-alpha.10
 [1.0.0-alpha.9]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.8...v1.0.0-alpha.9
