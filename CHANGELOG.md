@@ -1,6 +1,3 @@
-<!-- TODO: Update this CHANGELOG before merging into connector-codegen#main -->
-<!-- TODO: Also update semver values here and in package.json etc -->
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -11,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - None
+
+## [1.0.0-alpha.11] 2026-05-06
+
+### Fixed
+
+- Rename `hasIncome` -> `hasInput` and `hasOutcome` -> `hasOutput` in `AsPlannedTransformation`.
+- Rename `incomeOf` > `inputOf` in `AsPlannedConsumptionFlow`.
+- Rename `outcomeOf` -> `outpufOf` in `AsPlannedProductionFlow`.
 
 ## [1.0.0-alpha.10] - 2025-04-28
 
@@ -178,7 +183,8 @@ See the SUPPORTED.md file [comparison from main to next](https://github.com/data
 
 - Initial release.
 
-[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.10...HEAD
+[unreleased]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.11...HEAD
+[1.0.0-alpha.11]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.10...v1.0.0-alpha.11
 [1.0.0-alpha.10]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.9...v1.0.0-alpha.10
 [1.0.0-alpha.9]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.8...v1.0.0-alpha.9
 [1.0.0-alpha.8]: https://github.com/datafoodconsortium/connector-typescript/compare/v1.0.0-alpha.7...v1.0.0-alpha.8
