@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
-import SKOSConcept from "../../lib/SKOSConcept.js"
-import PhysicalCharacteristic from "../../lib/PhysicalCharacteristic.js"
 import Characteristic from "../../lib/Characteristic.js"
+import PhysicalCharacteristic from "../../lib/PhysicalCharacteristic.js"
+import SKOSConcept from "../../lib/SKOSConcept.js"
 import { assertSemanticEqual } from '../utils.js';
 
 const connector = new Connector();
@@ -23,32 +23,32 @@ const json = `{
 test('PhysicalCharacteristic', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const kaqvaeakda = new SKOSConcept({ connector, semanticId: 'http://base.com/sfgfzwsfez' });
+		const cegqollhgn = new SKOSConcept({ connector, semanticId: 'http://base.com/tzjiixuaby' });
 		
-		const nsmnmkjtji = new SKOSConcept({ connector, semanticId: 'http://base.com/tonkqivpip' });
+		const hjzrrvvifw = new SKOSConcept({ connector, semanticId: 'http://base.com/vaqlknmuyo' });
 		const obj = new PhysicalCharacteristic({
 			connector,
-			unit: kaqvaeakda,
-			value: 0.62692815,
-			physicalDimension: nsmnmkjtji
+			unit: cegqollhgn,
+			value: 0.6252865,
+			physicalDimension: hjzrrvvifw
 		});
 
 		
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = kaqvaeakda;
+		const expectedUnit = cegqollhgn;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.62692815;
+		const expectedValue = 0.6252865;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});
 
 		const actualPhysicalDimension = await obj.getQuantityDimension();
-		const expectedPhysicalDimension = nsmnmkjtji;
+		const expectedPhysicalDimension = hjzrrvvifw;
 		await t.test(`#physicalDimension`, () => {
 			assertSemanticEqual(actualPhysicalDimension, expectedPhysicalDimension);
 		});

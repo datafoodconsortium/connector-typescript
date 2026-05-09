@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Payable from "./Payable.js"
 import Marketable from "./Marketable.js"
+import Payable from "./Payable.js"
 import Stockable from "./Stockable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IOffer extends Semanticable, Stockable, Payable, Marketable {
+export default interface IOffer extends Semanticable, Marketable, Stockable, Payable {
 
 
 }

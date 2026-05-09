@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPlannedTransformation from "./IPlannedTransformation.js"
-import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
-import ISKOSConcept from "./ISKOSConcept.js"
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
+import IPlannedTransformation from "./IPlannedTransformation.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -84,24 +84,28 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 		
 	}
 
-	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
-		let result: ISKOSConcept | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISKOSConcept> semanticObject;
-		}
-		return result;
-	}
-
-	public async getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]> {
-		const results = new Array<IPlannedProductionFlow>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasOutput");
+	public async getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]> {
+		const results = new Array<IPlannedConsumptionFlow>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasInput");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IPlannedProductionFlow>semanticObject);
+			if (semanticObject) results.push(<IPlannedConsumptionFlow>semanticObject);
 		}
 		return results;
+	}
+
+	public addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
+		if (plannedConsumptionFlow.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasInput", plannedConsumptionFlow);
+		}
+		else {
+			this.connector.store(plannedConsumptionFlow);
+			this.addSemanticPropertyReference("dfc-b:hasInput", plannedConsumptionFlow);
+		}
+	}
+
+	public removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public setTransformationType(transformationType: ISKOSConcept): void {
@@ -110,17 +114,7 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 		this.connector.store(transformationType);
 	}
 
-	public setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasOutput").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		plannedProductionFlows.forEach((plannedTransformation) => {
-			this.addSemanticPropertyReference("dfc-b:hasOutput", plannedTransformation, true);
-			this.connector.store(plannedTransformation);
-		});
-	}
-
-	public removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void {
+	public removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
 		throw new Error("Not yet implemented.");
 	}
 
@@ -134,6 +128,36 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 		}
 	}
 
+	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
+	}
+
+	public setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasOutput").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		plannedProductionFlows.forEach((plannedTransformation) => {
+			this.addSemanticPropertyReference("dfc-b:hasOutput", plannedTransformation, true);
+			this.connector.store(plannedTransformation);
+		});
+	}
+
+	public async getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]> {
+		const results = new Array<IPlannedProductionFlow>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasOutput");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IPlannedProductionFlow>semanticObject);
+		}
+		return results;
+	}
+
 	public setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void {
 		this.getSemanticPropertyAll("dfc-b:hasInput").forEach((prop) => {
 			this.connector.removeFromStore(prop);
@@ -142,29 +166,5 @@ export default class PlannedTransformation extends SemanticObject implements IPl
 			this.addSemanticPropertyReference("dfc-b:hasInput", plannedTransformation, true);
 			this.connector.store(plannedTransformation);
 		});
-	}
-
-	public addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
-		if (plannedConsumptionFlow.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasInput", plannedConsumptionFlow);
-		}
-		else {
-			this.connector.store(plannedConsumptionFlow);
-			this.addSemanticPropertyReference("dfc-b:hasInput", plannedConsumptionFlow);
-		}
-	}
-
-	public async getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]> {
-		const results = new Array<IPlannedConsumptionFlow>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasInput");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IPlannedConsumptionFlow>semanticObject);
-		}
-		return results;
-	}
-
-	public removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void {
-		throw new Error("Not yet implemented.");
 	}
 }

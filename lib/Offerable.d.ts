@@ -1,5 +1,5 @@
-import IDefinedProduct from "./IDefinedProduct.js";
 import IOffer from "./IOffer.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default interface Offerable {
     getOfferers(): Promise<IOffer[]>;
     getOfferedProduct(): Promise<IDefinedProduct | undefined>;

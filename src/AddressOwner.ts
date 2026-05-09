@@ -32,4 +32,6 @@ export default interface AddressOwner extends ContactableByAddress {
 
 	removeLocalization(localization: IAddress): void;
 
+	setLocalizations(localizations: IAddress[]): void;
+
 }

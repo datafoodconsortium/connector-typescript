@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalog from "./ICatalog.js"
 import ICatalogItem from "./ICatalogItem.js"
+import ICatalog from "./ICatalog.js"
 import IEnterprise from "./IEnterprise.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -78,18 +78,14 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		
 	}
 
-	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
-		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
+	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
+		const results = new Array<ICatalogItem>();
+		const properties = this.getSemanticPropertyAll("dfc-b:lists");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IEnterprise>semanticObject);
+			if (semanticObject) results.push(<ICatalogItem>semanticObject);
 		}
 		return results;
-	}
-
-	public removeItem(item: ICatalogItem): void {
-		throw new Error("Not yet implemented.");
 	}
 
 	public addItem(item: ICatalogItem): void {
@@ -112,13 +108,17 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		}
 	}
 
-	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
-		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("dfc-b:lists");
+	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
+		const results = new Array<IEnterprise>();
+		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalogItem>semanticObject);
+			if (semanticObject) results.push(<IEnterprise>semanticObject);
 		}
 		return results;
+	}
+
+	public removeItem(item: ICatalogItem): void {
+		throw new Error("Not yet implemented.");
 	}
 }

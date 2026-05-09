@@ -2,9 +2,10 @@ import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
 import SKOSConcept from "../../lib/SKOSConcept.js"
-import Person from "../../lib/Person.js"
-import SaleSession from "../../lib/SaleSession.js"
 import Order from "../../lib/Order.js"
+import SaleSession from "../../lib/SaleSession.js"
+import Person from "../../lib/Person.js"
+import PaymentMethod from "../../lib/PaymentMethod.js"
 import OrderLine from "../../lib/OrderLine.js"
 import { assertSemanticEqual } from '../utils.js';
 
@@ -27,55 +28,57 @@ test('Order', async (t) => {
 		const connector = new Connector();
 		
 		
-		const dkfczfqngf = new SaleSession({ connector, semanticId: 'http://base.com/ljpqknxssn' });
-		const rdfjdlhmro = new Person({ connector, semanticId: 'http://base.com/gjavimjvld' });
-		const vvvuiughzm = [new OrderLine({ connector, semanticId: 'http://base.com/doycfikfki' })];
-		const bihcnbmsii = new Person({ connector, semanticId: 'http://base.com/dorropiurw' });
-		const rosmxowlsj = new SKOSConcept({ connector, semanticId: 'http://base.com/qsjefbyrxu' });
-		const kapolhhgsq = new SKOSConcept({ connector, semanticId: 'http://base.com/pycmksnxlw' });
-		const iuwrtnfdnl = new SKOSConcept({ connector, semanticId: 'http://base.com/vaixepbrxu' });
+		const jajfgcegnf = new SaleSession({ connector, semanticId: 'http://base.com/fgcqncihcl' });
+		const nznrtyefge = new Person({ connector, semanticId: 'http://base.com/vgpelrhpvu' });
+		const kjkopqzatp = [new OrderLine({ connector, semanticId: 'http://base.com/xigiqfvkch' })];
+		const bnkxtveqgg = new Person({ connector, semanticId: 'http://base.com/ysycnvpzxb' });
+		const niwmqyifsm = new SKOSConcept({ connector, semanticId: 'http://base.com/dmpbrqjgis' });
+		const jopeqaidzi = new SKOSConcept({ connector, semanticId: 'http://base.com/ppndpopgbj' });
+		const yjcaqnkgvl = new SKOSConcept({ connector, semanticId: 'http://base.com/luufxxpggz' });
+		const teoatngtri = new PaymentMethod({ connector, semanticId: 'http://base.com/qapahyubse' });
 		const obj = new Order({
 			connector,
 			semanticId: "http://example.org/obj",
-			number: "wkumzbiuxl",
-			date: "lzcmbhkowi",
-			saleSession: dkfczfqngf,
-			client: rdfjdlhmro,
-			lines: vvvuiughzm,
-			soldBy: bihcnbmsii,
-			fulfilmentStatus: rosmxowlsj,
-			orderStatus: kapolhhgsq,
-			paymentStatus: iuwrtnfdnl
+			number: "ygiepgrods",
+			date: "wqlkpbalei",
+			saleSession: jajfgcegnf,
+			client: nznrtyefge,
+			lines: kjkopqzatp,
+			soldBy: bnkxtveqgg,
+			fulfilmentStatus: niwmqyifsm,
+			orderStatus: jopeqaidzi,
+			paymentStatus: yjcaqnkgvl,
+			paymentMethod: teoatngtri
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualNumber = obj.getNumber();
-		const expectedNumber = "wkumzbiuxl";
+		const expectedNumber = "ygiepgrods";
 		await t.test(`#number`, () => {
 			assert.strictEqual(actualNumber, expectedNumber);
 		});
 
 		const actualDate = obj.getDate();
-		const expectedDate = "lzcmbhkowi";
+		const expectedDate = "wqlkpbalei";
 		await t.test(`#date`, () => {
 			assert.strictEqual(actualDate, expectedDate);
 		});
 
 		const actualSaleSession = await obj.getSaleSession();
-		const expectedSaleSession = dkfczfqngf;
+		const expectedSaleSession = jajfgcegnf;
 		await t.test(`#saleSession`, () => {
 			assertSemanticEqual(actualSaleSession, expectedSaleSession);
 		});
 
 		const actualClient = await obj.getClient();
-		const expectedClient = rdfjdlhmro;
+		const expectedClient = nznrtyefge;
 		await t.test(`#client`, () => {
 			assertSemanticEqual(actualClient, expectedClient);
 		});
 
 		const actualLines = await obj.getLines();
-		const expectedLines = vvvuiughzm;
+		const expectedLines = kjkopqzatp;
 		await actualLines.forEach((actual, i) => {
 			t.test(`#lines[${i}]`, () => {
 				assert.strictEqual(actual, expectedLines[i]);
@@ -83,27 +86,33 @@ test('Order', async (t) => {
 		});
 
 		const actualSoldBy = await obj.getSoldBy();
-		const expectedSoldBy = bihcnbmsii;
+		const expectedSoldBy = bnkxtveqgg;
 		await t.test(`#soldBy`, () => {
 			assertSemanticEqual(actualSoldBy, expectedSoldBy);
 		});
 
 		const actualFulfilmentStatus = await obj.getFulfilmentStatus();
-		const expectedFulfilmentStatus = rosmxowlsj;
+		const expectedFulfilmentStatus = niwmqyifsm;
 		await t.test(`#fulfilmentStatus`, () => {
 			assertSemanticEqual(actualFulfilmentStatus, expectedFulfilmentStatus);
 		});
 
 		const actualOrderStatus = await obj.getOrderStatus();
-		const expectedOrderStatus = kapolhhgsq;
+		const expectedOrderStatus = jopeqaidzi;
 		await t.test(`#orderStatus`, () => {
 			assertSemanticEqual(actualOrderStatus, expectedOrderStatus);
 		});
 
 		const actualPaymentStatus = await obj.getPaymentStatus();
-		const expectedPaymentStatus = iuwrtnfdnl;
+		const expectedPaymentStatus = yjcaqnkgvl;
 		await t.test(`#paymentStatus`, () => {
 			assertSemanticEqual(actualPaymentStatus, expectedPaymentStatus);
+		});
+
+		const actualPaymentMethod = await obj.getPaymentMethod();
+		const expectedPaymentMethod = teoatngtri;
+		await t.test(`#paymentMethod`, () => {
+			assertSemanticEqual(actualPaymentMethod, expectedPaymentMethod);
 		});
 	});
 });

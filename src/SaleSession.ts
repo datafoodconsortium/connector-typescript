@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISaleSession from "./ISaleSession.js"
 import IOffer from "./IOffer.js"
+import ISaleSession from "./ISaleSession.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -87,24 +87,34 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		
 	}
 
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
+	}
+
 	public setEndDate(endDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
 	}
 
-	public getQuantity(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:quantity"));
-	}
-
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
+	public addOffer(offer: IOffer): void {
+		if (offer.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:lists", offer);
+		}
+		else {
+			this.connector.store(offer);
+			this.addSemanticPropertyReference("dfc-b:lists", offer);
+		}
 	}
 
 	public getBeginDate(): string | undefined {
 		return this.getSemanticProperty("dfc-b:beginDate");
 	}
 
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
+	}
+
+	public getQuantity(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:quantity"));
 	}
 
 	public setQuantity(quantity: number): void {
@@ -119,15 +129,5 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 			if (semanticObject) results.push(<IOffer>semanticObject);
 		}
 		return results;
-	}
-
-	public addOffer(offer: IOffer): void {
-		if (offer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:lists", offer);
-		}
-		else {
-			this.connector.store(offer);
-			this.addSemanticPropertyReference("dfc-b:lists", offer);
-		}
 	}
 }

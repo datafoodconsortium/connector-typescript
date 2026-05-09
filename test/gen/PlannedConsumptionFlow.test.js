@@ -1,11 +1,11 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
-import Quantity from "../../lib/Quantity.js"
-import TechnicalProduct from "../../lib/TechnicalProduct.js"
-import PlannedTransformation from "../../lib/PlannedTransformation.js"
-import PlannedProductionFlow from "../../lib/PlannedProductionFlow.js"
 import Flow from "../../lib/Flow.js"
+import PlannedConsumptionFlow from "../../lib/PlannedConsumptionFlow.js"
+import PlannedTransformation from "../../lib/PlannedTransformation.js"
+import SuppliedProduct from "../../lib/SuppliedProduct.js"
+import Quantity from "../../lib/Quantity.js"
 import PlannedConsumptionFlow from "../../lib/PlannedConsumptionFlow.js"
 import { assertSemanticEqual } from '../utils.js';
 
@@ -26,33 +26,33 @@ const json = `{
 test('PlannedConsumptionFlow', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const ylgxdoqcqm = new Quantity({ connector });
-		const njoglqdzyd = new PlannedTransformation({ connector, semanticId: 'http://base.com/mrpaacjibp' });
-		const eyxpojciky = new TechnicalProduct({ connector, semanticId: 'http://base.com/yalvmoauwg' });
+		const sonmwrggzp = new Quantity({ connector });
+		const bwtcqzizjh = new PlannedTransformation({ connector, semanticId: 'http://base.com/lltrcmwfec' });
+		const xcvobhsclv = new SuppliedProduct({ connector, semanticId: 'http://base.com/gzzfahcqgg' });
 		const obj = new PlannedConsumptionFlow({
 			connector,
 			semanticId: "http://example.org/obj",
-			quantity: ylgxdoqcqm,
-			transformation: njoglqdzyd,
-			product: eyxpojciky
+			quantity: sonmwrggzp,
+			transformation: bwtcqzizjh,
+			product: xcvobhsclv
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
-		const expectedQuantity = ylgxdoqcqm;
+		const expectedQuantity = sonmwrggzp;
 		const actualQuantity = obj.getQuantity();
 		await t.test(`#quantity`, () => {
 			assertSemanticEqual(actualQuantity, expectedQuantity);
 		});
 
 		const actualTransformation = await obj.getPlannedTransformation();
-		const expectedTransformation = njoglqdzyd;
+		const expectedTransformation = bwtcqzizjh;
 		await t.test(`#transformation`, () => {
 			assertSemanticEqual(actualTransformation, expectedTransformation);
 		});
 
 		const actualProduct = await obj.getConsumedProduct();
-		const expectedProduct = eyxpojciky;
+		const expectedProduct = xcvobhsclv;
 		await t.test(`#product`, () => {
 			assertSemanticEqual(actualProduct, expectedProduct);
 		});

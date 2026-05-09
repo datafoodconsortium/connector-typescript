@@ -1,10 +1,10 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
+import PlannedConsumptionFlow from "../../lib/PlannedConsumptionFlow.js"
+import PlannedProductionFlow from "../../lib/PlannedProductionFlow.js"
 import PlannedTransformation from "../../lib/PlannedTransformation.js"
 import SKOSConcept from "../../lib/SKOSConcept.js"
-import PlannedProductionFlow from "../../lib/PlannedProductionFlow.js"
-import PlannedConsumptionFlow from "../../lib/PlannedConsumptionFlow.js"
 import { assertSemanticEqual } from '../utils.js';
 
 const connector = new Connector();
@@ -24,27 +24,27 @@ const json = `{
 test('PlannedTransformation', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const efoidhartf = new SKOSConcept({ connector, semanticId: 'http://base.com/ugoqlfqeaa' });
-		const ltmhegmkwj = [new PlannedConsumptionFlow({ connector, semanticId: 'http://base.com/xhrliagzcg' })];
-		const ihngrjwyqd = [new PlannedProductionFlow({ connector, semanticId: 'http://base.com/rsiirynomz' })];
+		const hiivmqyrhb = new SKOSConcept({ connector, semanticId: 'http://base.com/cgghfvrxup' });
+		const wukblnyvgy = [new PlannedConsumptionFlow({ connector, semanticId: 'http://base.com/lfvwpgrizu' })];
+		const eppsnkzbps = [new PlannedProductionFlow({ connector, semanticId: 'http://base.com/jnxqnpyxos' })];
 		const obj = new PlannedTransformation({
 			connector,
 			semanticId: "http://example.org/obj",
-			transformationType: efoidhartf,
-			consumptionFlows: ltmhegmkwj,
-			productionFlows: ihngrjwyqd
+			transformationType: hiivmqyrhb,
+			consumptionFlows: wukblnyvgy,
+			productionFlows: eppsnkzbps
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualTransformationType = await obj.getTransformationType();
-		const expectedTransformationType = efoidhartf;
+		const expectedTransformationType = hiivmqyrhb;
 		await t.test(`#transformationType`, () => {
 			assertSemanticEqual(actualTransformationType, expectedTransformationType);
 		});
 
 		const actualConsumptionFlows = await obj.getPlannedConsumptionFlows();
-		const expectedConsumptionFlows = ltmhegmkwj;
+		const expectedConsumptionFlows = wukblnyvgy;
 		await actualConsumptionFlows.forEach((actual, i) => {
 			t.test(`#consumptionFlows[${i}]`, () => {
 				assert.strictEqual(actual, expectedConsumptionFlows[i]);
@@ -52,7 +52,7 @@ test('PlannedTransformation', async (t) => {
 		});
 
 		const actualProductionFlows = await obj.getPlannedProductionFlows();
-		const expectedProductionFlows = ihngrjwyqd;
+		const expectedProductionFlows = eppsnkzbps;
 		await actualProductionFlows.forEach((actual, i) => {
 			t.test(`#productionFlows[${i}]`, () => {
 				assert.strictEqual(actual, expectedProductionFlows[i]);

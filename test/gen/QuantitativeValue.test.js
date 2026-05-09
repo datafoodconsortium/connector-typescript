@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
-import AllergenCharacteristic from "../../lib/AllergenCharacteristic.js"
 import SKOSConcept from "../../lib/SKOSConcept.js"
+import Price from "../../lib/Price.js"
 import { assertSemanticEqual } from '../utils.js';
 
 const connector = new Connector();
@@ -22,24 +22,24 @@ const json = `{
 test('QuantitativeValue', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const rctmwvuqtj = new SKOSConcept({ connector, semanticId: 'http://base.com/dbuaxqcnvv' });
+		const buddnfaikl = new SKOSConcept({ connector, semanticId: 'http://base.com/uwlvnphlpv' });
 		
 		const obj = new QuantitativeValue({
 			connector,
-			unit: rctmwvuqtj,
-			value: 0.6788696
+			unit: buddnfaikl,
+			value: 0.005738318
 		});
 
 		
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = rctmwvuqtj;
+		const expectedUnit = buddnfaikl;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.6788696;
+		const expectedValue = 0.005738318;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});

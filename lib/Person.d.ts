@@ -18,11 +18,11 @@ export default class Person extends Agent implements IPerson {
         doNotStore?: boolean;
     });
     getAffiliatedOrganizations(options?: IGetterOptions): Promise<IEnterprise[]>;
-    getFirstName(): string | undefined;
-    affiliateTo(organization: IEnterprise): void;
-    setFirstName(firstName: string): void;
     leaveAffiliatedOrganization(organization: IEnterprise): void;
-    setLastName(lastName: string): void;
     getLastName(): string | undefined;
+    affiliateTo(organization: IEnterprise): void;
+    getFirstName(): string | undefined;
+    setFirstName(firstName: string): void;
+    setLastName(lastName: string): void;
 }
 //# sourceMappingURL=Person.d.ts.map

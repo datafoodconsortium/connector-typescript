@@ -1,6 +1,6 @@
-import ISKOSConcept from "./ISKOSConcept.js";
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
 import Characteristic from "./Characteristic.js";
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
