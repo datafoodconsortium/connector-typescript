@@ -21,17 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Describable from "./Describable.js"
-import IQuantity from "./IQuantity.js"
-import Proposable from "./Proposable.js"
 import Nameable from "./Nameable.js"
+import Exhibitable from "./Exhibitable.js"
 import ISKOSConcept from "./ISKOSConcept.js"
-import Manufacturable from "./Manufacturable.js"
+import Describable from "./Describable.js"
+import Proposable from "./Proposable.js"
+import IQuantity from "./IQuantity.js"
 import Certifiable from "./Certifiable.js"
+import Manufacturable from "./Manufacturable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IDefinedProduct extends Semanticable, Manufacturable, Proposable, Nameable, Describable, Certifiable {
+export default interface IDefinedProduct extends Semanticable, Nameable, Manufacturable, Exhibitable, Proposable, Certifiable, Describable {
 
 	addClaim(claim: ISKOSConcept): void;
 
@@ -46,12 +47,6 @@ export default interface IDefinedProduct extends Semanticable, Manufacturable, P
 	setProductType(productType: ISKOSConcept): void;
 
 	removeClaim(claim: ISKOSConcept): void;
-
-	addImage(image: string): void;
-
-	removeImage(image: string): void;
-
-	getImages(): string[];
 
 	addVariant(variant: IDefinedProduct): void;
 

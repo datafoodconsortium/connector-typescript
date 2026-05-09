@@ -1,18 +1,18 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
-import Catalog from "../../lib/Catalog.js"
-import Person from "../../lib/Person.js"
-import Enterprise from "../../lib/Enterprise.js"
-import Address from "../../lib/Address.js"
-import SuppliedProduct from "../../lib/SuppliedProduct.js"
-import Agent from "../../lib/Agent.js"
-import TechnicalProduct from "../../lib/TechnicalProduct.js"
-import CatalogItem from "../../lib/CatalogItem.js"
-import Enterprise from "../../lib/Enterprise.js"
-import Enterprise from "../../lib/Enterprise.js"
 import Enterprise from "../../lib/Enterprise.js"
 import CustomerCategory from "../../lib/CustomerCategory.js"
+import Enterprise from "../../lib/Enterprise.js"
+import Person from "../../lib/Person.js"
+import Address from "../../lib/Address.js"
+import Enterprise from "../../lib/Enterprise.js"
+import Agent from "../../lib/Agent.js"
+import SuppliedProduct from "../../lib/SuppliedProduct.js"
+import CatalogItem from "../../lib/CatalogItem.js"
+import Catalog from "../../lib/Catalog.js"
+import TechnicalProduct from "../../lib/TechnicalProduct.js"
+import Enterprise from "../../lib/Enterprise.js"
 import { assertSemanticEqual } from '../utils.js';
 
 const connector = new Connector();
@@ -33,42 +33,42 @@ test('Enterprise', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
 		
-		const yfwvhrceha = [new Address({ connector, semanticId: 'http://base.com/phkaldoswb' })];
+		const mworlctltj = [new Address({ connector, semanticId: 'http://base.com/qlzocskwgc' })];
 		
 		
-		const bcdkexfugi = [new CustomerCategory({ connector, semanticId: 'http://base.com/jpgsztgudc' })];
-		const wunnrhszog = [new Catalog({ connector, semanticId: 'http://base.com/hihtamgfhk' })];
-		const mnzqbrdmmm = [new CatalogItem({ connector, semanticId: 'http://base.com/adtpxhadbh' })];
-		const jaqepjozgj = [new SuppliedProduct({ connector, semanticId: 'http://base.com/odacrarenl' })];
-		const azwjspdjvo = [new TechnicalProduct({ connector, semanticId: 'http://base.com/nwpisbpjfl' })];
-		const iwjlgoyusd = new Person({ connector, semanticId: 'http://base.com/pvkdsprrrq' });
+		const kmexnirugu = [new CustomerCategory({ connector, semanticId: 'http://base.com/owibbidzbh' })];
+		const rzmvkkntag = [new Catalog({ connector, semanticId: 'http://base.com/xjaptlwcoa' })];
+		const jswyoeuwcb = [new CatalogItem({ connector, semanticId: 'http://base.com/cypqjjxffm' })];
+		const smbzqmpunn = [new SuppliedProduct({ connector, semanticId: 'http://base.com/fekeucliss' })];
+		const dufcjtsood = [new TechnicalProduct({ connector, semanticId: 'http://base.com/wfcvaqgpey' })];
+		const zlhabzgavc = new Person({ connector, semanticId: 'http://base.com/qbhiikuunf' });
 		
 		const obj = new Enterprise({
 			connector,
 			semanticId: "http://example.org/obj",
-			name: "wudrtohxux",
-			localizations: yfwvhrceha,
-			description: "ujzumelkeg",
-			vatNumber: "ngiohclurw",
-			customerCategories: bcdkexfugi,
-			catalogs: wunnrhszog,
-			catalogItems: mnzqbrdmmm,
-			suppliedProducts: jaqepjozgj,
-			technicalProducts: azwjspdjvo,
-			mainContact: iwjlgoyusd,
-			logo: "aqsjjmurxt"
+			name: "ibwfqbofkt",
+			localizations: mworlctltj,
+			description: "ogzhxydajr",
+			vatNumber: "umnblggzud",
+			customerCategories: kmexnirugu,
+			catalogs: rzmvkkntag,
+			catalogItems: jswyoeuwcb,
+			suppliedProducts: smbzqmpunn,
+			technicalProducts: dufcjtsood,
+			mainContact: zlhabzgavc,
+			logo: "ckuxsvcnqs"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualName = obj.getName();
-		const expectedName = "wudrtohxux";
+		const expectedName = "ibwfqbofkt";
 		await t.test(`#name`, () => {
 			assert.strictEqual(actualName, expectedName);
 		});
 
 		const actualLocalizations = await obj.getLocalizations();
-		const expectedLocalizations = yfwvhrceha;
+		const expectedLocalizations = mworlctltj;
 		await actualLocalizations.forEach((actual, i) => {
 			t.test(`#localizations[${i}]`, () => {
 				assert.strictEqual(actual, expectedLocalizations[i]);
@@ -76,19 +76,19 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualDescription = obj.getDescription();
-		const expectedDescription = "ujzumelkeg";
+		const expectedDescription = "ogzhxydajr";
 		await t.test(`#description`, () => {
 			assert.strictEqual(actualDescription, expectedDescription);
 		});
 
 		const actualVatNumber = obj.getVatNumber();
-		const expectedVatNumber = "ngiohclurw";
+		const expectedVatNumber = "umnblggzud";
 		await t.test(`#vatNumber`, () => {
 			assert.strictEqual(actualVatNumber, expectedVatNumber);
 		});
 
 		const actualCustomerCategories = await obj.getCustomerCategories();
-		const expectedCustomerCategories = bcdkexfugi;
+		const expectedCustomerCategories = kmexnirugu;
 		await actualCustomerCategories.forEach((actual, i) => {
 			t.test(`#customerCategories[${i}]`, () => {
 				assert.strictEqual(actual, expectedCustomerCategories[i]);
@@ -96,7 +96,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualCatalogs = await obj.getMaintainedCatalogs();
-		const expectedCatalogs = wunnrhszog;
+		const expectedCatalogs = rzmvkkntag;
 		await actualCatalogs.forEach((actual, i) => {
 			t.test(`#catalogs[${i}]`, () => {
 				assert.strictEqual(actual, expectedCatalogs[i]);
@@ -104,7 +104,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualCatalogItems = await obj.getManagedCatalogItems();
-		const expectedCatalogItems = mnzqbrdmmm;
+		const expectedCatalogItems = jswyoeuwcb;
 		await actualCatalogItems.forEach((actual, i) => {
 			t.test(`#catalogItems[${i}]`, () => {
 				assert.strictEqual(actual, expectedCatalogItems[i]);
@@ -112,7 +112,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualSuppliedProducts = await obj.getSuppliedProducts();
-		const expectedSuppliedProducts = jaqepjozgj;
+		const expectedSuppliedProducts = smbzqmpunn;
 		await actualSuppliedProducts.forEach((actual, i) => {
 			t.test(`#suppliedProducts[${i}]`, () => {
 				assert.strictEqual(actual, expectedSuppliedProducts[i]);
@@ -120,7 +120,7 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualTechnicalProducts = await obj.getProposedTechnicalProducts();
-		const expectedTechnicalProducts = azwjspdjvo;
+		const expectedTechnicalProducts = dufcjtsood;
 		await actualTechnicalProducts.forEach((actual, i) => {
 			t.test(`#technicalProducts[${i}]`, () => {
 				assert.strictEqual(actual, expectedTechnicalProducts[i]);
@@ -128,13 +128,13 @@ test('Enterprise', async (t) => {
 		});
 
 		const actualMainContact = await obj.getMainContact();
-		const expectedMainContact = iwjlgoyusd;
+		const expectedMainContact = zlhabzgavc;
 		await t.test(`#mainContact`, () => {
 			assertSemanticEqual(actualMainContact, expectedMainContact);
 		});
 
 		const actualLogo = obj.getLogo();
-		const expectedLogo = "aqsjjmurxt";
+		const expectedLogo = "ckuxsvcnqs";
 		await t.test(`#logo`, () => {
 			assert.strictEqual(actualLogo, expectedLogo);
 		});

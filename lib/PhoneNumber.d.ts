@@ -12,9 +12,9 @@ export default class PhoneNumber extends SemanticObject implements IPhoneNumber 
         phoneNumber?: string;
         doNotStore?: boolean;
     });
-    setNumber(number: string): void;
-    getNumber(): string | undefined;
-    getCountryCode(): number | undefined;
     setCountryCode(countryCode: number): void;
+    setNumber(number: string): void;
+    getCountryCode(): number | undefined;
+    getNumber(): string | undefined;
 }
 //# sourceMappingURL=PhoneNumber.d.ts.map

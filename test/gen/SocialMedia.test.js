@@ -26,20 +26,20 @@ test('SocialMedia', async (t) => {
 		const obj = new SocialMedia({
 			connector,
 			semanticId: "http://example.org/obj",
-			name: "swnwxdidlj",
-			url: "omkbehidwc"
+			name: "ysmwjideoj",
+			url: "akojmiktye"
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualName = obj.getName();
-		const expectedName = "swnwxdidlj";
+		const expectedName = "ysmwjideoj";
 		await t.test(`#name`, () => {
 			assert.strictEqual(actualName, expectedName);
 		});
 
 		const actualUrl = obj.getUrl();
-		const expectedUrl = "omkbehidwc";
+		const expectedUrl = "akojmiktye";
 		await t.test(`#url`, () => {
 			assert.strictEqual(actualUrl, expectedUrl);
 		});

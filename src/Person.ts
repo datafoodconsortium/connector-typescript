@@ -94,8 +94,12 @@ export default class Person extends Agent implements IPerson {
 		return results;
 	}
 
-	public getFirstName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:firstName");
+	public leaveAffiliatedOrganization(organization: IEnterprise): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public getLastName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:familyName");
 	}
 
 	public affiliateTo(organization: IEnterprise): void {
@@ -108,19 +112,15 @@ export default class Person extends Agent implements IPerson {
 		}
 	}
 
+	public getFirstName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:firstName");
+	}
+
 	public setFirstName(firstName: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
 	}
 
-	public leaveAffiliatedOrganization(organization: IEnterprise): void {
-		throw new Error("Not yet implemented.");
-	}
-
 	public setLastName(lastName: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
-	}
-
-	public getLastName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:familyName");
 	}
 }

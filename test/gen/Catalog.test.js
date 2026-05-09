@@ -1,8 +1,8 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
-import Catalog from "../../lib/Catalog.js"
 import CatalogItem from "../../lib/CatalogItem.js"
+import Catalog from "../../lib/Catalog.js"
 import Enterprise from "../../lib/Enterprise.js"
 import { assertSemanticEqual } from '../utils.js';
 
@@ -23,19 +23,19 @@ const json = `{
 test('Catalog', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const jrfabwpyqo = [new Enterprise({ connector, semanticId: 'http://base.com/ocmyydvfps' })];
-		const beajwiadka = [new CatalogItem({ connector, semanticId: 'http://base.com/hrsqzgoesk' })];
+		const eimllghhsw = [new Enterprise({ connector, semanticId: 'http://base.com/qplrmdslox' })];
+		const tfobohdpnh = [new CatalogItem({ connector, semanticId: 'http://base.com/fashjgqziw' })];
 		const obj = new Catalog({
 			connector,
 			semanticId: "http://example.org/obj",
-			maintainers: jrfabwpyqo,
-			items: beajwiadka
+			maintainers: eimllghhsw,
+			items: tfobohdpnh
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualMaintainers = await obj.getMaintainers();
-		const expectedMaintainers = jrfabwpyqo;
+		const expectedMaintainers = eimllghhsw;
 		await actualMaintainers.forEach((actual, i) => {
 			t.test(`#maintainers[${i}]`, () => {
 				assert.strictEqual(actual, expectedMaintainers[i]);
@@ -43,7 +43,7 @@ test('Catalog', async (t) => {
 		});
 
 		const actualItems = await obj.getItems();
-		const expectedItems = beajwiadka;
+		const expectedItems = tfobohdpnh;
 		await actualItems.forEach((actual, i) => {
 			t.test(`#items[${i}]`, () => {
 				assert.strictEqual(actual, expectedItems[i]);

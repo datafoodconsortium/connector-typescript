@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
+import Offer from "../../lib/Offer.js"
 import Price from "../../lib/Price.js"
 import Order from "../../lib/Order.js"
-import Offer from "../../lib/Offer.js"
 import OrderLine from "../../lib/OrderLine.js"
 import { assertSemanticEqual } from '../utils.js';
 
@@ -25,40 +25,40 @@ test('OrderLine', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
 		
-		const urixybvzte = new Price({ connector });
-		const jnmqaefpsp = new Offer({ connector, semanticId: 'http://base.com/hostxrqtem' });
-		const glxdebzjup = new Order({ connector, semanticId: 'http://base.com/nagehmejrm' });
+		const aqtvdbfybr = new Price({ connector });
+		const mnlbluhdpd = new Offer({ connector, semanticId: 'http://base.com/oblygpyask' });
+		const jzrbonjsdb = new Order({ connector, semanticId: 'http://base.com/dtlcuraopa' });
 		const obj = new OrderLine({
 			connector,
 			semanticId: "http://example.org/obj",
-			quantity: 0.6644994,
-			price: urixybvzte,
-			offer: jnmqaefpsp,
-			order: glxdebzjup
+			quantity: 0.4397623,
+			price: aqtvdbfybr,
+			offer: mnlbluhdpd,
+			order: jzrbonjsdb
 		});
 
 		assert.strictEqual('http://example.org/obj', obj.getSemanticId());
 
 		const actualQuantity = obj.getQuantity();
-		const expectedQuantity = 0.6644994;
+		const expectedQuantity = 0.4397623;
 		await t.test(`#quantity`, () => {
 			assert.strictEqual(actualQuantity, expectedQuantity);
 		});
 
-		const expectedPrice = urixybvzte;
+		const expectedPrice = aqtvdbfybr;
 		const actualPrice = obj.getPrice();
 		await t.test(`#price`, () => {
 			assertSemanticEqual(actualPrice, expectedPrice);
 		});
 
 		const actualOffer = await obj.getOffer();
-		const expectedOffer = jnmqaefpsp;
+		const expectedOffer = mnlbluhdpd;
 		await t.test(`#offer`, () => {
 			assertSemanticEqual(actualOffer, expectedOffer);
 		});
 
 		const actualOrder = await obj.getOrder();
-		const expectedOrder = glxdebzjup;
+		const expectedOrder = jzrbonjsdb;
 		await t.test(`#order`, () => {
 			assertSemanticEqual(actualOrder, expectedOrder);
 		});

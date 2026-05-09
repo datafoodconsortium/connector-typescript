@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISuppliedProduct from "./ISuppliedProduct.js"
 import Flow from "./Flow.js"
 import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
 import IPlannedTransformation from "./IPlannedTransformation.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
 import IQuantity from "./IQuantity.js"
 import IPlannedFlow from "./IPlannedFlow.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
@@ -89,6 +89,12 @@ export default class PlannedProductionFlow extends Flow implements IPlannedProdu
 		return result;
 	}
 
+	public setPlannedTransformation(plannedTransformation: IPlannedTransformation): void {
+		this.setSemanticPropertyReference("dfc-b:outputOf", plannedTransformation);
+		
+		this.connector.store(plannedTransformation);
+	}
+
 	public async getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined> {
 		let result: IPlannedTransformation | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:outputOf");
@@ -97,12 +103,6 @@ export default class PlannedProductionFlow extends Flow implements IPlannedProdu
 			if (semanticObject) result = <IPlannedTransformation> semanticObject;
 		}
 		return result;
-	}
-
-	public setPlannedTransformation(plannedTransformation: IPlannedTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:outputOf", plannedTransformation);
-		
-		this.connector.store(plannedTransformation);
 	}
 
 	public setProducedProduct(producedProduct: ISuppliedProduct): void {

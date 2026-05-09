@@ -29,7 +29,7 @@ import EmailOwner from "./EmailOwner.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IAgent extends Semanticable, EmailOwner, SocialMediaOwner, WebsiteOwner, PhoneNumberOwner, AddressOwner {
+export default interface IAgent extends Semanticable, EmailOwner, WebsiteOwner, AddressOwner, SocialMediaOwner, PhoneNumberOwner {
 
 	getLogo(): string | undefined;
 

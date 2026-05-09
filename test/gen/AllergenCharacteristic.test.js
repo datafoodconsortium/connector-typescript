@@ -1,9 +1,9 @@
 import assert from 'node:assert';
 import { test } from 'node:test';
 import Connector from '../../lib/Connector.js';
-import AllergenCharacteristic from "../../lib/AllergenCharacteristic.js"
-import SKOSConcept from "../../lib/SKOSConcept.js"
 import Characteristic from "../../lib/Characteristic.js"
+import SKOSConcept from "../../lib/SKOSConcept.js"
+import AllergenCharacteristic from "../../lib/AllergenCharacteristic.js"
 import { assertSemanticEqual } from '../utils.js';
 
 const connector = new Connector();
@@ -23,32 +23,32 @@ const json = `{
 test('AllergenCharacteristic', async (t) => {
 	await t.test('#constructor', async (t) => {
 		const connector = new Connector();
-		const bzbzotdhmj = new SKOSConcept({ connector, semanticId: 'http://base.com/guxodrkybz' });
+		const ersnihgiww = new SKOSConcept({ connector, semanticId: 'http://base.com/yqvcmxxbst' });
 		
-		const okvofkobsa = new SKOSConcept({ connector, semanticId: 'http://base.com/tcaazxsufn' });
+		const mtfalqlydt = new SKOSConcept({ connector, semanticId: 'http://base.com/wndgfhinfy' });
 		const obj = new AllergenCharacteristic({
 			connector,
-			unit: bzbzotdhmj,
-			value: 0.5452212,
-			allergenDimension: okvofkobsa
+			unit: ersnihgiww,
+			value: 0.49598032,
+			allergenDimension: mtfalqlydt
 		});
 
 		
 
 		const actualUnit = await obj.getQuantityUnit();
-		const expectedUnit = bzbzotdhmj;
+		const expectedUnit = ersnihgiww;
 		await t.test(`#unit`, () => {
 			assertSemanticEqual(actualUnit, expectedUnit);
 		});
 
 		const actualValue = obj.getQuantityValue();
-		const expectedValue = 0.5452212;
+		const expectedValue = 0.49598032;
 		await t.test(`#value`, () => {
 			assert.strictEqual(actualValue, expectedValue);
 		});
 
 		const actualAllergenDimension = await obj.getQuantityDimension();
-		const expectedAllergenDimension = okvofkobsa;
+		const expectedAllergenDimension = mtfalqlydt;
 		await t.test(`#allergenDimension`, () => {
 			assertSemanticEqual(actualAllergenDimension, expectedAllergenDimension);
 		});

@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IQuantity from "./IQuantity.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -78,6 +78,12 @@ export default class Quantity extends SemanticObjectAnonymous implements IQuanti
 		return Number(this.getSemanticProperty("dfc-b:value"));
 	}
 
+	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
+		
+		this.connector.store(quantityUnit);
+	}
+
 	public setQuantityValue(quantityValue: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
 	}
@@ -90,11 +96,5 @@ export default class Quantity extends SemanticObjectAnonymous implements IQuanti
 			if (semanticObject) result = <ISKOSConcept> semanticObject;
 		}
 		return result;
-	}
-
-	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
-		
-		this.connector.store(quantityUnit);
 	}
 }

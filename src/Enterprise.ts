@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalog from "./ICatalog.js"
-import IPerson from "./IPerson.js"
-import Onboardable from "./Onboardable.js"
-import IAddress from "./IAddress.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
-import Agent from "./Agent.js"
-import ITechnicalProduct from "./ITechnicalProduct.js"
-import ICatalogItem from "./ICatalogItem.js"
-import ManagedByMainContact from "./ManagedByMainContact.js"
 import ProductSupplier from "./ProductSupplier.js"
-import IEnterprise from "./IEnterprise.js"
 import ICustomerCategory from "./ICustomerCategory.js"
+import Onboardable from "./Onboardable.js"
+import IPerson from "./IPerson.js"
+import IAddress from "./IAddress.js"
+import ManagedByMainContact from "./ManagedByMainContact.js"
+import Agent from "./Agent.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import ICatalogItem from "./ICatalogItem.js"
+import ICatalog from "./ICatalog.js"
+import ITechnicalProduct from "./ITechnicalProduct.js"
+import IEnterprise from "./IEnterprise.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -40,7 +40,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const ENTERPRISE_SEM_TYPE: string = "dfc-b:Enterprise";
 
-export default class Enterprise extends Agent implements IEnterprise, Onboardable, ManagedByMainContact, ProductSupplier {
+export default class Enterprise extends Agent implements ProductSupplier, ManagedByMainContact, Onboardable, IEnterprise {
 
 	public constructor(parameters: {
 		connector: IConnector,
@@ -122,6 +122,26 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
 		
 	}
 
+	public setMainContact(mainContact: IPerson): void {
+		this.setSemanticPropertyReference("dfc-b:hasMainContact", mainContact);
+		
+		this.connector.store(mainContact);
+	}
+
+	public getVatNumber(): string | undefined {
+		return this.getSemanticProperty("dfc-b:VATnumber");
+	}
+
+	public async getMaintainedCatalogs(options?: IGetterOptions): Promise<ICatalog[]> {
+		const results = new Array<ICatalog>();
+		const properties = this.getSemanticPropertyAll("dfc-b:maintains");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICatalog>semanticObject);
+		}
+		return results;
+	}
+
 	public getName(): string | undefined {
 		return this.getSemanticProperty("dfc-b:name");
 	}
@@ -136,76 +156,8 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
 		return result;
 	}
 
-	public manageCatalogItem(catalogItem: ICatalogItem): void {
-		if (catalogItem.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:manages", catalogItem);
-		}
-		else {
-			this.connector.store(catalogItem);
-			this.addSemanticPropertyReference("dfc-b:manages", catalogItem);
-		}
-	}
-
 	public unmanageCatalogItem(catalogItem: ICatalogItem): void {
 		throw new Error("Not yet implemented.");
-	}
-
-	public setMainContact(mainContact: IPerson): void {
-		this.setSemanticPropertyReference("dfc-b:hasMainContact", mainContact);
-		
-		this.connector.store(mainContact);
-	}
-
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasDescription");
-	}
-
-	public unmaintainCatalog(catalog: ICatalog): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public async getManagedCatalogItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
-		const results = new Array<ICatalogItem>();
-		const properties = this.getSemanticPropertyAll("dfc-b:manages");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalogItem>semanticObject);
-		}
-		return results;
-	}
-
-	public addCustomerCategory(customerCategory: ICustomerCategory): void {
-		if (customerCategory.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:defines", customerCategory);
-		}
-		else {
-			this.connector.store(customerCategory);
-			this.addSemanticPropertyReference("dfc-b:defines", customerCategory);
-		}
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:hasDescription", description);
-	}
-
-	public supplyProduct(suppliedProduct: ISuppliedProduct): void {
-		if (suppliedProduct.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:supplies", suppliedProduct);
-		}
-		else {
-			this.connector.store(suppliedProduct);
-			this.addSemanticPropertyReference("dfc-b:supplies", suppliedProduct);
-		}
-	}
-
-	public maintainCatalog(catalog: ICatalog): void {
-		if (catalog.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:maintains", catalog);
-		}
-		else {
-			this.connector.store(catalog);
-			this.addSemanticPropertyReference("dfc-b:maintains", catalog);
-		}
 	}
 
 	public async getSuppliedProducts(options?: IGetterOptions): Promise<ISuppliedProduct[]> {
@@ -218,6 +170,30 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
 		return results;
 	}
 
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public maintainCatalog(catalog: ICatalog): void {
+		if (catalog.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:maintains", catalog);
+		}
+		else {
+			this.connector.store(catalog);
+			this.addSemanticPropertyReference("dfc-b:maintains", catalog);
+		}
+	}
+
+	public addCustomerCategory(customerCategory: ICustomerCategory): void {
+		if (customerCategory.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:defines", customerCategory);
+		}
+		else {
+			this.connector.store(customerCategory);
+			this.addSemanticPropertyReference("dfc-b:defines", customerCategory);
+		}
+	}
+
 	public unsupplyProduct(suppliedProduct: ISuppliedProduct): void {
 		throw new Error("Not yet implemented.");
 	}
@@ -226,18 +202,40 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
 		this.setSemanticPropertyLiteral("dfc-b:VATnumber", vatNumber);
 	}
 
-	public async getMaintainedCatalogs(options?: IGetterOptions): Promise<ICatalog[]> {
-		const results = new Array<ICatalog>();
-		const properties = this.getSemanticPropertyAll("dfc-b:maintains");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalog>semanticObject);
-		}
-		return results;
+	public unmaintainCatalog(catalog: ICatalog): void {
+		throw new Error("Not yet implemented.");
 	}
 
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasDescription");
+	}
+
+	public supplyProduct(suppliedProduct: ISuppliedProduct): void {
+		if (suppliedProduct.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:supplies", suppliedProduct);
+		}
+		else {
+			this.connector.store(suppliedProduct);
+			this.addSemanticPropertyReference("dfc-b:supplies", suppliedProduct);
+		}
+	}
+
+	public unproposeTechnicalProducts(technicalProducts: ITechnicalProduct): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasDescription", description);
+	}
+
+	public manageCatalogItem(catalogItem: ICatalogItem): void {
+		if (catalogItem.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:manages", catalogItem);
+		}
+		else {
+			this.connector.store(catalogItem);
+			this.addSemanticPropertyReference("dfc-b:manages", catalogItem);
+		}
 	}
 
 	public async getProposedTechnicalProducts(options?: IGetterOptions): Promise<ITechnicalProduct[]> {
@@ -250,24 +248,6 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
 		return results;
 	}
 
-	public async getCustomerCategories(options?: IGetterOptions): Promise<ICustomerCategory[]> {
-		const results = new Array<ICustomerCategory>();
-		const properties = this.getSemanticPropertyAll("dfc-b:defines");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICustomerCategory>semanticObject);
-		}
-		return results;
-	}
-
-	public getVatNumber(): string | undefined {
-		return this.getSemanticProperty("dfc-b:VATnumber");
-	}
-
-	public unproposeTechnicalProducts(technicalProducts: ITechnicalProduct): void {
-		throw new Error("Not yet implemented.");
-	}
-
 	public proposeTechnicalProducts(technicalProducts: ITechnicalProduct): void {
 		if (technicalProducts.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:proposes", technicalProducts);
@@ -276,5 +256,25 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
 			this.connector.store(technicalProducts);
 			this.addSemanticPropertyReference("dfc-b:proposes", technicalProducts);
 		}
+	}
+
+	public async getManagedCatalogItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
+		const results = new Array<ICatalogItem>();
+		const properties = this.getSemanticPropertyAll("dfc-b:manages");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICatalogItem>semanticObject);
+		}
+		return results;
+	}
+
+	public async getCustomerCategories(options?: IGetterOptions): Promise<ICustomerCategory[]> {
+		const results = new Array<ICustomerCategory>();
+		const properties = this.getSemanticPropertyAll("dfc-b:defines");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICustomerCategory>semanticObject);
+		}
+		return results;
 	}
 }

@@ -1,11 +1,11 @@
-import DefinedProduct from "./DefinedProduct.js";
-import IQuantity from "./IQuantity.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import ISKOSConcept from "./ISKOSConcept.js";
-import ITechnicalProduct from "./ITechnicalProduct.js";
+import DefinedProduct from "./DefinedProduct.js";
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import ICatalogItem from "./ICatalogItem.js";
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import ITechnicalProduct from "./ITechnicalProduct.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 export default class TechnicalProduct extends DefinedProduct implements ITechnicalProduct {
@@ -29,6 +29,7 @@ export default class TechnicalProduct extends DefinedProduct implements ITechnic
         certifications?: ISKOSConcept[];
         natureOrigin?: ISKOSConcept[];
         partOrigin?: ISKOSConcept[];
+        images?: string[];
         doNotStore?: boolean;
     });
 }

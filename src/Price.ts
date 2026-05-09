@@ -79,12 +79,26 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 		
 	}
 
+	public getVatRate(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:VATrate"));
+	}
+
 	public getQuantityValue(): number | undefined {
 		return Number(this.getSemanticProperty("dfc-b:value"));
 	}
 
+	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
+		
+		this.connector.store(quantityUnit);
+	}
+
 	public setQuantityValue(quantityValue: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
+	}
+
+	public setVatRate(vatRate: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:VATrate", vatRate);
 	}
 
 	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
@@ -95,19 +109,5 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 			if (semanticObject) result = <ISKOSConcept> semanticObject;
 		}
 		return result;
-	}
-
-	public getVatRate(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:VATrate"));
-	}
-
-	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
-		
-		this.connector.store(quantityUnit);
-	}
-
-	public setVatRate(vatRate: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:VATrate", vatRate);
 	}
 }

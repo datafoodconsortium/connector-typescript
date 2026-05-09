@@ -1,7 +1,7 @@
 import IAddress from "./IAddress.js";
-import IAgent from "./IAgent.js";
-import ISocialMedia from "./ISocialMedia.js";
 import IPhoneNumber from "./IPhoneNumber.js";
+import ISocialMedia from "./ISocialMedia.js";
+import IAgent from "./IAgent.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -21,22 +21,24 @@ export default abstract class Agent extends SemanticObject implements IAgent {
         logo?: string;
         doNotStore?: boolean;
     });
-    removeWebsite(website: string): void;
     getLogo(): string | undefined;
-    getPhoneNumbers(options?: IGetterOptions): Promise<IPhoneNumber[]>;
-    getEmails(): string[];
+    removeWebsite(website: string): void;
+    setLocalizations(localizations: IAddress[]): void;
+    addEmailAddress(emailAddress: string): void;
     removePhoneNumber(phoneNumber: IPhoneNumber): void;
     removeLocalization(localization: IAddress): void;
-    addPhoneNumber(phoneNumber: IPhoneNumber): void;
-    addWebsite(website: string): void;
-    getSocialMedias(options?: IGetterOptions): Promise<ISocialMedia[]>;
     removeSocialMedia(socialMedia: ISocialMedia): void;
-    addLocalization(localization: IAddress): void;
-    addEmailAddress(emailAddress: string): void;
-    getWebsites(): string[];
     getLocalizations(options?: IGetterOptions): Promise<IAddress[]>;
-    setLogo(logo: string): void;
-    addSocialMedia(socialMedia: ISocialMedia): void;
     removeEmailAddress(emailAddress: string): void;
+    getWebsites(): string[];
+    setLogo(logo: string): void;
+    getSocialMedias(options?: IGetterOptions): Promise<ISocialMedia[]>;
+    getPhoneNumbers(options?: IGetterOptions): Promise<IPhoneNumber[]>;
+    setPhoneNumbers(phoneNumbers: IPhoneNumber[]): void;
+    getEmails(): string[];
+    addWebsite(website: string): void;
+    addPhoneNumber(phoneNumber: IPhoneNumber): void;
+    addLocalization(localization: IAddress): void;
+    addSocialMedia(socialMedia: ISocialMedia): void;
 }
 //# sourceMappingURL=Agent.d.ts.map
