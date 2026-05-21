@@ -33,4 +33,6 @@ export default interface CatalogItemManager {
 
 	unmanageCatalogItem(catalogItem: ICatalogItem): void;
 
+	setManagedCatalogItems(catalogItems: ICatalogItem[]): void;
+
 }

@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPickupOption from "./IPickupOption.js"
-import IPhysicalPlace from "./IPhysicalPlace.js"
 import IOrder from "./IOrder.js"
+import IPhysicalPlace from "./IPhysicalPlace.js"
+import IPickupOption from "./IPickupOption.js"
 import ISaleSession from "./ISaleSession.js"
 import ShippingOption from "./ShippingOption.js"
 import IQuantity from "./IQuantity.js"

@@ -98,18 +98,18 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
 		return this.getSemanticProperty("dfc-b:sku");
 	}
 
-	public async getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
-		let result: IDefinedProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:references");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IDefinedProduct> semanticObject;
-		}
-		return result;
+	public setSku(sku: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:sku", sku);
 	}
 
-	public setStockLimitation(stockLimitation: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
+	public setCatalogs(catalogs: ICatalog[]): void {
+		this.getSemanticPropertyAll("dfc-b:listedIn").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		catalogs.forEach((catalogItem) => {
+			this.addSemanticPropertyReference("dfc-b:listedIn", catalogItem, true);
+			this.connector.store(catalogItem);
+		});
 	}
 
 	public registerInCatalog(repository: ICatalog): void {
@@ -122,34 +122,34 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
 		}
 	}
 
-	public getStockLimitation(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
-	}
-
-	public addOffer(offer: IOffer): void {
-		if (offer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:offeredThrough", offer);
-		}
-		else {
-			this.connector.store(offer);
-			this.addSemanticPropertyReference("dfc-b:offeredThrough", offer);
-		}
-	}
-
-	public async getCatalogs(options?: IGetterOptions): Promise<ICatalog[]> {
-		const results = new Array<ICatalog>();
-		const properties = this.getSemanticPropertyAll("dfc-b:listedIn");
-		for await (const semanticId of properties) {
+	public async getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
+		let result: IDefinedProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:references");
+		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ICatalog>semanticObject);
+			if (semanticObject) result = <IDefinedProduct> semanticObject;
 		}
-		return results;
+		return result;
 	}
 
 	public setOfferedProduct(offeredProduct: IDefinedProduct): void {
 		this.setSemanticPropertyReference("dfc-b:references", offeredProduct);
 		
 		this.connector.store(offeredProduct);
+	}
+
+	public getStockLimitation(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
+	}
+
+	public setOffers(offers: IOffer[]): void {
+		this.getSemanticPropertyAll("dfc-b:offeredThrough").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		offers.forEach((catalogItem) => {
+			this.addSemanticPropertyReference("dfc-b:offeredThrough", catalogItem, true);
+			this.connector.store(catalogItem);
+		});
 	}
 
 	public async getOfferers(options?: IGetterOptions): Promise<IOffer[]> {
@@ -162,7 +162,35 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
 		return results;
 	}
 
-	public setSku(sku: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:sku", sku);
+	public setStockLimitation(stockLimitation: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
+	}
+
+	public async getCatalogs(options?: IGetterOptions): Promise<ICatalog[]> {
+		const results = new Array<ICatalog>();
+		const properties = this.getSemanticPropertyAll("dfc-b:listedIn");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ICatalog>semanticObject);
+		}
+		return results;
+	}
+
+	public removeCatalog(catalog: ICatalog): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public addOffer(offer: IOffer): void {
+		if (offer.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:offeredThrough", offer);
+		}
+		else {
+			this.connector.store(offer);
+			this.addSemanticPropertyReference("dfc-b:offeredThrough", offer);
+		}
+	}
+
+	public removeOffer(offer: IOffer): void {
+		throw new Error("Not yet implemented.");
 	}
 }

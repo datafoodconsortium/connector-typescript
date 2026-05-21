@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPrice from "./IPrice.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import IPrice from "./IPrice.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -83,24 +83,6 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 		return Number(this.getSemanticProperty("dfc-b:VATrate"));
 	}
 
-	public getQuantityValue(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:value"));
-	}
-
-	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
-		
-		this.connector.store(quantityUnit);
-	}
-
-	public setQuantityValue(quantityValue: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
-	}
-
-	public setVatRate(vatRate: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:VATrate", vatRate);
-	}
-
 	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
 		let result: ISKOSConcept | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:hasUnit");
@@ -109,5 +91,23 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 			if (semanticObject) result = <ISKOSConcept> semanticObject;
 		}
 		return result;
+	}
+
+	public getQuantityValue(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:value"));
+	}
+
+	public setQuantityValue(quantityValue: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
+	}
+
+	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
+		
+		this.connector.store(quantityUnit);
+	}
+
+	public setVatRate(vatRate: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:VATrate", vatRate);
 	}
 }

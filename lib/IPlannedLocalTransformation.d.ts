@@ -1,6 +1,6 @@
 import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js";
-import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
 import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
 import Ellapsable from "./Ellapsable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IPlannedLocalTransformation extends Semanticable, Ellapsable {

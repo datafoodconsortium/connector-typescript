@@ -1,10 +1,10 @@
 import ISKOSConcept from "./ISKOSConcept.js";
-import Quantifiable from "./Quantifiable.js";
+import IQuantity from "./IQuantity.js";
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
-export default class QuantitativeValue extends SemanticObjectAnonymous implements Quantifiable {
+export default class QuantitativeValue extends SemanticObjectAnonymous implements IQuantity {
     protected connector: IConnector;
     constructor(parameters: {
         connector: IConnector;
@@ -14,9 +14,9 @@ export default class QuantitativeValue extends SemanticObjectAnonymous implement
         unit?: ISKOSConcept;
         value?: number;
     });
-    getQuantityValue(): number | undefined;
-    setQuantityUnit(quantityUnit: ISKOSConcept): void;
-    setQuantityValue(quantityValue: number): void;
     getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    getQuantityValue(): number | undefined;
+    setQuantityValue(quantityValue: number): void;
+    setQuantityUnit(quantityUnit: ISKOSConcept): void;
 }
 //# sourceMappingURL=QuantitativeValue.d.ts.map

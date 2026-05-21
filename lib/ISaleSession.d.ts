@@ -6,5 +6,7 @@ export default interface ISaleSession extends Semanticable, Ellapsable {
     setQuantity(quantity: number): void;
     getOffers(): Promise<IOffer[]>;
     addOffer(offer: IOffer): void;
+    removeOffer(offer: IOffer): void;
+    setOffers(offers: IOffer[]): void;
 }
 //# sourceMappingURL=ISaleSession.d.ts.map

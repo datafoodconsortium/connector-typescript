@@ -3,5 +3,6 @@ export default interface CatalogItemManager {
     getManagedCatalogItems(): Promise<ICatalogItem[]>;
     manageCatalogItem(catalogItem: ICatalogItem): void;
     unmanageCatalogItem(catalogItem: ICatalogItem): void;
+    setManagedCatalogItems(catalogItems: ICatalogItem[]): void;
 }
 //# sourceMappingURL=CatalogItemManager.d.ts.map

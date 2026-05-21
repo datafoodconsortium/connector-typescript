@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IPaymentMethod from "./IPaymentMethod.js"
 import ISKOSConcept from "./ISKOSConcept.js"
 import ISaleSession from "./ISaleSession.js"
 import IAgent from "./IAgent.js"
-import IPaymentMethod from "./IPaymentMethod.js"
 import IOrderLine from "./IOrderLine.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -70,5 +70,9 @@ export default interface IOrder extends Semanticable{
 	getPaymentMethod(): Promise<IPaymentMethod | undefined>;
 
 	setPaymentMethod(paymentMethod: IPaymentMethod): void;
+
+	removeLine(line: IOrderLine): void;
+
+	setLines(lines: IOrderLine[]): void;
 
 }

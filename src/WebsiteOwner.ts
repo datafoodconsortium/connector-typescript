@@ -31,4 +31,6 @@ export default interface WebsiteOwner extends ContactableByWebsite {
 
 	removeWebsite(website: string): void;
 
+	setWebsites(emailAddresses: string[]): void;
+
 }

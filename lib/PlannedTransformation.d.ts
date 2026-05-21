@@ -1,7 +1,7 @@
-import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
 import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
-import IPlannedTransformation from "./IPlannedTransformation.js";
 import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -18,14 +18,14 @@ export default class PlannedTransformation extends SemanticObject implements IPl
         doNotStore?: boolean;
     });
     getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]>;
-    addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
     removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
-    setTransformationType(transformationType: ISKOSConcept): void;
-    removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
-    addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
     getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
     setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void;
+    removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
+    addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
+    addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
     getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]>;
+    setTransformationType(transformationType: ISKOSConcept): void;
     setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void;
 }
 //# sourceMappingURL=PlannedTransformation.d.ts.map

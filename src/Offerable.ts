@@ -36,4 +36,8 @@ export default interface Offerable {
 
 	setOfferedProduct(offeredProduct: IDefinedProduct): void;
 
+	removeOffer(offer: IOffer): void;
+
+	setOffers(offers: IOffer[]): void;
+
 }

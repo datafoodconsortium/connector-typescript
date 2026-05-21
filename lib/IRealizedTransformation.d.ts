@@ -1,7 +1,7 @@
 import ISKOSConcept from "./ISKOSConcept.js";
-import Ellapsable from "./Ellapsable.js";
 import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js";
 import IRealizedProductionFlow from "./IRealizedProductionFlow.js";
+import Ellapsable from "./Ellapsable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IRealizedTransformation extends Semanticable, Ellapsable {
     getTransformationType(): Promise<ISKOSConcept | undefined>;

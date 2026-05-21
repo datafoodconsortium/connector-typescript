@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ILocalizedProduct from "./ILocalizedProduct.js"
 import ITheoreticalStock from "./ITheoreticalStock.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
 import IPhysicalPlace from "./IPhysicalPlace.js"
 import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
@@ -89,6 +89,30 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
 		
 	}
 
+	public async getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
+		let result: IPhysicalPlace | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:localizedBy");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalPlace> semanticObject;
+		}
+		return result;
+	}
+
+	public setQuantity(quantity: IQuantity): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+		
+	}
+
+	public getAvailabilityDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:availabilityDate");
+	}
+
+	public getQuantity(): IQuantity | undefined {
+		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasQuantity");
+		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
+	}
+
 	public setAvailabilityDate(availabilityDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:availabilityDate", availabilityDate);
 	}
@@ -97,10 +121,6 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
 		this.setSemanticPropertyReference("dfc-b:localizedBy", physicalPlace);
 		
 		this.connector.store(physicalPlace);
-	}
-
-	public getAvailabilityDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:availabilityDate");
 	}
 
 	public async getLocalizedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined> {
@@ -113,29 +133,9 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
 		return result;
 	}
 
-	public setQuantity(quantity: IQuantity): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
-		
-	}
-
-	public getQuantity(): IQuantity | undefined {
-		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasQuantity");
-		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
-	}
-
 	public setLocalizedProduct(localizedProduct: ILocalizedProduct): void {
 		this.setSemanticPropertyReference("dfc-b:constitutes", localizedProduct);
 		
 		this.connector.store(localizedProduct);
-	}
-
-	public async getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
-		let result: IPhysicalPlace | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:localizedBy");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalPlace> semanticObject;
-		}
-		return result;
 	}
 }

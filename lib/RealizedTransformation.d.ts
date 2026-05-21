@@ -1,6 +1,6 @@
 import ISKOSConcept from "./ISKOSConcept.js";
-import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js";
 import IRealizedTransformation from "./IRealizedTransformation.js";
+import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js";
 import IRealizedProductionFlow from "./IRealizedProductionFlow.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
@@ -19,19 +19,19 @@ export default class RealizedTransformation extends SemanticObject implements IR
         productionFlows?: IRealizedProductionFlow[];
         doNotStore?: boolean;
     });
-    getRealizedConsumptionFlows(options?: IGetterOptions): Promise<IRealizedConsumptionFlow[]>;
-    setEndDate(endDate: string): void;
-    setRealizedProductionFlows(realizedProductionFlows: IRealizedProductionFlow[]): void;
-    setTransformationType(transformationType: ISKOSConcept): void;
-    getBeginDate(): string | undefined;
-    setBeginDate(beginDate: string): void;
-    removeRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void;
-    addRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void;
+    addRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void;
     getEndDate(): string | undefined;
     removeRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void;
+    removeRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void;
     getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    setTransformationType(transformationType: ISKOSConcept): void;
+    setRealizedProductionFlows(realizedProductionFlows: IRealizedProductionFlow[]): void;
+    addRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void;
     getRealizedProductionFlows(options?: IGetterOptions): Promise<IRealizedProductionFlow[]>;
+    setBeginDate(beginDate: string): void;
     setRealizedConsumptionFlows(realizedConsumptionFlows: IRealizedConsumptionFlow[]): void;
-    addRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void;
+    getRealizedConsumptionFlows(options?: IGetterOptions): Promise<IRealizedConsumptionFlow[]>;
+    getBeginDate(): string | undefined;
+    setEndDate(endDate: string): void;
 }
 //# sourceMappingURL=RealizedTransformation.d.ts.map

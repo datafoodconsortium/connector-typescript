@@ -17,16 +17,16 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
         doNotStore?: boolean;
     });
     setUrls(urls: string[]): void;
-    removeHostedSaleSession(): ISaleSession | undefined;
     getDescription(): string | undefined;
+    setDescription(description: string): void;
+    removeUrl(url: string): void;
+    getUrls(): string[];
+    removeHostedSaleSession(): ISaleSession | undefined;
+    setHostedSaleSessions(saleSessions: ISaleSession[]): void;
     getName(): string | undefined;
+    addHostedSaleSession(saleSession: ISaleSession): void;
+    setName(name: string): void;
     addUrl(url: string): void;
     getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]>;
-    setDescription(description: string): void;
-    setHostedSaleSessions(saleSessions: ISaleSession[]): void;
-    getUrls(): string[];
-    setName(name: string): void;
-    addHostedSaleSession(saleSession: ISaleSession): void;
-    removeUrl(url: string): void;
 }
 //# sourceMappingURL=VirtualPlace.d.ts.map

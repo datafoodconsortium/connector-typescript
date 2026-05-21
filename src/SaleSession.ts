@@ -87,12 +87,34 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		
 	}
 
+	public getQuantity(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:quantity"));
+	}
+
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
+	}
+
 	public getEndDate(): string | undefined {
 		return this.getSemanticProperty("dfc-b:endDate");
 	}
 
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	public removeOffer(offer: IOffer): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setQuantity(quantity: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
+	}
+
+	public setOffers(offers: IOffer[]): void {
+		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		offers.forEach((saleSession) => {
+			this.addSemanticPropertyReference("dfc-b:lists", saleSession, true);
+			this.connector.store(saleSession);
+		});
 	}
 
 	public addOffer(offer: IOffer): void {
@@ -109,16 +131,8 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		return this.getSemanticProperty("dfc-b:beginDate");
 	}
 
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
-	}
-
-	public getQuantity(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:quantity"));
-	}
-
-	public setQuantity(quantity: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
 	}
 
 	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {

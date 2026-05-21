@@ -36,4 +36,8 @@ export default interface ISaleSession extends Semanticable, Ellapsable {
 
 	addOffer(offer: IOffer): void;
 
+	removeOffer(offer: IOffer): void;
+
+	setOffers(offers: IOffer[]): void;
+
 }

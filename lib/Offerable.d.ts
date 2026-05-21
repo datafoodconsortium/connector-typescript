@@ -5,5 +5,7 @@ export default interface Offerable {
     getOfferedProduct(): Promise<IDefinedProduct | undefined>;
     addOffer(offer: IOffer): void;
     setOfferedProduct(offeredProduct: IDefinedProduct): void;
+    removeOffer(offer: IOffer): void;
+    setOffers(offers: IOffer[]): void;
 }
 //# sourceMappingURL=Offerable.d.ts.map

@@ -1,5 +1,5 @@
-import IPrice from "./IPrice.js";
 import ISKOSConcept from "./ISKOSConcept.js";
+import IPrice from "./IPrice.js";
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -16,10 +16,10 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
         unit?: ISKOSConcept;
     });
     getVatRate(): number | undefined;
-    getQuantityValue(): number | undefined;
-    setQuantityUnit(quantityUnit: ISKOSConcept): void;
-    setQuantityValue(quantityValue: number): void;
-    setVatRate(vatRate: number): void;
     getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    getQuantityValue(): number | undefined;
+    setQuantityValue(quantityValue: number): void;
+    setQuantityUnit(quantityUnit: ISKOSConcept): void;
+    setVatRate(vatRate: number): void;
 }
 //# sourceMappingURL=Price.d.ts.map

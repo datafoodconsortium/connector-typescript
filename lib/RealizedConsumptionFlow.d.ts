@@ -1,13 +1,13 @@
+import IRealizedTransformation from "./IRealizedTransformation.js";
 import Flow from "./Flow.js";
 import IPhysicalProduct from "./IPhysicalProduct.js";
+import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js";
 import IRealizedFlow from "./IRealizedFlow.js";
 import IQuantity from "./IQuantity.js";
-import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js";
-import IRealizedTransformation from "./IRealizedTransformation.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
-export default class RealizedConsumptionFlow extends Flow implements IRealizedFlow, IRealizedConsumptionFlow {
+export default class RealizedConsumptionFlow extends Flow implements IRealizedConsumptionFlow, IRealizedFlow {
     constructor(parameters: {
         connector: IConnector;
         semanticId?: string;
@@ -18,8 +18,8 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedFl
         doNotStore?: boolean;
     });
     getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined>;
-    getConsumedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
     setConsumedProduct(consumedProduct: IPhysicalProduct): void;
     setRealizedTransformation(realizedTransformation: IRealizedTransformation): void;
+    getConsumedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
 }
 //# sourceMappingURL=RealizedConsumptionFlow.d.ts.map

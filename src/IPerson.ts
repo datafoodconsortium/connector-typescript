@@ -26,7 +26,7 @@ import Personable from "./Personable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IPerson extends Semanticable, Affiliable, Personable {
+export default interface IPerson extends Semanticable, Personable, Affiliable {
 
 
 }

@@ -1,13 +1,13 @@
 import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js";
-import Flow from "./Flow.js";
 import ILocalizedProduct from "./ILocalizedProduct.js";
-import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
-import IQuantity from "./IQuantity.js";
 import IPlannedLocalFlow from "./IPlannedLocalFlow.js";
+import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
+import Flow from "./Flow.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
-export default class PlannedLocalProductionFlow extends Flow implements IPlannedLocalFlow, IPlannedLocalProductionFlow {
+export default class PlannedLocalProductionFlow extends Flow implements IPlannedLocalProductionFlow, IPlannedLocalFlow {
     constructor(parameters: {
         connector: IConnector;
         semanticId?: string;
@@ -17,9 +17,9 @@ export default class PlannedLocalProductionFlow extends Flow implements IPlanned
         product?: ILocalizedProduct;
         doNotStore?: boolean;
     });
-    setPlannedLocalTransformation(plannedLocalTransformation: IPlannedLocalTransformation): void;
     setProducedProduct(producedProduct: ILocalizedProduct): void;
-    getProducedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined>;
+    setPlannedLocalTransformation(plannedLocalTransformation: IPlannedLocalTransformation): void;
     getPlannedLocalTransformation(options?: IGetterOptions): Promise<IPlannedLocalTransformation | undefined>;
+    getProducedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined>;
 }
 //# sourceMappingURL=PlannedLocalProductionFlow.d.ts.map

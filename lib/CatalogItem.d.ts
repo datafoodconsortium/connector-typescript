@@ -20,14 +20,18 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
         doNotStore?: boolean;
     });
     getSku(): string | undefined;
-    getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined>;
-    setStockLimitation(stockLimitation: number): void;
-    registerInCatalog(repository: ICatalog): void;
-    getStockLimitation(): number | undefined;
-    addOffer(offer: IOffer): void;
-    getCatalogs(options?: IGetterOptions): Promise<ICatalog[]>;
-    setOfferedProduct(offeredProduct: IDefinedProduct): void;
-    getOfferers(options?: IGetterOptions): Promise<IOffer[]>;
     setSku(sku: string): void;
+    setCatalogs(catalogs: ICatalog[]): void;
+    registerInCatalog(repository: ICatalog): void;
+    getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined>;
+    setOfferedProduct(offeredProduct: IDefinedProduct): void;
+    getStockLimitation(): number | undefined;
+    setOffers(offers: IOffer[]): void;
+    getOfferers(options?: IGetterOptions): Promise<IOffer[]>;
+    setStockLimitation(stockLimitation: number): void;
+    getCatalogs(options?: IGetterOptions): Promise<ICatalog[]>;
+    removeCatalog(catalog: ICatalog): void;
+    addOffer(offer: IOffer): void;
+    removeOffer(offer: IOffer): void;
 }
 //# sourceMappingURL=CatalogItem.d.ts.map

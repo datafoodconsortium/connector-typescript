@@ -23,21 +23,21 @@ export default abstract class ShippingOption extends SemanticObject implements I
         endDate?: string;
         doNotStore?: boolean;
     });
-    getName(): string | undefined;
-    setFee(fee: number): void;
-    setEndDate(endDate: string): void;
+    setQuantity(quantity: IQuantity): void;
     getFee(): number | undefined;
-    getBeginDate(): string | undefined;
-    setName(name: string): void;
-    setBeginDate(beginDate: string): void;
-    setSaleSession(saleSession: ISaleSession): void;
-    getEndDate(): string | undefined;
     getDescription(): string | undefined;
     setDescription(description: string): void;
-    getQuantity(): IQuantity | undefined;
+    setFee(fee: number): void;
+    setSaleSession(saleSession: ISaleSession): void;
+    getEndDate(): string | undefined;
+    getName(): string | undefined;
     setOrder(order: IOrder): void;
+    setBeginDate(beginDate: string): void;
+    getQuantity(): IQuantity | undefined;
     getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined>;
-    setQuantity(quantity: IQuantity): void;
+    setName(name: string): void;
+    getBeginDate(): string | undefined;
+    setEndDate(endDate: string): void;
     getOrder(options?: IGetterOptions): Promise<IOrder | undefined>;
 }
 //# sourceMappingURL=ShippingOption.d.ts.map

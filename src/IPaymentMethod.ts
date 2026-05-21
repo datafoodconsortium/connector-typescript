@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Nameable from "./Nameable.js"
-import Describable from "./Describable.js"
 import Payable from "./Payable.js"
+import Describable from "./Describable.js"
+import Nameable from "./Nameable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IPaymentMethod extends Semanticable, Payable, Nameable, Describable {
+export default interface IPaymentMethod extends Semanticable, Nameable, Describable, Payable {
 
 	getProvider(): string | undefined;
 

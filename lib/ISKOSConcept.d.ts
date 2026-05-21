@@ -1,5 +1,5 @@
-import ISKOSLabel from "./ISKOSLabel.js";
 import ISKOSConceptScheme from "./ISKOSConceptScheme.js";
+import ISKOSLabel from "./ISKOSLabel.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface ISKOSConcept extends Semanticable {
     addBroader(broader: ISKOSConcept): void;

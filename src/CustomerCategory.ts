@@ -37,6 +37,7 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 		connector: IConnector,
 		semanticId?: string,
 		other?: Semanticable,
+		name?: string,
 		description?: string,
 		doNotStore?: boolean,
 	}) {
@@ -65,6 +66,10 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 		if (!parameters.doNotStore) {
 			this.connector.store(this);
 		}
+		if (parameters.name) {
+			this.setName(parameters.name);
+		}
+		
 		if (parameters.description) {
 			this.setDescription(parameters.description);
 		}
@@ -77,5 +82,13 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 
 	public setDescription(description: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 }

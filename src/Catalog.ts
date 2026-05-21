@@ -88,6 +88,16 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		return results;
 	}
 
+	public setItems(items: ICatalogItem[]): void {
+		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		items.forEach((catalog) => {
+			this.addSemanticPropertyReference("dfc-b:lists", catalog, true);
+			this.connector.store(catalog);
+		});
+	}
+
 	public addItem(item: ICatalogItem): void {
 		if (item.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:lists", item);
@@ -108,6 +118,16 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		}
 	}
 
+	public setMaintainers(maintainers: IEnterprise[]): void {
+		this.getSemanticPropertyAll("dfc-b:maintainedBy").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		maintainers.forEach((catalog) => {
+			this.addSemanticPropertyReference("dfc-b:maintainedBy", catalog, true);
+			this.connector.store(catalog);
+		});
+	}
+
 	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
 		const results = new Array<IEnterprise>();
 		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
@@ -116,6 +136,10 @@ export default class Catalog extends SemanticObject implements ICatalog {
 			if (semanticObject) results.push(<IEnterprise>semanticObject);
 		}
 		return results;
+	}
+
+	public removeMaintainer(maintainer: IEnterprise): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public removeItem(item: ICatalogItem): void {

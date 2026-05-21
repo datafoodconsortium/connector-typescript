@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IRealizedTransformation from "./IRealizedTransformation.js"
 import Flow from "./Flow.js"
 import IPhysicalProduct from "./IPhysicalProduct.js"
+import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import IRealizedFlow from "./IRealizedFlow.js"
 import IQuantity from "./IQuantity.js"
-import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
-import IRealizedTransformation from "./IRealizedTransformation.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -34,7 +34,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const REALIZED_CONSUMPTION_FLOW_SEM_TYPE: string = "dfc-b:AsRealizedConsumptionFlow";
 
-export default class RealizedConsumptionFlow extends Flow implements IRealizedFlow, IRealizedConsumptionFlow {
+export default class RealizedConsumptionFlow extends Flow implements IRealizedConsumptionFlow, IRealizedFlow {
 
 	public constructor(parameters: {
 		connector: IConnector,
@@ -89,16 +89,6 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedFl
 		return result;
 	}
 
-	public async getConsumedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
-		let result: IPhysicalProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:consumes");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalProduct> semanticObject;
-		}
-		return result;
-	}
-
 	public setConsumedProduct(consumedProduct: IPhysicalProduct): void {
 		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
 		
@@ -109,5 +99,15 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedFl
 		this.setSemanticPropertyReference("dfc-b:inputOf", realizedTransformation);
 		
 		this.connector.store(realizedTransformation);
+	}
+
+	public async getConsumedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
+		let result: IPhysicalProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:consumes");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalProduct> semanticObject;
+		}
+		return result;
 	}
 }

@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPerson from "./IPerson.js"
 import IAddress from "./IAddress.js"
 import Agent from "./Agent.js"
+import IPerson from "./IPerson.js"
 import IEnterprise from "./IEnterprise.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -94,12 +94,8 @@ export default class Person extends Agent implements IPerson {
 		return results;
 	}
 
-	public leaveAffiliatedOrganization(organization: IEnterprise): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public getLastName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:familyName");
+	public getFirstName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:firstName");
 	}
 
 	public affiliateTo(organization: IEnterprise): void {
@@ -112,15 +108,29 @@ export default class Person extends Agent implements IPerson {
 		}
 	}
 
-	public getFirstName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:firstName");
+	public leaveAffiliatedOrganization(organization: IEnterprise): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public setFirstName(firstName: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
 	}
 
+	public getLastName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:familyName");
+	}
+
 	public setLastName(lastName: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
+	}
+
+	public setAffiliatedOrganizations(organizations: IEnterprise[]): void {
+		this.getSemanticPropertyAll("dfc-b:affiliates").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		organizations.forEach((person) => {
+			this.addSemanticPropertyReference("dfc-b:affiliates", person, true);
+			this.connector.store(person);
+		});
 	}
 }

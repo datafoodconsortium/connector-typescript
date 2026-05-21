@@ -1,9 +1,9 @@
-import Flow from "./Flow.js";
 import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
-import IPlannedTransformation from "./IPlannedTransformation.js";
 import ISuppliedProduct from "./ISuppliedProduct.js";
-import IQuantity from "./IQuantity.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
 import IPlannedFlow from "./IPlannedFlow.js";
+import Flow from "./Flow.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -17,9 +17,9 @@ export default class PlannedProductionFlow extends Flow implements IPlannedProdu
         product?: ISuppliedProduct;
         doNotStore?: boolean;
     });
-    getProducedProduct(options?: IGetterOptions): Promise<ISuppliedProduct | undefined>;
-    setPlannedTransformation(plannedTransformation: IPlannedTransformation): void;
     getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined>;
+    getProducedProduct(options?: IGetterOptions): Promise<ISuppliedProduct | undefined>;
     setProducedProduct(producedProduct: ISuppliedProduct): void;
+    setPlannedTransformation(plannedTransformation: IPlannedTransformation): void;
 }
 //# sourceMappingURL=PlannedProductionFlow.d.ts.map

@@ -22,13 +22,13 @@
  * SOFTWARE.
 */
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import ILocalizedProduct from "./ILocalizedProduct.js"
-import ISKOSConcept from "./ISKOSConcept.js"
 import ISuppliedProduct from "./ISuppliedProduct.js"
+import ISKOSConcept from "./ISKOSConcept.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
+import ICatalogItem from "./ICatalogItem.js"
 import DefinedProduct from "./DefinedProduct.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
-import ICatalogItem from "./ICatalogItem.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
 import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -122,16 +122,6 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 		
 	}
 
-	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {
-		const results = new Array<ILocalizedProduct>();
-		const properties = this.getSemanticPropertyAll("dfc-b:referenceOf");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ILocalizedProduct>semanticObject);
-		}
-		return results;
-	}
-
 	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
 		throw new Error("Not yet implemented.");
 	}
@@ -144,6 +134,16 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 			this.addSemanticPropertyReference("dfc-b:referenceOf", suppliedProduct, true);
 			this.connector.store(suppliedProduct);
 		});
+	}
+
+	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {
+		const results = new Array<ILocalizedProduct>();
+		const properties = this.getSemanticPropertyAll("dfc-b:referenceOf");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ILocalizedProduct>semanticObject);
+		}
+		return results;
 	}
 
 	public addLocalizedProduct(localizedProduct: ILocalizedProduct): void {

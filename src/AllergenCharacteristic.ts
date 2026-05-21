@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Characteristic from "./Characteristic.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import Characteristic from "./Characteristic.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"

@@ -1,7 +1,7 @@
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import ISKOSConcept from "./ISKOSConcept.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
 export default interface Manufacturable {
     getAlcoholPercentage(): number | undefined;
     getLifetime(): string | undefined;
@@ -26,5 +26,10 @@ export default interface Manufacturable {
     removePhysicalCharacteristic(physicalCharacteristic: IPhysicalCharacteristic): void;
     removeNatureOrigin(natureOrigin: ISKOSConcept): void;
     removePartOrigin(partOrigin: ISKOSConcept): void;
+    setAllergenCharacteristics(allergenCharacteristics: IAllergenCharacteristic[]): void;
+    setNutrientCharacteristics(nutrientCharacteristics: INutrientCharacteristic[]): void;
+    setPhysicalCharacteristics(physicalCharacteristics: IPhysicalCharacteristic[]): void;
+    setNatureOrigins(natureOrigin: ISKOSConcept[]): void;
+    setPartOrigins(partOrigin: ISKOSConcept[]): void;
 }
 //# sourceMappingURL=Manufacturable.d.ts.map

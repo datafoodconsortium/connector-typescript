@@ -21,19 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Onboardable from "./Onboardable.js"
-import ProductSupplier from "./ProductSupplier.js"
-import Nameable from "./Nameable.js"
-import Describable from "./Describable.js"
-import Taxable from "./Taxable.js"
-import CatalogMaintainer from "./CatalogMaintainer.js"
 import TechnicalProductProposer from "./TechnicalProductProposer.js"
-import MainContactOwner from "./MainContactOwner.js"
+import Onboardable from "./Onboardable.js"
 import CatalogItemManager from "./CatalogItemManager.js"
+import MainContactOwner from "./MainContactOwner.js"
+import ProductSupplier from "./ProductSupplier.js"
+import CatalogMaintainer from "./CatalogMaintainer.js"
+import Taxable from "./Taxable.js"
+import Describable from "./Describable.js"
+import Nameable from "./Nameable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IEnterprise extends Semanticable, TechnicalProductProposer, ProductSupplier, Describable, Nameable, MainContactOwner, Onboardable, CatalogMaintainer, CatalogItemManager, Taxable {
+export default interface IEnterprise extends Semanticable, CatalogMaintainer, Describable, Nameable, TechnicalProductProposer, MainContactOwner, CatalogItemManager, Onboardable, ProductSupplier, Taxable {
 
 
 }

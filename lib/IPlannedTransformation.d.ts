@@ -1,6 +1,6 @@
-import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
 import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
 import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IPlannedTransformation extends Semanticable {
     getTransformationType(): Promise<ISKOSConcept | undefined>;

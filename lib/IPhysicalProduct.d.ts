@@ -1,14 +1,14 @@
-import Nameable from "./Nameable.js";
-import Exhibitable from "./Exhibitable.js";
-import ILocalizedProduct from "./ILocalizedProduct.js";
 import IProductBatch from "./IProductBatch.js";
-import IRealStock from "./IRealStock.js";
+import ILocalizedProduct from "./ILocalizedProduct.js";
 import Describable from "./Describable.js";
-import IQuantity from "./IQuantity.js";
+import IRealStock from "./IRealStock.js";
 import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js";
+import Exhibitable from "./Exhibitable.js";
+import IQuantity from "./IQuantity.js";
 import IRealizedProductionFlow from "./IRealizedProductionFlow.js";
+import Nameable from "./Nameable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default interface IPhysicalProduct extends Semanticable, Describable, Nameable, Exhibitable {
+export default interface IPhysicalProduct extends Semanticable, Nameable, Describable, Exhibitable {
     getRealStocks(): Promise<IRealStock[]>;
     addRealStock(realStock: IRealStock): void;
     removeRealStock(realStock: IRealStock): void;

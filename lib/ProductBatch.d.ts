@@ -21,21 +21,21 @@ export default class ProductBatch extends SemanticObject implements IProductBatc
         productionDate?: string;
         doNotStore?: boolean;
     });
-    getRealStock(options?: IGetterOptions): Promise<IRealStock | undefined>;
-    getName(): string | undefined;
-    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
-    setBestBeforeDate(bestBeforeDate: string): void;
-    setProductionDate(productionDate: string): void;
-    setName(name: string): void;
     getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
-    getExpirationDate(): string | undefined;
-    setExpirationDate(expirationDate: string): void;
     getDescription(): string | undefined;
-    getProductionDate(): string | undefined;
-    setBatchNumber(batchNumber: string): void;
-    getBatchNumber(): string | undefined;
     setDescription(description: string): void;
+    getName(): string | undefined;
+    getBatchNumber(): string | undefined;
+    getExpirationDate(): string | undefined;
+    setBatchNumber(batchNumber: string): void;
     setRealStock(realStock: IRealStock): void;
+    setExpirationDate(expirationDate: string): void;
+    setBestBeforeDate(bestBeforeDate: string): void;
+    getRealStock(options?: IGetterOptions): Promise<IRealStock | undefined>;
+    getProductionDate(): string | undefined;
+    setName(name: string): void;
     getBestBeforeDate(): string | undefined;
+    setProductionDate(productionDate: string): void;
+    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
 }
 //# sourceMappingURL=ProductBatch.d.ts.map

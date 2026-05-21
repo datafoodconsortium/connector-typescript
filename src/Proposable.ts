@@ -31,4 +31,8 @@ export default interface Proposable {
 
 	addCatalogItem(catalogItem: ICatalogItem): void;
 
+	removeCatalogItem(catalogItem: ICatalogItem): void;
+
+	setCatalogItems(catalogItems: ICatalogItem[]): void;
+
 }

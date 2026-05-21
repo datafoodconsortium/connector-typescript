@@ -23,10 +23,10 @@
 */
 import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
 import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js"
-import Flow from "./Flow.js"
 import ILocalizedProduct from "./ILocalizedProduct.js"
-import IQuantity from "./IQuantity.js"
 import IPlannedLocalFlow from "./IPlannedLocalFlow.js"
+import Flow from "./Flow.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -79,16 +79,16 @@ export default class PlannedLocalConsumptionFlow extends Flow implements IPlanne
 		
 	}
 
-	public setPlannedLocalTransformation(plannedLocalTransformation: IPlannedLocalTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:inputOf", plannedLocalTransformation);
-		
-		this.connector.store(plannedLocalTransformation);
-	}
-
 	public setConsumedProduct(consumedProduct: ILocalizedProduct): void {
 		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
 		
 		this.connector.store(consumedProduct);
+	}
+
+	public setPlannedLocalTransformation(plannedLocalTransformation: IPlannedLocalTransformation): void {
+		this.setSemanticPropertyReference("dfc-b:inputOf", plannedLocalTransformation);
+		
+		this.connector.store(plannedLocalTransformation);
 	}
 
 	public async getConsumedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined> {

@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Nameable from "./Nameable.js"
 import Describable from "./Describable.js"
 import ISaleSession from "./ISaleSession.js"
+import Nameable from "./Nameable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IPlace extends Semanticable, Nameable, Describable {
+export default interface IPlace extends Semanticable, Describable, Nameable {
 
 	getHostedSaleSessions(): Promise<ISaleSession[]>;
 

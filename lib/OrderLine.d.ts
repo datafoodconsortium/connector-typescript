@@ -1,6 +1,6 @@
+import IOrder from "./IOrder.js";
 import IOffer from "./IOffer.js";
 import IPrice from "./IPrice.js";
-import IOrder from "./IOrder.js";
 import IOrderLine from "./IOrderLine.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
@@ -18,15 +18,15 @@ export default class OrderLine extends SemanticObject implements IOrderLine {
         order?: IOrder;
         doNotStore?: boolean;
     });
-    getDescription(): string | undefined;
-    getOffer(options?: IGetterOptions): Promise<IOffer | undefined>;
-    setOrder(order: IOrder): void;
     getQuantity(): number | undefined;
-    setDescription(description: string): void;
-    setPrice(price: IPrice): void;
-    setQuantity(quantity: number): void;
-    getPrice(): IPrice | undefined;
     getOrder(options?: IGetterOptions): Promise<IOrder | undefined>;
+    setPrice(price: IPrice): void;
+    getDescription(): string | undefined;
+    setDescription(description: string): void;
+    getOffer(options?: IGetterOptions): Promise<IOffer | undefined>;
+    getPrice(): IPrice | undefined;
     setOffer(offer: IOffer): void;
+    setQuantity(quantity: number): void;
+    setOrder(order: IOrder): void;
 }
 //# sourceMappingURL=OrderLine.d.ts.map

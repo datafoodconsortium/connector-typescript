@@ -16,9 +16,12 @@ export default class Catalog extends SemanticObject implements ICatalog {
         doNotStore?: boolean;
     });
     getItems(options?: IGetterOptions): Promise<ICatalogItem[]>;
+    setItems(items: ICatalogItem[]): void;
     addItem(item: ICatalogItem): void;
     addMaintainer(maintainer: IEnterprise): void;
+    setMaintainers(maintainers: IEnterprise[]): void;
     getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]>;
+    removeMaintainer(maintainer: IEnterprise): void;
     removeItem(item: ICatalogItem): void;
 }
 //# sourceMappingURL=Catalog.d.ts.map

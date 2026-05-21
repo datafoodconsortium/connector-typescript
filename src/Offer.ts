@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICustomerCategory from "./ICustomerCategory.js"
 import IOffer from "./IOffer.js"
-import IPrice from "./IPrice.js"
 import ICatalogItem from "./ICatalogItem.js"
+import ICustomerCategory from "./ICustomerCategory.js"
+import IPrice from "./IPrice.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -89,14 +89,19 @@ export default class Offer extends SemanticObject implements IOffer {
 		
 	}
 
-	public setOfferedItem(offeredItem: ICatalogItem): void {
-		this.setSemanticPropertyReference("dfc-b:offeredItem", offeredItem);
+	public setPrice(price: IPrice): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasPrice", price);
 		
-		this.connector.store(offeredItem);
 	}
 
 	public setStockLimitation(stockLimitation: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
+	}
+
+	public setOfferedItem(offeredItem: ICatalogItem): void {
+		this.setSemanticPropertyReference("dfc-b:offeredItem", offeredItem);
+		
+		this.connector.store(offeredItem);
 	}
 
 	public async getOfferedItem(options?: IGetterOptions): Promise<ICatalogItem | undefined> {
@@ -109,6 +114,17 @@ export default class Offer extends SemanticObject implements IOffer {
 		return result;
 	}
 
+	public getPrice(): IPrice | undefined {
+		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
+		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
+	}
+
+	public setCustomerCategory(customerCategory: ICustomerCategory): void {
+		this.setSemanticPropertyReference("dfc-b:offeredTo", customerCategory);
+		
+		this.connector.store(customerCategory);
+	}
+
 	public async getCustomerCategory(options?: IGetterOptions): Promise<ICustomerCategory | undefined> {
 		let result: ICustomerCategory | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:offeredTo");
@@ -119,23 +135,7 @@ export default class Offer extends SemanticObject implements IOffer {
 		return result;
 	}
 
-	public setPrice(price: IPrice): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasPrice", price);
-		
-	}
-
 	public getStockLimitation(): number | undefined {
 		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
-	}
-
-	public setCustomerCategory(customerCategory: ICustomerCategory): void {
-		this.setSemanticPropertyReference("dfc-b:offeredTo", customerCategory);
-		
-		this.connector.store(customerCategory);
-	}
-
-	public getPrice(): IPrice | undefined {
-		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
-		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 }
