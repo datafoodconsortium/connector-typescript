@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ContactableByAddress from "./ContactableByAddress.js"
 import IAddress from "./IAddress.js"
+import ContactableByAddress from "./ContactableByAddress.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -31,5 +31,7 @@ export default interface AddressOwner extends ContactableByAddress {
 	addLocalization(localization: IAddress): void;
 
 	removeLocalization(localization: IAddress): void;
+
+	setLocalizations(localizations: IAddress[]): void;
 
 }

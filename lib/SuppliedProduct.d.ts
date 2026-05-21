@@ -1,13 +1,15 @@
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import ISuppliedProduct from "./ISuppliedProduct.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import ILocalizedProduct from "./ILocalizedProduct.js";
+import ICatalogItem from "./ICatalogItem.js";
 import DefinedProduct from "./DefinedProduct.js";
-import IQuantity from "./IQuantity.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import ISKOSConcept from "./ISKOSConcept.js";
-import ISuppliedProduct from "./ISuppliedProduct.js";
-import ICatalogItem from "./ICatalogItem.js";
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
+import IGetterOptions from "./IGetterOptions.js";
 export default class SuppliedProduct extends DefinedProduct implements ISuppliedProduct {
     getTotalTheoreticalStock(): number | undefined;
     setTotalTheoreticalStock(totalTheoreticalStock: number): void;
@@ -33,7 +35,12 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
         partOrigin?: ISKOSConcept[];
         totalTheoreticalStock?: number;
         images?: string[];
+        localizedProducts?: ILocalizedProduct[];
         doNotStore?: boolean;
     });
+    removeLocalizedProduct(localizedProduct: ILocalizedProduct): void;
+    setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void;
+    getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]>;
+    addLocalizedProduct(localizedProduct: ILocalizedProduct): void;
 }
 //# sourceMappingURL=SuppliedProduct.d.ts.map

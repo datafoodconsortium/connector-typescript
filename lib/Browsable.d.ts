@@ -6,5 +6,8 @@ export default interface Browsable {
     removeItem(item: ICatalogItem): void;
     addItem(item: ICatalogItem): void;
     addMaintainer(maintainer: IEnterprise): void;
+    setItems(items: ICatalogItem[]): void;
+    removeMaintainer(maintainer: IEnterprise): void;
+    setMaintainers(maintainers: IEnterprise[]): void;
 }
 //# sourceMappingURL=Browsable.d.ts.map

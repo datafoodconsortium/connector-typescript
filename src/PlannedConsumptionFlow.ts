@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
+import IPlannedTransformation from "./IPlannedTransformation.js"
+import IPlannedFlow from "./IPlannedFlow.js"
 import Flow from "./Flow.js"
 import IDefinedProduct from "./IDefinedProduct.js"
-import IPlannedTransformation from "./IPlannedTransformation.js"
 import IQuantity from "./IQuantity.js"
-import IPlannedFlow from "./IPlannedFlow.js"
-import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -89,12 +89,6 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedCons
 		return result;
 	}
 
-	public setConsumedProduct(consumedProduct: IDefinedProduct): void {
-		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
-		
-		this.connector.store(consumedProduct);
-	}
-
 	public async getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined> {
 		let result: IPlannedTransformation | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
@@ -109,5 +103,11 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedCons
 		this.setSemanticPropertyReference("dfc-b:inputOf", plannedTransformation);
 		
 		this.connector.store(plannedTransformation);
+	}
+
+	public setConsumedProduct(consumedProduct: IDefinedProduct): void {
+		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
+		
+		this.connector.store(consumedProduct);
 	}
 }

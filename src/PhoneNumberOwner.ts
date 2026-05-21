@@ -32,4 +32,6 @@ export default interface PhoneNumberOwner extends ContactableByPhone {
 
 	removePhoneNumber(phoneNumber: IPhoneNumber): void;
 
+	setPhoneNumbers(phoneNumbers: IPhoneNumber[]): void;
+
 }

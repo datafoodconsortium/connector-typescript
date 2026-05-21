@@ -21,11 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import ILocalizedProduct from "./ILocalizedProduct.js"
 import IDefinedProduct from "./IDefinedProduct.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
 export default interface ISuppliedProduct extends IDefinedProduct {
 
+	getLocalizedProducts(): Promise<ILocalizedProduct[]>;
+
+	addLocalizedProduct(localizedProduct: ILocalizedProduct): void;
+
+	removeLocalizedProduct(localizedProduct: ILocalizedProduct): void;
+
+	setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void;
 
 }

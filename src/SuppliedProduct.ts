@@ -21,14 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import ISKOSConcept from "./ISKOSConcept.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
+import ICatalogItem from "./ICatalogItem.js"
 import DefinedProduct from "./DefinedProduct.js"
-import IQuantity from "./IQuantity.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
 import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
-import ICatalogItem from "./ICatalogItem.js"
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -68,6 +69,7 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 		partOrigin?: ISKOSConcept[],
 		totalTheoreticalStock?: number,
 		images?: string[],
+		localizedProducts?: ILocalizedProduct[],
 		doNotStore?: boolean,
 	}) {
 		
@@ -114,5 +116,43 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 			this.setTotalTheoreticalStock(parameters.totalTheoreticalStock);
 		}
 		
+		if (parameters.localizedProducts) {
+			parameters.localizedProducts.forEach(e => this.addLocalizedProduct(e));
+		}
+		
+	}
+
+	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void {
+		this.getSemanticPropertyAll("dfc-b:referenceOf").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		localizedProducts.forEach((suppliedProduct) => {
+			this.addSemanticPropertyReference("dfc-b:referenceOf", suppliedProduct, true);
+			this.connector.store(suppliedProduct);
+		});
+	}
+
+	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {
+		const results = new Array<ILocalizedProduct>();
+		const properties = this.getSemanticPropertyAll("dfc-b:referenceOf");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ILocalizedProduct>semanticObject);
+		}
+		return results;
+	}
+
+	public addLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		if (localizedProduct.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:referenceOf", localizedProduct);
+		}
+		else {
+			this.connector.store(localizedProduct);
+			this.addSemanticPropertyReference("dfc-b:referenceOf", localizedProduct);
+		}
 	}
 }

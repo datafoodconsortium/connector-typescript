@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
 import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -75,5 +75,15 @@ export default interface Manufacturable {
 	removeNatureOrigin(natureOrigin: ISKOSConcept): void;
 
 	removePartOrigin(partOrigin: ISKOSConcept): void;
+
+	setAllergenCharacteristics(allergenCharacteristics: IAllergenCharacteristic[]): void;
+
+	setNutrientCharacteristics(nutrientCharacteristics: INutrientCharacteristic[]): void;
+
+	setPhysicalCharacteristics(physicalCharacteristics: IPhysicalCharacteristic[]): void;
+
+	setNatureOrigins(natureOrigin: ISKOSConcept[]): void;
+
+	setPartOrigins(partOrigin: ISKOSConcept[]): void;
 
 }

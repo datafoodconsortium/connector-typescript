@@ -33,4 +33,6 @@ export default interface TechnicalProductProposer {
 
 	unproposeTechnicalProducts(technicalProducts: ITechnicalProduct): void;
 
+	setProposedTechnicalProducts(technicalProducts: ITechnicalProduct[]): void;
+
 }

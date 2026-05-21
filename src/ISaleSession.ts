@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Ellapsable from "./Ellapsable.js"
 import IOffer from "./IOffer.js"
+import Ellapsable from "./Ellapsable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -35,5 +35,9 @@ export default interface ISaleSession extends Semanticable, Ellapsable {
 	getOffers(): Promise<IOffer[]>;
 
 	addOffer(offer: IOffer): void;
+
+	removeOffer(offer: IOffer): void;
+
+	setOffers(offers: IOffer[]): void;
 
 }

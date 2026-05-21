@@ -1,6 +1,6 @@
+import ICharacteristic from "./ICharacteristic.js";
 import ISKOSConcept from "./ISKOSConcept.js";
 import QuantitativeValue from "./QuantitativeValue.js";
-import ICharacteristic from "./ICharacteristic.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";

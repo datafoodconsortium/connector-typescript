@@ -1,19 +1,19 @@
-import ICatalog from "./ICatalog.js";
-import IPerson from "./IPerson.js";
 import Onboardable from "./Onboardable.js";
-import IAddress from "./IAddress.js";
 import ISuppliedProduct from "./ISuppliedProduct.js";
-import Agent from "./Agent.js";
-import ITechnicalProduct from "./ITechnicalProduct.js";
-import ICatalogItem from "./ICatalogItem.js";
-import ManagedByMainContact from "./ManagedByMainContact.js";
 import ProductSupplier from "./ProductSupplier.js";
-import IEnterprise from "./IEnterprise.js";
+import IAddress from "./IAddress.js";
+import ITechnicalProduct from "./ITechnicalProduct.js";
+import Agent from "./Agent.js";
+import ICatalogItem from "./ICatalogItem.js";
+import IPerson from "./IPerson.js";
 import ICustomerCategory from "./ICustomerCategory.js";
+import ManagedByMainContact from "./ManagedByMainContact.js";
+import IEnterprise from "./IEnterprise.js";
+import ICatalog from "./ICatalog.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
-export default class Enterprise extends Agent implements IEnterprise, Onboardable, ManagedByMainContact, ProductSupplier {
+export default class Enterprise extends Agent implements Onboardable, ManagedByMainContact, IEnterprise, ProductSupplier {
     constructor(parameters: {
         connector: IConnector;
         semanticId?: string;
@@ -31,27 +31,32 @@ export default class Enterprise extends Agent implements IEnterprise, Onboardabl
         logo?: string;
         doNotStore?: boolean;
     });
-    getName(): string | undefined;
-    getMainContact(options?: IGetterOptions): Promise<IPerson | undefined>;
-    manageCatalogItem(catalogItem: ICatalogItem): void;
-    unmanageCatalogItem(catalogItem: ICatalogItem): void;
-    setMainContact(mainContact: IPerson): void;
-    getDescription(): string | undefined;
-    unmaintainCatalog(catalog: ICatalog): void;
     getManagedCatalogItems(options?: IGetterOptions): Promise<ICatalogItem[]>;
-    addCustomerCategory(customerCategory: ICustomerCategory): void;
     setDescription(description: string): void;
-    supplyProduct(suppliedProduct: ISuppliedProduct): void;
-    maintainCatalog(catalog: ICatalog): void;
+    getName(): string | undefined;
     getSuppliedProducts(options?: IGetterOptions): Promise<ISuppliedProduct[]>;
-    unsupplyProduct(suppliedProduct: ISuppliedProduct): void;
-    setVatNumber(vatNumber: string): void;
-    getMaintainedCatalogs(options?: IGetterOptions): Promise<ICatalog[]>;
-    setName(name: string): void;
+    supplyProduct(suppliedProduct: ISuppliedProduct): void;
+    unmaintainCatalog(catalog: ICatalog): void;
+    removeCustomerCategory(customerCategory: ICustomerCategory): void;
     getProposedTechnicalProducts(options?: IGetterOptions): Promise<ITechnicalProduct[]>;
-    getCustomerCategories(options?: IGetterOptions): Promise<ICustomerCategory[]>;
+    proposeTechnicalProducts(technicalProducts: ITechnicalProduct): void;
+    maintainCatalog(catalog: ICatalog): void;
+    unmanageCatalogItem(catalogItem: ICatalogItem): void;
+    unsupplyProduct(suppliedProduct: ISuppliedProduct): void;
     getVatNumber(): string | undefined;
     unproposeTechnicalProducts(technicalProducts: ITechnicalProduct): void;
-    proposeTechnicalProducts(technicalProducts: ITechnicalProduct): void;
+    getDescription(): string | undefined;
+    setVatNumber(vatNumber: string): void;
+    getMaintainedCatalogs(options?: IGetterOptions): Promise<ICatalog[]>;
+    manageCatalogItem(catalogItem: ICatalogItem): void;
+    setSuppliedProducts(suppliedProducts: ISuppliedProduct[]): void;
+    setMainContact(mainContact: IPerson): void;
+    getCustomerCategories(options?: IGetterOptions): Promise<ICustomerCategory[]>;
+    addCustomerCategory(customerCategory: ICustomerCategory): void;
+    setManagedCatalogItems(catalogItems: ICatalogItem[]): void;
+    setProposedTechnicalProducts(technicalProducts: ITechnicalProduct[]): void;
+    getMainContact(options?: IGetterOptions): Promise<IPerson | undefined>;
+    setName(name: string): void;
+    setCustomerCategories(customerCategories: ICustomerCategory[]): void;
 }
 //# sourceMappingURL=Enterprise.d.ts.map

@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import ITechnicalProduct from "./ITechnicalProduct.js"
+import ISKOSConcept from "./ISKOSConcept.js"
+import ICatalogItem from "./ICatalogItem.js"
 import DefinedProduct from "./DefinedProduct.js"
-import IQuantity from "./IQuantity.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
 import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import ITechnicalProduct from "./ITechnicalProduct.js"
-import ICatalogItem from "./ICatalogItem.js"
-import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -58,6 +58,7 @@ export default class TechnicalProduct extends DefinedProduct implements ITechnic
 		certifications?: ISKOSConcept[],
 		natureOrigin?: ISKOSConcept[],
 		partOrigin?: ISKOSConcept[],
+		images?: string[],
 		doNotStore?: boolean,
 	}) {
 		
@@ -91,7 +92,8 @@ export default class TechnicalProduct extends DefinedProduct implements ITechnic
 				catalogItems: parameters.catalogItems,
 				certifications: parameters.certifications,
 				natureOrigin: parameters.natureOrigin,
-				partOrigin: parameters.partOrigin
+				partOrigin: parameters.partOrigin,
+				images: parameters.images
 		});
 		}
 		

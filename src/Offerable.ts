@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IDefinedProduct from "./IDefinedProduct.js"
 import IOffer from "./IOffer.js"
+import IDefinedProduct from "./IDefinedProduct.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -35,5 +35,9 @@ export default interface Offerable {
 	addOffer(offer: IOffer): void;
 
 	setOfferedProduct(offeredProduct: IDefinedProduct): void;
+
+	removeOffer(offer: IOffer): void;
+
+	setOffers(offers: IOffer[]): void;
 
 }

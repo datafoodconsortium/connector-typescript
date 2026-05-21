@@ -1,5 +1,5 @@
-import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
+import ICatalog from "./ICatalog.js";
 import IEnterprise from "./IEnterprise.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
@@ -15,10 +15,13 @@ export default class Catalog extends SemanticObject implements ICatalog {
         items?: ICatalogItem[];
         doNotStore?: boolean;
     });
-    getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]>;
-    removeItem(item: ICatalogItem): void;
+    getItems(options?: IGetterOptions): Promise<ICatalogItem[]>;
+    setItems(items: ICatalogItem[]): void;
     addItem(item: ICatalogItem): void;
     addMaintainer(maintainer: IEnterprise): void;
-    getItems(options?: IGetterOptions): Promise<ICatalogItem[]>;
+    setMaintainers(maintainers: IEnterprise[]): void;
+    getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]>;
+    removeMaintainer(maintainer: IEnterprise): void;
+    removeItem(item: ICatalogItem): void;
 }
 //# sourceMappingURL=Catalog.d.ts.map

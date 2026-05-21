@@ -33,4 +33,6 @@ export default interface Affiliable {
 
 	leaveAffiliatedOrganization(organization: IEnterprise): void;
 
+	setAffiliatedOrganizations(organizations: IEnterprise[]): void;
+
 }

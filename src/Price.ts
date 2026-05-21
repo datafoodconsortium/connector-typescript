@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPrice from "./IPrice.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import IPrice from "./IPrice.js"
 import { SemanticObjectAnonymous } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -79,12 +79,8 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 		
 	}
 
-	public getQuantityValue(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:value"));
-	}
-
-	public setQuantityValue(quantityValue: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
+	public getVatRate(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:VATrate"));
 	}
 
 	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
@@ -97,8 +93,12 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 		return result;
 	}
 
-	public getVatRate(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:VATrate"));
+	public getQuantityValue(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:value"));
+	}
+
+	public setQuantityValue(quantityValue: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
 	}
 
 	public setQuantityUnit(quantityUnit: ISKOSConcept): void {

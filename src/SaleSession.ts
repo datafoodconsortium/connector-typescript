@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISaleSession from "./ISaleSession.js"
 import IOffer from "./IOffer.js"
+import ISaleSession from "./ISaleSession.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -87,10 +87,6 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		
 	}
 
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
-	}
-
 	public getQuantity(): number | undefined {
 		return Number(this.getSemanticProperty("dfc-b:quantity"));
 	}
@@ -99,26 +95,26 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
 	}
 
-	public getBeginDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:beginDate");
-	}
-
 	public getEndDate(): string | undefined {
 		return this.getSemanticProperty("dfc-b:endDate");
+	}
+
+	public removeOffer(offer: IOffer): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public setQuantity(quantity: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
 	}
 
-	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {
-		const results = new Array<IOffer>();
-		const properties = this.getSemanticPropertyAll("dfc-b:lists");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOffer>semanticObject);
-		}
-		return results;
+	public setOffers(offers: IOffer[]): void {
+		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		offers.forEach((saleSession) => {
+			this.addSemanticPropertyReference("dfc-b:lists", saleSession, true);
+			this.connector.store(saleSession);
+		});
 	}
 
 	public addOffer(offer: IOffer): void {
@@ -129,5 +125,23 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 			this.connector.store(offer);
 			this.addSemanticPropertyReference("dfc-b:lists", offer);
 		}
+	}
+
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:beginDate");
+	}
+
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	}
+
+	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {
+		const results = new Array<IOffer>();
+		const properties = this.getSemanticPropertyAll("dfc-b:lists");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IOffer>semanticObject);
+		}
+		return results;
 	}
 }

@@ -1,5 +1,5 @@
-import ISaleSession from "./ISaleSession.js";
 import IOffer from "./IOffer.js";
+import ISaleSession from "./ISaleSession.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -16,13 +16,15 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
         offers?: IOffer[];
         doNotStore?: boolean;
     });
-    setEndDate(endDate: string): void;
     getQuantity(): number | undefined;
     setBeginDate(beginDate: string): void;
-    getBeginDate(): string | undefined;
     getEndDate(): string | undefined;
+    removeOffer(offer: IOffer): void;
     setQuantity(quantity: number): void;
-    getOffers(options?: IGetterOptions): Promise<IOffer[]>;
+    setOffers(offers: IOffer[]): void;
     addOffer(offer: IOffer): void;
+    getBeginDate(): string | undefined;
+    setEndDate(endDate: string): void;
+    getOffers(options?: IGetterOptions): Promise<IOffer[]>;
 }
 //# sourceMappingURL=SaleSession.d.ts.map

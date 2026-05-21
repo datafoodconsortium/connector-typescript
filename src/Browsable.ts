@@ -38,4 +38,10 @@ export default interface Browsable {
 
 	addMaintainer(maintainer: IEnterprise): void;
 
+	setItems(items: ICatalogItem[]): void;
+
+	removeMaintainer(maintainer: IEnterprise): void;
+
+	setMaintainers(maintainers: IEnterprise[]): void;
+
 }
