@@ -1,13 +1,13 @@
+import PhoneNumberOwner from "./PhoneNumberOwner.js";
 import IGeoJsonFeature from "./IGeoJsonFeature.js";
 import Openable from "./Openable.js";
-import IAddress from "./IAddress.js";
-import ContactableByPhone from "./ContactableByPhone.js";
-import PhoneNumberOwner from "./PhoneNumberOwner.js";
 import IPerson from "./IPerson.js";
-import ITheoreticalStock from "./ITheoreticalStock.js";
 import IPlace from "./IPlace.js";
+import IAddress from "./IAddress.js";
+import ITheoreticalStock from "./ITheoreticalStock.js";
+import ContactableByPhone from "./ContactableByPhone.js";
 import IRealStock from "./IRealStock.js";
-export default interface IPhysicalPlace extends PhoneNumberOwner, ContactableByPhone, IPlace, Openable {
+export default interface IPhysicalPlace extends PhoneNumberOwner, ContactableByPhone, Openable, IPlace {
     getAddress(): Promise<IAddress | undefined>;
     setAddress(address: IAddress): void;
     getMainContacts(): Promise<IPerson[]>;

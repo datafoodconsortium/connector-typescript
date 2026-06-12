@@ -16,15 +16,15 @@ export default class PaymentMethod extends SemanticObject implements IPaymentMet
         type?: string;
         doNotStore?: boolean;
     });
-    getName(): string | undefined;
-    getDescription(): string | undefined;
-    setPrice(price: IPrice): void;
-    setDescription(description: string): void;
     setProvider(provider: string): void;
+    getDescription(): string | undefined;
+    getName(): string | undefined;
     setType(type: string): void;
-    setName(name: string): void;
-    getPrice(): IPrice | undefined;
-    getProvider(): string | undefined;
+    setPrice(price: IPrice): void;
     getType(): string | undefined;
+    getPrice(): IPrice | undefined;
+    setDescription(description: string): void;
+    setName(name: string): void;
+    getProvider(): string | undefined;
 }
 //# sourceMappingURL=PaymentMethod.d.ts.map

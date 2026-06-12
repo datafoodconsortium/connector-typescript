@@ -1,5 +1,5 @@
-import IShippingOption from "./IShippingOption.js";
 import IPhysicalPlace from "./IPhysicalPlace.js";
+import IShippingOption from "./IShippingOption.js";
 export default interface IDeliveryOption extends IShippingOption {
     getDeliveredPlace(): Promise<IPhysicalPlace | undefined>;
     setDeliveredPlace(deliveredPlace: IPhysicalPlace): void;

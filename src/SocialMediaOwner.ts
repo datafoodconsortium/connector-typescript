@@ -32,4 +32,6 @@ export default interface SocialMediaOwner extends ContactableBySocialMedia {
 
 	removeSocialMedia(socialMedia: ISocialMedia): void;
 
+	setSocialMedias(socialMedias: ISocialMedia[]): void;
+
 }

@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Flow from "./Flow.js"
-import IQuantity from "./IQuantity.js"
-import IRealizedFlow from "./IRealizedFlow.js"
 import IPhysicalProduct from "./IPhysicalProduct.js"
-import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
+import Flow from "./Flow.js"
 import IRealizedTransformation from "./IRealizedTransformation.js"
+import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
+import IRealizedFlow from "./IRealizedFlow.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -79,12 +79,12 @@ export default class RealizedProductionFlow extends Flow implements IRealizedFlo
 		
 	}
 
-	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
-		let result: IRealizedTransformation | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:outcomeOf");
+	public async getProducedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
+		let result: IPhysicalProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:produces");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IRealizedTransformation> semanticObject;
+			if (semanticObject) result = <IPhysicalProduct> semanticObject;
 		}
 		return result;
 	}
@@ -96,17 +96,17 @@ export default class RealizedProductionFlow extends Flow implements IRealizedFlo
 	}
 
 	public setRealizedTransformation(realizedTransformation: IRealizedTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:outcomeOf", realizedTransformation);
+		this.setSemanticPropertyReference("dfc-b:outputOf", realizedTransformation);
 		
 		this.connector.store(realizedTransformation);
 	}
 
-	public async getProducedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
-		let result: IPhysicalProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:produces");
+	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
+		let result: IRealizedTransformation | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:outputOf");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalProduct> semanticObject;
+			if (semanticObject) result = <IRealizedTransformation> semanticObject;
 		}
 		return result;
 	}

@@ -1,14 +1,14 @@
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import IQuantity from "./IQuantity.js";
-import IProductOption from "./IProductOption.js";
-import IVariant from "./IVariant.js";
+import ICatalogItem from "./ICatalogItem.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IVariant from "./IVariant.js";
+import DefinedProduct from "./DefinedProduct.js";
+import IDefinedProduct from "./IDefinedProduct.js";
+import IProductOption from "./IProductOption.js";
 import IVariantCharacteristic from "./IVariantCharacteristic.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import ICatalogItem from "./ICatalogItem.js";
-import IDefinedProduct from "./IDefinedProduct.js";
-import DefinedProduct from "./DefinedProduct.js";
-import ISKOSConcept from "./ISKOSConcept.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -40,13 +40,13 @@ export default class Variant extends DefinedProduct implements IVariant {
         referenceProductOptions?: IProductOption[];
         doNotStore?: boolean;
     });
-    setIsVariantOf(products: IDefinedProduct[]): void;
-    getVariantCharacteristics(options?: IGetterOptions): Promise<IVariantCharacteristic[]>;
-    removeVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
-    setVariantCharacteristics(variantCharacteristics: IVariantCharacteristic[]): void;
-    addVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
-    isVariantOf(options?: IGetterOptions): Promise<IDefinedProduct[]>;
     removeIsVariantOf(product: IDefinedProduct): void;
+    setVariantCharacteristics(variantCharacteristics: IVariantCharacteristic[]): void;
+    removeVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
+    getVariantCharacteristics(options?: IGetterOptions): Promise<IVariantCharacteristic[]>;
+    setIsVariantOf(products: IDefinedProduct[]): void;
+    isVariantOf(options?: IGetterOptions): Promise<IDefinedProduct[]>;
     addIsVariantOf(product: IDefinedProduct): void;
+    addVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
 }
 //# sourceMappingURL=Variant.d.ts.map

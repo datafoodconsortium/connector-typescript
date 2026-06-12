@@ -31,4 +31,6 @@ export default interface EmailOwner extends ContactableByEmail {
 
 	removeEmailAddress(emailAddress: string): void;
 
+	setEmails(emailAddresses: string[]): void;
+
 }

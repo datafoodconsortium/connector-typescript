@@ -87,56 +87,24 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
 		
 	}
 
-	public getUrls(): string[] {
-		return this.getSemanticPropertyAll("dfc-b:URL");
-	}
-
-	public removeHostedSaleSession(): ISaleSession | undefined {
+	public removeUrl(url: string): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public setUrls(urls: string[]): void {
+		this.setSemanticPropertyLiteralAll("dfc-b:URL", urls);
 	}
 
 	public getDescription(): string | undefined {
 		return this.getSemanticProperty("dfc-b:description");
 	}
 
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
 	}
 
 	public addUrl(url: string): void {
 		this.addSemanticPropertyLiteral("dfc-b:URL", url);
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public setHostedSaleSessions(saleSessions: ISaleSession[]): void {
-		this.getSemanticPropertyAll("dfc-b:hosts").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		saleSessions.forEach((virtualPlace) => {
-			this.addSemanticPropertyReference("dfc-b:hosts", virtualPlace, true);
-			this.connector.store(virtualPlace);
-		});
-	}
-
-	public addHostedSaleSession(saleSession: ISaleSession): void {
-		if (saleSession.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hosts", saleSession);
-		}
-		else {
-			this.connector.store(saleSession);
-			this.addSemanticPropertyReference("dfc-b:hosts", saleSession);
-		}
-	}
-
-	public setUrls(urls: string[]): void {
-		this.setSemanticPropertyLiteralAll("dfc-b:URL", urls);
 	}
 
 	public async getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]> {
@@ -149,7 +117,39 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
 		return results;
 	}
 
-	public removeUrl(url: string): void {
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public addHostedSaleSession(saleSession: ISaleSession): void {
+		if (saleSession.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hosts", saleSession);
+		}
+		else {
+			this.connector.store(saleSession);
+			this.addSemanticPropertyReference("dfc-b:hosts", saleSession);
+		}
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public getUrls(): string[] {
+		return this.getSemanticPropertyAll("dfc-b:URL");
+	}
+
+	public removeHostedSaleSession(): ISaleSession | undefined {
 		throw new Error("Not yet implemented.");
+	}
+
+	public setHostedSaleSessions(saleSessions: ISaleSession[]): void {
+		this.getSemanticPropertyAll("dfc-b:hosts").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		saleSessions.forEach((virtualPlace) => {
+			this.addSemanticPropertyReference("dfc-b:hosts", virtualPlace, true);
+			this.connector.store(virtualPlace);
+		});
 	}
 }

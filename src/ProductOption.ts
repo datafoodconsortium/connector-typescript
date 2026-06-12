@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IProductOption from "./IProductOption.js"
 import IProductOptionValue from "./IProductOptionValue.js"
+import IProductOption from "./IProductOption.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -87,10 +87,6 @@ export default class ProductOption extends SemanticObject implements IProductOpt
 		
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
 	public addReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void {
 		if (productOptionValue.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:hasReferenceProductOptionValue", productOptionValue);
@@ -105,30 +101,8 @@ export default class ProductOption extends SemanticObject implements IProductOpt
 		return this.getSemanticProperty("dfc-b:description");
 	}
 
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public removeReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public setReferenceProductionOptionValue(productOptionValues: IProductOptionValue[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasReferenceProductOptionValue").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		productOptionValues.forEach((productOption) => {
-			this.addSemanticPropertyReference("dfc-b:hasReferenceProductOptionValue", productOption, true);
-			this.connector.store(productOption);
-		});
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
 	}
 
 	public async getReferenceProductionOptionValue(options?: IGetterOptions): Promise<IProductOptionValue[]> {
@@ -141,7 +115,33 @@ export default class ProductOption extends SemanticObject implements IProductOpt
 		return results;
 	}
 
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
+	}
+
 	public getDate(): string | undefined {
 		return this.getSemanticProperty("dfc-b:date");
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public removeReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setReferenceProductionOptionValue(productOptionValues: IProductOptionValue[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasReferenceProductOptionValue").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		productOptionValues.forEach((productOption) => {
+			this.addSemanticPropertyReference("dfc-b:hasReferenceProductOptionValue", productOption, true);
+			this.connector.store(productOption);
+		});
 	}
 }

@@ -22,8 +22,8 @@
  * SOFTWARE.
 */
 import Nameable from "./Nameable.js"
-import IOrganization from "./IOrganization.js"
 import Describable from "./Describable.js"
+import IOrganization from "./IOrganization.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

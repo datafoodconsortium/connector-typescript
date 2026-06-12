@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Nameable from "./Nameable.js"
-import Describable from "./Describable.js"
 import Datable from "./Datable.js"
-import IProductOption from "./IProductOption.js"
+import Nameable from "./Nameable.js"
 import IProductOptionValue from "./IProductOptionValue.js"
+import Describable from "./Describable.js"
+import IProductOption from "./IProductOption.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IVariantCharacteristic extends Semanticable, Datable, Nameable, Describable {
+export default interface IVariantCharacteristic extends Semanticable, Describable, Datable, Nameable {
 
 	getProductOption(): Promise<IProductOption | undefined>;
 

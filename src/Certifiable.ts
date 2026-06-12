@@ -33,4 +33,6 @@ export default interface Certifiable {
 
 	removeCertification(certification: ISKOSConcept): void;
 
+	setCertifications(certifications: ISKOSConcept[]): void;
+
 }

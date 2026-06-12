@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IRoute from "./IRoute.js"
 import IDeliveryStep from "./IDeliveryStep.js"
+import IRoute from "./IRoute.js"
 import Step from "./Step.js"
 import IShipment from "./IShipment.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"

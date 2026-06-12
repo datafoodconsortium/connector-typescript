@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IAgent from "./IAgent.js"
 import ICustomerCategory from "./ICustomerCategory.js"
+import IAgent from "./IAgent.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -38,6 +38,7 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 		connector: IConnector,
 		semanticId?: string,
 		other?: Semanticable,
+		name?: string,
 		description?: string,
 		members?: IAgent[],
 		doNotStore?: boolean,
@@ -67,6 +68,10 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 		if (!parameters.doNotStore) {
 			this.connector.store(this);
 		}
+		if (parameters.name) {
+			this.setName(parameters.name);
+		}
+		
 		if (parameters.description) {
 			this.setDescription(parameters.description);
 		}
@@ -75,6 +80,18 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 			parameters.members.forEach(e => this.addMember(e));
 		}
 		
+	}
+
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
 	public addMember(member: IAgent): void {
@@ -87,16 +104,8 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 		}
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public removeMember(member: IAgent): void {
-		throw new Error("Not yet implemented.");
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
 	public setMembers(members: IAgent[]): void {
@@ -107,6 +116,10 @@ export default class CustomerCategory extends SemanticObject implements ICustome
 			this.addSemanticPropertyReference("dfc-b:isMemberOf", customerCategory, true);
 			this.connector.store(customerCategory);
 		});
+	}
+
+	public removeMember(member: IAgent): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public async getMembers(options?: IGetterOptions): Promise<IAgent[]> {

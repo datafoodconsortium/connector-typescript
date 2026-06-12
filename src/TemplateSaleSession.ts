@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IOrganization from "./IOrganization.js"
 import ITemplateSaleSession from "./ITemplateSaleSession.js"
+import IOrganization from "./IOrganization.js"
 import IPlace from "./IPlace.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -88,8 +88,14 @@ export default class TemplateSaleSession extends SemanticObject implements ITemp
 		}
 	}
 
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
+	public async getHostingPlaces(options?: IGetterOptions): Promise<IPlace[]> {
+		const results = new Array<IPlace>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hostedAt");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IPlace>semanticObject);
+		}
+		return results;
 	}
 
 	public addOrganization(organization: IOrganization): void {
@@ -102,42 +108,12 @@ export default class TemplateSaleSession extends SemanticObject implements ITemp
 		}
 	}
 
-	public setHostingPlaces(hostingPlaces: IPlace[]): void {
-		this.getSemanticPropertyAll("dfc-b:hostedAt").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		hostingPlaces.forEach((templateSaleSession) => {
-			this.addSemanticPropertyReference("dfc-b:hostedAt", templateSaleSession, true);
-			this.connector.store(templateSaleSession);
-		});
-	}
-
-	public async getHostingPlaces(options?: IGetterOptions): Promise<IPlace[]> {
-		const results = new Array<IPlace>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hostedAt");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IPlace>semanticObject);
-		}
-		return results;
-	}
-
 	public removeHostingPlace(hostingPlace: IPlace): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public async getOrganizations(options?: IGetterOptions): Promise<IOrganization[]> {
-		const results = new Array<IOrganization>();
-		const properties = this.getSemanticPropertyAll("dfc-b:isTemplateSaleSessionOf");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOrganization>semanticObject);
-		}
-		return results;
-	}
-
-	public removeOrganization(organization: IOrganization): void {
-		throw new Error("Not yet implemented.");
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
 	}
 
 	public getDate(): string | undefined {
@@ -152,5 +128,29 @@ export default class TemplateSaleSession extends SemanticObject implements ITemp
 			this.addSemanticPropertyReference("dfc-b:isTemplateSaleSessionOf", templateSaleSession, true);
 			this.connector.store(templateSaleSession);
 		});
+	}
+
+	public removeOrganization(organization: IOrganization): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setHostingPlaces(hostingPlaces: IPlace[]): void {
+		this.getSemanticPropertyAll("dfc-b:hostedAt").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		hostingPlaces.forEach((templateSaleSession) => {
+			this.addSemanticPropertyReference("dfc-b:hostedAt", templateSaleSession, true);
+			this.connector.store(templateSaleSession);
+		});
+	}
+
+	public async getOrganizations(options?: IGetterOptions): Promise<IOrganization[]> {
+		const results = new Array<IOrganization>();
+		const properties = this.getSemanticPropertyAll("dfc-b:isTemplateSaleSessionOf");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IOrganization>semanticObject);
+		}
+		return results;
 	}
 }

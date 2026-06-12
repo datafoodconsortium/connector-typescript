@@ -22,8 +22,8 @@
  * SOFTWARE.
 */
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
-import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

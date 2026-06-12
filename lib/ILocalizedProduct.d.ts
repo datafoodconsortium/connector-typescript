@@ -1,12 +1,12 @@
-import Nameable from "./Nameable.js";
-import ISuppliedProduct from "./ISuppliedProduct.js";
-import Describable from "./Describable.js";
-import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js";
-import IQuantity from "./IQuantity.js";
-import ITheoreticalStock from "./ITheoreticalStock.js";
-import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
-import Exhibitable from "./Exhibitable.js";
 import IPhysicalProduct from "./IPhysicalProduct.js";
+import Nameable from "./Nameable.js";
+import Exhibitable from "./Exhibitable.js";
+import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
+import Describable from "./Describable.js";
+import ISuppliedProduct from "./ISuppliedProduct.js";
+import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js";
+import ITheoreticalStock from "./ITheoreticalStock.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface ILocalizedProduct extends Semanticable, Nameable, Exhibitable, Describable {
     getCost(): number | undefined;

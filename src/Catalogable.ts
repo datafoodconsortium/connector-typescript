@@ -31,4 +31,8 @@ export default interface Catalogable {
 
 	registerInCatalog(repository: ICatalog): void;
 
+	removeCatalog(catalog: ICatalog): void;
+
+	setCatalogs(catalogs: ICatalog[]): void;
+
 }

@@ -1,9 +1,9 @@
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
-import IPlannedTransformation from "./IPlannedTransformation.js";
-import Flow from "./Flow.js";
-import IQuantity from "./IQuantity.js";
-import IDefinedProduct from "./IDefinedProduct.js";
 import IPlannedFlow from "./IPlannedFlow.js";
+import IDefinedProduct from "./IDefinedProduct.js";
+import Flow from "./Flow.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -18,8 +18,8 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedFlow
         doNotStore?: boolean;
     });
     getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined>;
-    getConsumedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined>;
-    setPlannedTransformation(plannedTransformation: IPlannedTransformation): void;
     setConsumedProduct(consumedProduct: IDefinedProduct): void;
+    setPlannedTransformation(plannedTransformation: IPlannedTransformation): void;
+    getConsumedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined>;
 }
 //# sourceMappingURL=PlannedConsumptionFlow.d.ts.map

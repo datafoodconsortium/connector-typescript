@@ -1,7 +1,7 @@
-import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js";
 import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js";
-import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -20,21 +20,21 @@ export default class PlannedLocalTransformation extends SemanticObject implement
         productionFlows?: IPlannedLocalProductionFlow[];
         doNotStore?: boolean;
     });
-    removePlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void;
-    setBeginDate(beginDate: string): void;
     setPlannedLocalConsumptionFlows(plannedLocalConsumptionFlows: IPlannedLocalConsumptionFlow[]): void;
-    getPlannedLocalConsumptionFlows(options?: IGetterOptions): Promise<IPlannedLocalConsumptionFlow[]>;
-    removePlannedLocalConsumptionFlow(plannedLocalConsumptionFlow: IPlannedLocalConsumptionFlow): void;
-    setEndDate(endDate: string): void;
-    addPlannedLocalConsumptionFlow(plannedLocalConsumptionFlow: IPlannedLocalConsumptionFlow): void;
-    getCost(): number | undefined;
-    setTransformationType(transformationType: ISKOSConcept): void;
-    getPlannedLocalProductionFlows(options?: IGetterOptions): Promise<IPlannedLocalProductionFlow[]>;
-    getBeginDate(): string | undefined;
-    setCost(cost: number): void;
-    addPlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void;
-    getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
     getEndDate(): string | undefined;
+    addPlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void;
     setPlannedLocalProductionFlows(plannedLocalProductionFlows: IPlannedLocalProductionFlow[]): void;
+    setBeginDate(beginDate: string): void;
+    getPlannedLocalConsumptionFlows(options?: IGetterOptions): Promise<IPlannedLocalConsumptionFlow[]>;
+    getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    getPlannedLocalProductionFlows(options?: IGetterOptions): Promise<IPlannedLocalProductionFlow[]>;
+    setTransformationType(transformationType: ISKOSConcept): void;
+    removePlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void;
+    setEndDate(endDate: string): void;
+    getBeginDate(): string | undefined;
+    removePlannedLocalConsumptionFlow(plannedLocalConsumptionFlow: IPlannedLocalConsumptionFlow): void;
+    getCost(): number | undefined;
+    setCost(cost: number): void;
+    addPlannedLocalConsumptionFlow(plannedLocalConsumptionFlow: IPlannedLocalConsumptionFlow): void;
 }
 //# sourceMappingURL=PlannedLocalTransformation.d.ts.map

@@ -22,9 +22,9 @@
  * SOFTWARE.
 */
 import ISaleSession from "./ISaleSession.js"
-import IQuantity from "./IQuantity.js"
-import IShippingOption from "./IShippingOption.js"
 import IOrder from "./IOrder.js"
+import IShippingOption from "./IShippingOption.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -111,16 +111,8 @@ export default abstract class ShippingOption extends SemanticObject implements I
 		return result;
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public getFee(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:fee"));
-	}
-
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:startDate", beginDate);
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
 	}
 
 	public setSaleSession(saleSession: ISaleSession): void {
@@ -129,20 +121,8 @@ export default abstract class ShippingOption extends SemanticObject implements I
 		this.connector.store(saleSession);
 	}
 
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
-	}
-
-	public setFee(fee: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:fee", fee);
-	}
-
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
 	}
 
 	public getQuantity(): IQuantity | undefined {
@@ -150,12 +130,43 @@ export default abstract class ShippingOption extends SemanticObject implements I
 		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 
+	public setFee(fee: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:fee", fee);
+	}
+
 	public setName(name: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
-	public getBeginDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:startDate");
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:startDate", beginDate);
+	}
+
+	public setQuantity(quantity: IQuantity): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+		
+	}
+
+	public setOrder(order: IOrder): void {
+		this.setSemanticPropertyReference("dfc-b:selectedBy", order);
+		
+		this.connector.store(order);
+	}
+
+	public getFee(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:fee"));
+	}
+
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
 	}
 
 	public async getOrder(options?: IGetterOptions): Promise<IOrder | undefined> {
@@ -168,18 +179,7 @@ export default abstract class ShippingOption extends SemanticObject implements I
 		return result;
 	}
 
-	public setQuantity(quantity: IQuantity): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
-		
-	}
-
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
-	}
-
-	public setOrder(order: IOrder): void {
-		this.setSemanticPropertyReference("dfc-b:selectedBy", order);
-		
-		this.connector.store(order);
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:startDate");
 	}
 }

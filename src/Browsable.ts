@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IOrganization from "./IOrganization.js"
 import ICatalogItem from "./ICatalogItem.js"
+import IOrganization from "./IOrganization.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -37,5 +37,11 @@ export default interface Browsable {
 	addItem(item: ICatalogItem): void;
 
 	addMaintainer(maintainer: IOrganization): void;
+
+	setItems(items: ICatalogItem[]): void;
+
+	removeMaintainer(maintainer: IOrganization): void;
+
+	setMaintainers(maintainers: IOrganization[]): void;
 
 }

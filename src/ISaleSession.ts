@@ -22,12 +22,12 @@
  * SOFTWARE.
 */
 import IHostingPlace from "./IHostingPlace.js"
-import Ellapsable from "./Ellapsable.js"
 import IOffer from "./IOffer.js"
+import Ellapsable from "./Ellapsable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ISaleSession extends Semanticable, Ellapsable, IHostingPlace {
+export default interface ISaleSession extends Semanticable, IHostingPlace, Ellapsable {
 
 	getQuantity(): number | undefined;
 
@@ -37,8 +37,8 @@ export default interface ISaleSession extends Semanticable, Ellapsable, IHosting
 
 	addOffer(offer: IOffer): void;
 
-	setOffers(offers: IOffer[]): void;
-
 	removeOffer(offer: IOffer): void;
+
+	setOffers(offers: IOffer[]): void;
 
 }

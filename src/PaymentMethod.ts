@@ -92,12 +92,20 @@ export default class PaymentMethod extends SemanticObject implements IPaymentMet
 		
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public setProvider(provider: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:paymentMethodProvider", provider);
 	}
 
 	public getDescription(): string | undefined {
 		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public setType(type: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:paymentMethodType", type);
 	}
 
 	public setPrice(price: IPrice): void {
@@ -105,20 +113,8 @@ export default class PaymentMethod extends SemanticObject implements IPaymentMet
 		
 	}
 
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public setProvider(provider: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:paymentMethodProvider", provider);
-	}
-
-	public setType(type: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:paymentMethodType", type);
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	public getType(): string | undefined {
+		return this.getSemanticProperty("dfc-b:paymentMethodType");
 	}
 
 	public getPrice(): IPrice | undefined {
@@ -126,11 +122,15 @@ export default class PaymentMethod extends SemanticObject implements IPaymentMet
 		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 
-	public getProvider(): string | undefined {
-		return this.getSemanticProperty("dfc-b:paymentMethodProvider");
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
-	public getType(): string | undefined {
-		return this.getSemanticProperty("dfc-b:paymentMethodType");
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public getProvider(): string | undefined {
+		return this.getSemanticProperty("dfc-b:paymentMethodProvider");
 	}
 }

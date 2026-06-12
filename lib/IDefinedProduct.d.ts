@@ -1,14 +1,14 @@
-import Nameable from "./Nameable.js";
-import Certifiable from "./Certifiable.js";
 import Manufacturable from "./Manufacturable.js";
-import Describable from "./Describable.js";
-import IQuantity from "./IQuantity.js";
-import IProductOption from "./IProductOption.js";
-import Exhibitable from "./Exhibitable.js";
 import Proposable from "./Proposable.js";
+import Nameable from "./Nameable.js";
+import Exhibitable from "./Exhibitable.js";
 import ISKOSConcept from "./ISKOSConcept.js";
+import Certifiable from "./Certifiable.js";
+import Describable from "./Describable.js";
+import IProductOption from "./IProductOption.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default interface IDefinedProduct extends Semanticable, Describable, Nameable, Exhibitable, Certifiable, Proposable, Manufacturable {
+export default interface IDefinedProduct extends Semanticable, Proposable, Certifiable, Exhibitable, Nameable, Describable, Manufacturable {
     addClaim(claim: ISKOSConcept): void;
     getQuantity(): IQuantity | undefined;
     setQuantity(quantity: IQuantity): void;
@@ -24,5 +24,6 @@ export default interface IDefinedProduct extends Semanticable, Describable, Name
     getReferenceProductOptions(): Promise<IProductOption[]>;
     setReferenceProductOptions(referenceProductOptions: IProductOption[]): void;
     removeReferenceProductOption(referenceProductOption: IProductOption): void;
+    setClaims(claims: ISKOSConcept[]): void;
 }
 //# sourceMappingURL=IDefinedProduct.d.ts.map

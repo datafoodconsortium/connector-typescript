@@ -1,5 +1,5 @@
-import IProductOption from "./IProductOption.js";
 import IProductOptionValue from "./IProductOptionValue.js";
+import IProductOption from "./IProductOption.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -16,15 +16,15 @@ export default class ProductOption extends SemanticObject implements IProductOpt
         referenceProductionOptionValue?: IProductOptionValue[];
         doNotStore?: boolean;
     });
-    getName(): string | undefined;
     addReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void;
     getDescription(): string | undefined;
-    setDate(date: string): void;
-    setDescription(description: string): void;
-    removeReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void;
-    setName(name: string): void;
-    setReferenceProductionOptionValue(productOptionValues: IProductOptionValue[]): void;
+    getName(): string | undefined;
     getReferenceProductionOptionValue(options?: IGetterOptions): Promise<IProductOptionValue[]>;
+    setDescription(description: string): void;
+    setDate(date: string): void;
     getDate(): string | undefined;
+    setName(name: string): void;
+    removeReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void;
+    setReferenceProductionOptionValue(productOptionValues: IProductOptionValue[]): void;
 }
 //# sourceMappingURL=ProductOption.d.ts.map

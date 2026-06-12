@@ -1,6 +1,6 @@
-import IOrganization from "./IOrganization.js";
-import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
+import ICatalog from "./ICatalog.js";
+import IOrganization from "./IOrganization.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -17,14 +17,17 @@ export default class Catalog extends SemanticObject implements ICatalog {
         endDate?: string;
         doNotStore?: boolean;
     });
-    setBeginDate(beginDate: string): void;
-    removeItem(item: ICatalogItem): void;
-    addItem(item: ICatalogItem): void;
-    getBeginDate(): string | undefined;
-    setEndDate(endDate: string): void;
+    setItems(items: ICatalogItem[]): void;
     getEndDate(): string | undefined;
-    getMaintainers(options?: IGetterOptions): Promise<IOrganization[]>;
-    addMaintainer(maintainer: IOrganization): void;
+    setBeginDate(beginDate: string): void;
     getItems(options?: IGetterOptions): Promise<ICatalogItem[]>;
+    addItem(item: ICatalogItem): void;
+    setEndDate(endDate: string): void;
+    addMaintainer(maintainer: IOrganization): void;
+    getMaintainers(options?: IGetterOptions): Promise<IOrganization[]>;
+    getBeginDate(): string | undefined;
+    removeItem(item: ICatalogItem): void;
+    setMaintainers(maintainers: IOrganization[]): void;
+    removeMaintainer(maintainer: IOrganization): void;
 }
 //# sourceMappingURL=Catalog.d.ts.map

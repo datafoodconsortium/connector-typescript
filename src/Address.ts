@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import ISKOSConcept from "./ISKOSConcept.js"
 import IAddress from "./IAddress.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -40,7 +41,7 @@ export default class Address extends SemanticObject implements IAddress {
 		street?: string,
 		postalCode?: string,
 		city?: string,
-		country?: string,
+		country?: ISKOSConcept,
 		latitude?: number,
 		longitude?: number,
 		region?: string,
@@ -101,52 +102,16 @@ export default class Address extends SemanticObject implements IAddress {
 		
 	}
 
-	public getCity(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasCity");
-	}
-
-	public setPostalCode(postalCode: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:hasPostalCode", postalCode);
-	}
-
-	public setLatitude(latitude: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:latitude", latitude);
-	}
-
-	public getLongitude(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:longitude"));
-	}
-
-	public getStreet(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasStreet");
-	}
-
-	public getLatitude(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:latitude"));
-	}
-
-	public getRegion(): string | undefined {
-		return this.getSemanticProperty("dfc-b:region");
-	}
-
-	public setCountry(country: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:hasCountry", country);
-	}
-
 	public setStreet(street: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:hasStreet", street);
 	}
 
-	public setCity(city: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:hasCity", city);
+	public getCity(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasCity");
 	}
 
-	public getCountry(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasCountry");
-	}
-
-	public getPostalCode(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasPostalCode");
+	public getLongitude(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:longitude"));
 	}
 
 	public setRegion(region: string): void {
@@ -155,5 +120,49 @@ export default class Address extends SemanticObject implements IAddress {
 
 	public setLongitude(longitude: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:longitude", longitude);
+	}
+
+	public setLatitude(latitude: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:latitude", latitude);
+	}
+
+	public getStreet(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasStreet");
+	}
+
+	public getRegion(): string | undefined {
+		return this.getSemanticProperty("dfc-b:region");
+	}
+
+	public getLatitude(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:latitude"));
+	}
+
+	public setCountry(country: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasCountry", country);
+		
+		this.connector.store(country);
+	}
+
+	public setCity(city: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasCity", city);
+	}
+
+	public getPostalCode(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasPostalCode");
+	}
+
+	public setPostalCode(postalCode: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasPostalCode", postalCode);
+	}
+
+	public async getCountry(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasCountry");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
 	}
 }

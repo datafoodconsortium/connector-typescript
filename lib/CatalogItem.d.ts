@@ -1,7 +1,7 @@
-import ICatalog from "./ICatalog.js";
 import ICatalogItem from "./ICatalogItem.js";
-import IDefinedProduct from "./IDefinedProduct.js";
 import IOffer from "./IOffer.js";
+import IDefinedProduct from "./IDefinedProduct.js";
+import ICatalog from "./ICatalog.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -19,15 +19,19 @@ export default class CatalogItem extends SemanticObject implements ICatalogItem 
         catalogs?: ICatalog[];
         doNotStore?: boolean;
     });
-    getSku(): string | undefined;
+    removeCatalog(catalog: ICatalog): void;
+    setCatalogs(catalogs: ICatalog[]): void;
+    removeOffer(offer: IOffer): void;
     getCatalogs(options?: IGetterOptions): Promise<ICatalog[]>;
-    getStockLimitation(): number | undefined;
     getOfferers(options?: IGetterOptions): Promise<IOffer[]>;
-    setSku(sku: string): void;
-    setStockLimitation(stockLimitation: number): void;
-    getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined>;
+    getSku(): string | undefined;
     registerInCatalog(repository: ICatalog): void;
-    setOfferedProduct(offeredProduct: IDefinedProduct): void;
+    getStockLimitation(): number | undefined;
     addOffer(offer: IOffer): void;
+    getOfferedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined>;
+    setOffers(offers: IOffer[]): void;
+    setStockLimitation(stockLimitation: number): void;
+    setOfferedProduct(offeredProduct: IDefinedProduct): void;
+    setSku(sku: string): void;
 }
 //# sourceMappingURL=CatalogItem.d.ts.map

@@ -1,1 +1,0 @@
-{"version":3,"file":"Identifiable.d.ts","sourceRoot":"","sources":["../src/Identifiable.ts"],"names":[],"mappings":"AAAA,OAAO,QAAQ,MAAM,eAAe,CAAA;AAIpC,MAAM,CAAC,OAAO,WAAW,YAAY;IAGpC,gBAAgB,IAAI,OAAO,CAAC,KAAK,CAAC,QAAQ,CAAC,CAAC,CAC3C;IACD,eAAe,CAAC,YAAY,EAAE,QAAQ,GAAG,IAAI,CAAC;IAC9C,kBAAkB,CAAC,YAAY,EAAE,QAAQ,GAAG,IAAI,CAAC;CAEjD"}

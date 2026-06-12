@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Personable from "./Personable.js"
 import Affiliable from "./Affiliable.js"
+import Personable from "./Personable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IPerson extends Semanticable, Personable, Affiliable {
+export default interface IPerson extends Semanticable, Affiliable, Personable {
 
 
 }

@@ -1,9 +1,9 @@
-import ShippingOption from "./ShippingOption.js";
 import ISaleSession from "./ISaleSession.js";
-import IPickupOption from "./IPickupOption.js";
-import IQuantity from "./IQuantity.js";
-import IPhysicalPlace from "./IPhysicalPlace.js";
 import IOrder from "./IOrder.js";
+import IPickupOption from "./IPickupOption.js";
+import IPhysicalPlace from "./IPhysicalPlace.js";
+import ShippingOption from "./ShippingOption.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";

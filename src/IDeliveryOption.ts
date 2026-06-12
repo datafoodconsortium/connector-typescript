@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IShippingOption from "./IShippingOption.js"
 import IPhysicalPlace from "./IPhysicalPlace.js"
+import IShippingOption from "./IShippingOption.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

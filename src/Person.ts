@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import Agent from "./Agent.js"
+import IPerson from "./IPerson.js"
+import ICustomerCategory from "./ICustomerCategory.js"
 import IOrganization from "./IOrganization.js"
 import IAddress from "./IAddress.js"
-import IPerson from "./IPerson.js"
-import Agent from "./Agent.js"
-import ICustomerCategory from "./ICustomerCategory.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -87,20 +87,6 @@ export default class Person extends Agent implements IPerson {
 		
 	}
 
-	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<IOrganization[]> {
-		const results = new Array<IOrganization>();
-		const properties = this.getSemanticPropertyAll("dfc-b:affiliates");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOrganization>semanticObject);
-		}
-		return results;
-	}
-
-	public setLastName(lastName: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
-	}
-
 	public affiliateTo(organization: IOrganization): void {
 		if (organization.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:affiliates", organization);
@@ -111,12 +97,12 @@ export default class Person extends Agent implements IPerson {
 		}
 	}
 
-	public leaveAffiliatedOrganization(organization: IOrganization): void {
-		throw new Error("Not yet implemented.");
+	public setLastName(lastName: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:familyName", lastName);
 	}
 
-	public setFirstName(firstName: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
+	public leaveAffiliatedOrganization(organization: IOrganization): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public getFirstName(): string | undefined {
@@ -125,5 +111,29 @@ export default class Person extends Agent implements IPerson {
 
 	public getLastName(): string | undefined {
 		return this.getSemanticProperty("dfc-b:familyName");
+	}
+
+	public async getAffiliatedOrganizations(options?: IGetterOptions): Promise<IOrganization[]> {
+		const results = new Array<IOrganization>();
+		const properties = this.getSemanticPropertyAll("dfc-b:affiliates");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IOrganization>semanticObject);
+		}
+		return results;
+	}
+
+	public setFirstName(firstName: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:firstName", firstName);
+	}
+
+	public setAffiliatedOrganizations(organizations: IOrganization[]): void {
+		this.getSemanticPropertyAll("dfc-b:affiliates").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		organizations.forEach((person) => {
+			this.addSemanticPropertyReference("dfc-b:affiliates", person, true);
+			this.connector.store(person);
+		});
 	}
 }

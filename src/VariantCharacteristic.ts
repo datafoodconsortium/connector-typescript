@@ -103,34 +103,34 @@ export default class VariantCharacteristic extends SemanticObject implements IVa
 		return result;
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
 	public getDescription(): string | undefined {
 		return this.getSemanticProperty("dfc-b:description");
 	}
 
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
 	}
 
 	public setDescription(description: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
-	public setProductOptionValue(productOptionValue: IProductOptionValue): void {
-		this.setSemanticPropertyReference("dfc-b:hasProductOptionValue", productOptionValue);
-		
-		this.connector.store(productOptionValue);
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
+	}
+
+	public getDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:date");
 	}
 
 	public setName(name: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
-	public getDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:date");
+	public setProductOption(productOption: IProductOption): void {
+		this.setSemanticPropertyReference("dfc-b:hasProductOption", productOption);
+		
+		this.connector.store(productOption);
 	}
 
 	public async getProductOptionValue(options?: IGetterOptions): Promise<IProductOptionValue | undefined> {
@@ -143,9 +143,9 @@ export default class VariantCharacteristic extends SemanticObject implements IVa
 		return result;
 	}
 
-	public setProductOption(productOption: IProductOption): void {
-		this.setSemanticPropertyReference("dfc-b:hasProductOption", productOption);
+	public setProductOptionValue(productOptionValue: IProductOptionValue): void {
+		this.setSemanticPropertyReference("dfc-b:hasProductOptionValue", productOptionValue);
 		
-		this.connector.store(productOption);
+		this.connector.store(productOptionValue);
 	}
 }

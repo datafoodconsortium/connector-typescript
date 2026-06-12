@@ -22,11 +22,11 @@
  * SOFTWARE.
 */
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js"
-import IPlannedTransformation from "./IPlannedTransformation.js"
-import Flow from "./Flow.js"
-import IQuantity from "./IQuantity.js"
-import IDefinedProduct from "./IDefinedProduct.js"
 import IPlannedFlow from "./IPlannedFlow.js"
+import IDefinedProduct from "./IDefinedProduct.js"
+import Flow from "./Flow.js"
+import IPlannedTransformation from "./IPlannedTransformation.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -81,12 +81,24 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedFlow
 
 	public async getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined> {
 		let result: IPlannedTransformation | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:incomeOf");
+		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
 			if (semanticObject) result = <IPlannedTransformation> semanticObject;
 		}
 		return result;
+	}
+
+	public setConsumedProduct(consumedProduct: IDefinedProduct): void {
+		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
+		
+		this.connector.store(consumedProduct);
+	}
+
+	public setPlannedTransformation(plannedTransformation: IPlannedTransformation): void {
+		this.setSemanticPropertyReference("dfc-b:inputOf", plannedTransformation);
+		
+		this.connector.store(plannedTransformation);
 	}
 
 	public async getConsumedProduct(options?: IGetterOptions): Promise<IDefinedProduct | undefined> {
@@ -97,17 +109,5 @@ export default class PlannedConsumptionFlow extends Flow implements IPlannedFlow
 			if (semanticObject) result = <IDefinedProduct> semanticObject;
 		}
 		return result;
-	}
-
-	public setPlannedTransformation(plannedTransformation: IPlannedTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:incomeOf", plannedTransformation);
-		
-		this.connector.store(plannedTransformation);
-	}
-
-	public setConsumedProduct(consumedProduct: IDefinedProduct): void {
-		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
-		
-		this.connector.store(consumedProduct);
 	}
 }

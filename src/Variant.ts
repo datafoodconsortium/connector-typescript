@@ -22,16 +22,16 @@
  * SOFTWARE.
 */
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import IQuantity from "./IQuantity.js"
-import IProductOption from "./IProductOption.js"
-import IVariant from "./IVariant.js"
+import ICatalogItem from "./ICatalogItem.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import IVariant from "./IVariant.js"
+import DefinedProduct from "./DefinedProduct.js"
+import IDefinedProduct from "./IDefinedProduct.js"
+import IProductOption from "./IProductOption.js"
 import IVariantCharacteristic from "./IVariantCharacteristic.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
-import ICatalogItem from "./ICatalogItem.js"
-import IDefinedProduct from "./IDefinedProduct.js"
-import DefinedProduct from "./DefinedProduct.js"
-import ISKOSConcept from "./ISKOSConcept.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -120,27 +120,7 @@ export default class Variant extends DefinedProduct implements IVariant {
 		
 	}
 
-	public setIsVariantOf(products: IDefinedProduct[]): void {
-		this.getSemanticPropertyAll("dfc-b:isVariantOf").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		products.forEach((variant) => {
-			this.addSemanticPropertyReference("dfc-b:isVariantOf", variant, true);
-			this.connector.store(variant);
-		});
-	}
-
-	public async getVariantCharacteristics(options?: IGetterOptions): Promise<IVariantCharacteristic[]> {
-		const results = new Array<IVariantCharacteristic>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasVariantCaracteristic");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IVariantCharacteristic>semanticObject);
-		}
-		return results;
-	}
-
-	public removeVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void {
+	public removeIsVariantOf(product: IDefinedProduct): void {
 		throw new Error("Not yet implemented.");
 	}
 
@@ -154,14 +134,28 @@ export default class Variant extends DefinedProduct implements IVariant {
 		});
 	}
 
-	public addVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void {
-		if (variantCharacteristic.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasVariantCaracteristic", variantCharacteristic);
+	public removeVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getVariantCharacteristics(options?: IGetterOptions): Promise<IVariantCharacteristic[]> {
+		const results = new Array<IVariantCharacteristic>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasVariantCaracteristic");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IVariantCharacteristic>semanticObject);
 		}
-		else {
-			this.connector.store(variantCharacteristic);
-			this.addSemanticPropertyReference("dfc-b:hasVariantCaracteristic", variantCharacteristic);
-		}
+		return results;
+	}
+
+	public setIsVariantOf(products: IDefinedProduct[]): void {
+		this.getSemanticPropertyAll("dfc-b:isVariantOf").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		products.forEach((variant) => {
+			this.addSemanticPropertyReference("dfc-b:isVariantOf", variant, true);
+			this.connector.store(variant);
+		});
 	}
 
 	public async isVariantOf(options?: IGetterOptions): Promise<IDefinedProduct[]> {
@@ -174,10 +168,6 @@ export default class Variant extends DefinedProduct implements IVariant {
 		return results;
 	}
 
-	public removeIsVariantOf(product: IDefinedProduct): void {
-		throw new Error("Not yet implemented.");
-	}
-
 	public addIsVariantOf(product: IDefinedProduct): void {
 		if (product.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:isVariantOf", product);
@@ -185,6 +175,16 @@ export default class Variant extends DefinedProduct implements IVariant {
 		else {
 			this.connector.store(product);
 			this.addSemanticPropertyReference("dfc-b:isVariantOf", product);
+		}
+	}
+
+	public addVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void {
+		if (variantCharacteristic.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasVariantCaracteristic", variantCharacteristic);
+		}
+		else {
+			this.connector.store(variantCharacteristic);
+			this.addSemanticPropertyReference("dfc-b:hasVariantCaracteristic", variantCharacteristic);
 		}
 	}
 }

@@ -17,17 +17,17 @@ export default class Route extends SemanticObject implements IRoute {
         features?: IGeoJsonFeature[];
         doNotStore?: boolean;
     });
-    getName(): string | undefined;
-    getDescription(): string | undefined;
-    setDescription(description: string): void;
-    setSteps(steps: IStep[]): void;
-    setName(name: string): void;
-    getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]>;
-    removeStep(step: IStep): void;
-    removeFeature(feature: IGeoJsonFeature): void;
-    getSteps(options?: IGetterOptions): Promise<IStep[]>;
     addStep(step: IStep): void;
+    getDescription(): string | undefined;
+    getName(): string | undefined;
     setFeatures(features: IGeoJsonFeature[]): void;
+    setDescription(description: string): void;
+    getSteps(options?: IGetterOptions): Promise<IStep[]>;
+    setName(name: string): void;
+    setSteps(steps: IStep[]): void;
+    removeStep(step: IStep): void;
     addFeature(feature: IGeoJsonFeature): void;
+    removeFeature(feature: IGeoJsonFeature): void;
+    getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]>;
 }
 //# sourceMappingURL=Route.d.ts.map

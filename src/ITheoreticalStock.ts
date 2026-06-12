@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ILocalizedProduct from "./ILocalizedProduct.js"
 import IStock from "./IStock.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

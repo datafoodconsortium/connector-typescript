@@ -3,5 +3,6 @@ export default interface TechnicalProductProposer {
     getProposedTechnicalProducts(): Promise<ITechnicalProduct[]>;
     proposeTechnicalProducts(technicalProducts: ITechnicalProduct): void;
     unproposeTechnicalProducts(technicalProducts: ITechnicalProduct): void;
+    setProposedTechnicalProducts(technicalProducts: ITechnicalProduct[]): void;
 }
 //# sourceMappingURL=TechnicalProductProposer.d.ts.map

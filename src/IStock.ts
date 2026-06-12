@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IQuantity from "./IQuantity.js"
 import IPhysicalPlace from "./IPhysicalPlace.js"
+import IQuantity from "./IQuantity.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

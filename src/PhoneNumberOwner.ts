@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ContactableByPhone from "./ContactableByPhone.js"
 import IPhoneNumber from "./IPhoneNumber.js"
+import ContactableByPhone from "./ContactableByPhone.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

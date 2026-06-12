@@ -1,7 +1,7 @@
 import ISaleSession from "./ISaleSession.js";
-import IQuantity from "./IQuantity.js";
-import IShippingOption from "./IShippingOption.js";
 import IOrder from "./IOrder.js";
+import IShippingOption from "./IShippingOption.js";
+import IQuantity from "./IQuantity.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -24,20 +24,20 @@ export default abstract class ShippingOption extends SemanticObject implements I
         doNotStore?: boolean;
     });
     getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined>;
-    getDescription(): string | undefined;
-    getFee(): number | undefined;
-    setBeginDate(beginDate: string): void;
-    setSaleSession(saleSession: ISaleSession): void;
-    setEndDate(endDate: string): void;
-    setFee(fee: number): void;
     getName(): string | undefined;
-    setDescription(description: string): void;
-    getQuantity(): IQuantity | undefined;
-    setName(name: string): void;
-    getBeginDate(): string | undefined;
-    getOrder(options?: IGetterOptions): Promise<IOrder | undefined>;
-    setQuantity(quantity: IQuantity): void;
+    setSaleSession(saleSession: ISaleSession): void;
     getEndDate(): string | undefined;
+    getQuantity(): IQuantity | undefined;
+    setFee(fee: number): void;
+    setName(name: string): void;
+    setBeginDate(beginDate: string): void;
+    setQuantity(quantity: IQuantity): void;
     setOrder(order: IOrder): void;
+    getFee(): number | undefined;
+    getDescription(): string | undefined;
+    setDescription(description: string): void;
+    setEndDate(endDate: string): void;
+    getOrder(options?: IGetterOptions): Promise<IOrder | undefined>;
+    getBeginDate(): string | undefined;
 }
 //# sourceMappingURL=ShippingOption.d.ts.map

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-
+import ISKOSConcept from "./ISKOSConcept.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
@@ -33,7 +33,7 @@ export default interface Localizable {
 
 	getCity(): string | undefined;
 
-	getCountry(): string | undefined;
+	getCountry(): Promise<ISKOSConcept | undefined>;
 
 	setStreet(street: string): void;
 
@@ -41,7 +41,7 @@ export default interface Localizable {
 
 	setCity(city: string): void;
 
-	setCountry(country: string): void;
+	setCountry(country: ISKOSConcept): void;
 
 	getLatitude(): number | undefined;
 

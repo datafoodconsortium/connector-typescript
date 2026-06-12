@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Flow from "./Flow.js"
-import IQuantity from "./IQuantity.js"
-import IRealizedFlow from "./IRealizedFlow.js"
-import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import IPhysicalProduct from "./IPhysicalProduct.js"
+import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
+import Flow from "./Flow.js"
 import IRealizedTransformation from "./IRealizedTransformation.js"
+import IRealizedFlow from "./IRealizedFlow.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -34,7 +34,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const REALIZED_CONSUMPTION_FLOW_SEM_TYPE: string = "dfc-b:AsRealizedConsumptionFlow";
 
-export default class RealizedConsumptionFlow extends Flow implements IRealizedConsumptionFlow, IRealizedFlow {
+export default class RealizedConsumptionFlow extends Flow implements IRealizedFlow, IRealizedConsumptionFlow {
 
 	public constructor(parameters: {
 		connector: IConnector,
@@ -85,14 +85,10 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedCo
 		this.connector.store(consumedProduct);
 	}
 
-	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
-		let result: IRealizedTransformation | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:incomeOf");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IRealizedTransformation> semanticObject;
-		}
-		return result;
+	public setRealizedTransformation(realizedTransformation: IRealizedTransformation): void {
+		this.setSemanticPropertyReference("dfc-b:inputOf", realizedTransformation);
+		
+		this.connector.store(realizedTransformation);
 	}
 
 	public async getConsumedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
@@ -105,9 +101,13 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedCo
 		return result;
 	}
 
-	public setRealizedTransformation(realizedTransformation: IRealizedTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:incomeOf", realizedTransformation);
-		
-		this.connector.store(realizedTransformation);
+	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
+		let result: IRealizedTransformation | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IRealizedTransformation> semanticObject;
+		}
+		return result;
 	}
 }

@@ -64,13 +64,13 @@ export default abstract class Flow extends SemanticObject implements IFlow {
 		
 	}
 
-	public setQuantity(quantity: IQuantity): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
-		
-	}
-
 	public getQuantity(): IQuantity | undefined {
 		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasQuantity");
 		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
+	}
+
+	public setQuantity(quantity: IQuantity): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+		
 	}
 }

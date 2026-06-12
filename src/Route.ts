@@ -88,60 +88,6 @@ export default class Route extends SemanticObject implements IRoute {
 		
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public setSteps(steps: IStep[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasStep").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		steps.forEach((route) => {
-			this.addSemanticPropertyReference("dfc-b:hasStep", route, true);
-			this.connector.store(route);
-		});
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public async getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]> {
-		const results = new Array<IGeoJsonFeature>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasGeoJsonFeature");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IGeoJsonFeature>semanticObject);
-		}
-		return results;
-	}
-
-	public removeStep(step: IStep): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public removeFeature(feature: IGeoJsonFeature): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public async getSteps(options?: IGetterOptions): Promise<IStep[]> {
-		const results = new Array<IStep>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasStep");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IStep>semanticObject);
-		}
-		return results;
-	}
-
 	public addStep(step: IStep): void {
 		if (step.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:hasStep", step);
@@ -150,6 +96,14 @@ export default class Route extends SemanticObject implements IRoute {
 			this.connector.store(step);
 			this.addSemanticPropertyReference("dfc-b:hasStep", step);
 		}
+	}
+
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
 	}
 
 	public setFeatures(features: IGeoJsonFeature[]): void {
@@ -162,6 +116,38 @@ export default class Route extends SemanticObject implements IRoute {
 		});
 	}
 
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public async getSteps(options?: IGetterOptions): Promise<IStep[]> {
+		const results = new Array<IStep>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasStep");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IStep>semanticObject);
+		}
+		return results;
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public setSteps(steps: IStep[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasStep").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		steps.forEach((route) => {
+			this.addSemanticPropertyReference("dfc-b:hasStep", route, true);
+			this.connector.store(route);
+		});
+	}
+
+	public removeStep(step: IStep): void {
+		throw new Error("Not yet implemented.");
+	}
+
 	public addFeature(feature: IGeoJsonFeature): void {
 		if (feature.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:hasGeoJsonFeature", feature);
@@ -170,5 +156,19 @@ export default class Route extends SemanticObject implements IRoute {
 			this.connector.store(feature);
 			this.addSemanticPropertyReference("dfc-b:hasGeoJsonFeature", feature);
 		}
+	}
+
+	public removeFeature(feature: IGeoJsonFeature): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]> {
+		const results = new Array<IGeoJsonFeature>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasGeoJsonFeature");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IGeoJsonFeature>semanticObject);
+		}
+		return results;
 	}
 }

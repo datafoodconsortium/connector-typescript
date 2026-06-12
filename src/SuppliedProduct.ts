@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISuppliedProduct from "./ISuppliedProduct.js"
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import IQuantity from "./IQuantity.js"
-import IProductOption from "./IProductOption.js"
-import IVariant from "./IVariant.js"
-import ILocalizedProduct from "./ILocalizedProduct.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
 import ICatalogItem from "./ICatalogItem.js"
-import DefinedProduct from "./DefinedProduct.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import IVariant from "./IVariant.js"
+import DefinedProduct from "./DefinedProduct.js"
+import IProductOption from "./IProductOption.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -128,10 +128,6 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 		
 	}
 
-	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
-		throw new Error("Not yet implemented.");
-	}
-
 	public setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void {
 		this.getSemanticPropertyAll("dfc-b:referenceOf").forEach((prop) => {
 			this.connector.removeFromStore(prop);
@@ -140,6 +136,10 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 			this.addSemanticPropertyReference("dfc-b:referenceOf", suppliedProduct, true);
 			this.connector.store(suppliedProduct);
 		});
+	}
+
+	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {

@@ -22,12 +22,12 @@
  * SOFTWARE.
 */
 import IHostingPlace from "./IHostingPlace.js"
-import IOrganization from "./IOrganization.js"
 import Datable from "./Datable.js"
+import IOrganization from "./IOrganization.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ITemplateSaleSession extends Semanticable, IHostingPlace, Datable {
+export default interface ITemplateSaleSession extends Semanticable, Datable, IHostingPlace {
 
 	getOrganizations(): Promise<IOrganization[]>;
 

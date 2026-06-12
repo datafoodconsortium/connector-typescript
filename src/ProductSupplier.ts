@@ -33,4 +33,6 @@ export default interface ProductSupplier {
 
 	unsupplyProduct(suppliedProduct: ISuppliedProduct): void;
 
+	setSuppliedProducts(suppliedProducts: ISuppliedProduct[]): void;
+
 }

@@ -3,7 +3,7 @@ import Describable from "./Describable.js";
 import IRoute from "./IRoute.js";
 import IShipment from "./IShipment.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default interface IStep extends Semanticable, Nameable, Describable {
+export default interface IStep extends Semanticable, Describable, Nameable {
     getArrivalDate(): string | undefined;
     setArrivalDate(arrivalDate: string): void;
     getDuration(): string | undefined;

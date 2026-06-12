@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ShippingOption from "./ShippingOption.js"
-import ISaleSession from "./ISaleSession.js"
-import IQuantity from "./IQuantity.js"
-import IPhysicalPlace from "./IPhysicalPlace.js"
 import IOrder from "./IOrder.js"
+import ISaleSession from "./ISaleSession.js"
 import IDeliveryOption from "./IDeliveryOption.js"
+import IPhysicalPlace from "./IPhysicalPlace.js"
+import ShippingOption from "./ShippingOption.js"
+import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -98,14 +98,8 @@ export default class DeliveryOption extends ShippingOption implements IDeliveryO
 		
 	}
 
-	public async getDeliveredPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
-		let result: IPhysicalPlace | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:deliveredAt");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalPlace> semanticObject;
-		}
-		return result;
+	public setAccessibilityInformation(accessibilityInformation: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:accessibilityInfo", accessibilityInformation);
 	}
 
 	public setDeliveredPlace(deliveredPlace: IPhysicalPlace): void {
@@ -118,15 +112,21 @@ export default class DeliveryOption extends ShippingOption implements IDeliveryO
 		this.setSemanticPropertyLiteral("dfc-b:deliveryConstraint", deliveryConstraint);
 	}
 
-	public getAccessibilityInformation(): string | undefined {
-		return this.getSemanticProperty("dfc-b:accessibilityInfo");
-	}
-
 	public getDeliveryConstraint(): string | undefined {
 		return this.getSemanticProperty("dfc-b:deliveryConstraint");
 	}
 
-	public setAccessibilityInformation(accessibilityInformation: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:accessibilityInfo", accessibilityInformation);
+	public async getDeliveredPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
+		let result: IPhysicalPlace | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:deliveredAt");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalPlace> semanticObject;
+		}
+		return result;
+	}
+
+	public getAccessibilityInformation(): string | undefined {
+		return this.getSemanticProperty("dfc-b:accessibilityInfo");
 	}
 }

@@ -1,8 +1,8 @@
 import ISaleSession from "./ISaleSession.js";
-import IAgent from "./IAgent.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import IPaymentMethod from "./IPaymentMethod.js";
 import IOrderLine from "./IOrderLine.js";
-import ISKOSConcept from "./ISKOSConcept.js";
+import IAgent from "./IAgent.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IOrder extends Semanticable {
     getNumber(): string | undefined;
@@ -25,5 +25,7 @@ export default interface IOrder extends Semanticable {
     setPaymentStatus(paymentState: ISKOSConcept): void;
     getPaymentMethod(): Promise<IPaymentMethod | undefined>;
     setPaymentMethod(paymentMethod: IPaymentMethod): void;
+    removeLine(line: IOrderLine): void;
+    setLines(lines: IOrderLine[]): void;
 }
 //# sourceMappingURL=IOrder.d.ts.map

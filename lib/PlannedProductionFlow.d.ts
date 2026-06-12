@@ -1,13 +1,13 @@
+import IPlannedFlow from "./IPlannedFlow.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
+import Flow from "./Flow.js";
 import ISuppliedProduct from "./ISuppliedProduct.js";
 import IPlannedTransformation from "./IPlannedTransformation.js";
-import Flow from "./Flow.js";
 import IQuantity from "./IQuantity.js";
-import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
-import IPlannedFlow from "./IPlannedFlow.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
-export default class PlannedProductionFlow extends Flow implements IPlannedProductionFlow, IPlannedFlow {
+export default class PlannedProductionFlow extends Flow implements IPlannedFlow, IPlannedProductionFlow {
     constructor(parameters: {
         connector: IConnector;
         semanticId?: string;
@@ -17,9 +17,9 @@ export default class PlannedProductionFlow extends Flow implements IPlannedProdu
         product?: ISuppliedProduct;
         doNotStore?: boolean;
     });
-    getProducedProduct(options?: IGetterOptions): Promise<ISuppliedProduct | undefined>;
     getPlannedTransformation(options?: IGetterOptions): Promise<IPlannedTransformation | undefined>;
-    setPlannedTransformation(plannedTransformation: IPlannedTransformation): void;
     setProducedProduct(producedProduct: ISuppliedProduct): void;
+    setPlannedTransformation(plannedTransformation: IPlannedTransformation): void;
+    getProducedProduct(options?: IGetterOptions): Promise<ISuppliedProduct | undefined>;
 }
 //# sourceMappingURL=PlannedProductionFlow.d.ts.map

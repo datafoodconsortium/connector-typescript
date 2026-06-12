@@ -1,9 +1,9 @@
-import Flow from "./Flow.js";
-import IQuantity from "./IQuantity.js";
-import IRealizedFlow from "./IRealizedFlow.js";
 import IPhysicalProduct from "./IPhysicalProduct.js";
-import IRealizedProductionFlow from "./IRealizedProductionFlow.js";
+import Flow from "./Flow.js";
 import IRealizedTransformation from "./IRealizedTransformation.js";
+import IRealizedProductionFlow from "./IRealizedProductionFlow.js";
+import IRealizedFlow from "./IRealizedFlow.js";
+import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -17,9 +17,9 @@ export default class RealizedProductionFlow extends Flow implements IRealizedFlo
         product?: IPhysicalProduct;
         doNotStore?: boolean;
     });
-    getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined>;
+    getProducedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
     setProducedProduct(producedProduct: IPhysicalProduct): void;
     setRealizedTransformation(realizedTransformation: IRealizedTransformation): void;
-    getProducedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
+    getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined>;
 }
 //# sourceMappingURL=RealizedProductionFlow.d.ts.map

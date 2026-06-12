@@ -13,7 +13,7 @@ export default abstract class Flow extends SemanticObject implements IFlow {
         quantity?: IQuantity;
         doNotStore?: boolean;
     });
-    setQuantity(quantity: IQuantity): void;
     getQuantity(): IQuantity | undefined;
+    setQuantity(quantity: IQuantity): void;
 }
 //# sourceMappingURL=Flow.d.ts.map
