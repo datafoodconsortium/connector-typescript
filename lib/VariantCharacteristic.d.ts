@@ -18,15 +18,15 @@ export default class VariantCharacteristic extends SemanticObject implements IVa
         productOptionValue?: IProductOptionValue;
         doNotStore?: boolean;
     });
+    getDate(): string | undefined;
+    getName(): string | undefined;
     getProductOption(options?: IGetterOptions): Promise<IProductOption | undefined>;
     getDescription(): string | undefined;
-    getName(): string | undefined;
     setDescription(description: string): void;
-    setDate(date: string): void;
-    getDate(): string | undefined;
-    setName(name: string): void;
-    setProductOption(productOption: IProductOption): void;
     getProductOptionValue(options?: IGetterOptions): Promise<IProductOptionValue | undefined>;
+    setName(name: string): void;
+    setDate(date: string): void;
+    setProductOption(productOption: IProductOption): void;
     setProductOptionValue(productOptionValue: IProductOptionValue): void;
 }
 //# sourceMappingURL=VariantCharacteristic.d.ts.map

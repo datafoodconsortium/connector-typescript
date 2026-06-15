@@ -1,5 +1,5 @@
-import IDefinedProduct from "./IDefinedProduct.js";
 import IVariantCharacteristic from "./IVariantCharacteristic.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default interface IVariant extends IDefinedProduct {
     addIsVariantOf(product: IDefinedProduct): void;
     isVariantOf(): Promise<IDefinedProduct[]>;

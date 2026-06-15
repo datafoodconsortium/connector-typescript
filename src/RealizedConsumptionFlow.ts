@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPhysicalProduct from "./IPhysicalProduct.js"
 import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import Flow from "./Flow.js"
-import IRealizedTransformation from "./IRealizedTransformation.js"
-import IRealizedFlow from "./IRealizedFlow.js"
 import IQuantity from "./IQuantity.js"
+import IRealizedTransformation from "./IRealizedTransformation.js"
+import IPhysicalProduct from "./IPhysicalProduct.js"
+import IRealizedFlow from "./IRealizedFlow.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -79,10 +79,14 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedFl
 		
 	}
 
-	public setConsumedProduct(consumedProduct: IPhysicalProduct): void {
-		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
-		
-		this.connector.store(consumedProduct);
+	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
+		let result: IRealizedTransformation | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IRealizedTransformation> semanticObject;
+		}
+		return result;
 	}
 
 	public setRealizedTransformation(realizedTransformation: IRealizedTransformation): void {
@@ -101,13 +105,9 @@ export default class RealizedConsumptionFlow extends Flow implements IRealizedFl
 		return result;
 	}
 
-	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
-		let result: IRealizedTransformation | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IRealizedTransformation> semanticObject;
-		}
-		return result;
+	public setConsumedProduct(consumedProduct: IPhysicalProduct): void {
+		this.setSemanticPropertyReference("dfc-b:consumes", consumedProduct);
+		
+		this.connector.store(consumedProduct);
 	}
 }

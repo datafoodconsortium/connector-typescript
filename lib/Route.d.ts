@@ -1,6 +1,6 @@
+import IStep from "./IStep.js";
 import IGeoJsonFeature from "./IGeoJsonFeature.js";
 import IRoute from "./IRoute.js";
-import IStep from "./IStep.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -17,17 +17,17 @@ export default class Route extends SemanticObject implements IRoute {
         features?: IGeoJsonFeature[];
         doNotStore?: boolean;
     });
-    addStep(step: IStep): void;
-    getDescription(): string | undefined;
+    removeStep(step: IStep): void;
+    getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]>;
     getName(): string | undefined;
     setFeatures(features: IGeoJsonFeature[]): void;
+    getDescription(): string | undefined;
     setDescription(description: string): void;
-    getSteps(options?: IGetterOptions): Promise<IStep[]>;
-    setName(name: string): void;
     setSteps(steps: IStep[]): void;
-    removeStep(step: IStep): void;
     addFeature(feature: IGeoJsonFeature): void;
+    setName(name: string): void;
+    addStep(step: IStep): void;
     removeFeature(feature: IGeoJsonFeature): void;
-    getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]>;
+    getSteps(options?: IGetterOptions): Promise<IStep[]>;
 }
 //# sourceMappingURL=Route.d.ts.map

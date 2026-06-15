@@ -84,11 +84,11 @@ export default class SocialMedia extends SemanticObject implements ISocialMedia 
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
-	public setUrl(url: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:URL", url);
-	}
-
 	public getUrl(): string | undefined {
 		return this.getSemanticProperty("dfc-b:URL");
+	}
+
+	public setUrl(url: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:URL", url);
 	}
 }

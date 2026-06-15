@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IDefinedProduct from "./IDefinedProduct.js"
 import IVariantCharacteristic from "./IVariantCharacteristic.js"
+import IDefinedProduct from "./IDefinedProduct.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

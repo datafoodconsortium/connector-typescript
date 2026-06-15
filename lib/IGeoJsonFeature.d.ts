@@ -1,5 +1,5 @@
-import IGeoJsonGeometry from "./IGeoJsonGeometry.js";
 import IGeoJsonProperties from "./IGeoJsonProperties.js";
+import IGeoJsonGeometry from "./IGeoJsonGeometry.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IGeoJsonFeature extends Semanticable {
     getGeometry(): Promise<IGeoJsonGeometry | undefined>;

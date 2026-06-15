@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPickUpStep from "./IPickUpStep.js"
-import IRoute from "./IRoute.js"
 import Step from "./Step.js"
+import IPickUpStep from "./IPickUpStep.js"
 import IShipment from "./IShipment.js"
+import IRoute from "./IRoute.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";

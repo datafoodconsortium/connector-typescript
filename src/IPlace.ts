@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISaleSession from "./ISaleSession.js"
 import Nameable from "./Nameable.js"
 import Describable from "./Describable.js"
+import ISaleSession from "./ISaleSession.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

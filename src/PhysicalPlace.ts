@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IAddress from "./IAddress.js"
+import IRealStock from "./IRealStock.js"
+import IOpeningHoursSpecification from "./IOpeningHoursSpecification.js"
 import ISaleSession from "./ISaleSession.js"
+import IPerson from "./IPerson.js"
 import IGeoJsonFeature from "./IGeoJsonFeature.js"
 import IPhoneNumber from "./IPhoneNumber.js"
-import IOpeningHoursSpecification from "./IOpeningHoursSpecification.js"
-import IPerson from "./IPerson.js"
-import IAddress from "./IAddress.js"
-import ITheoreticalStock from "./ITheoreticalStock.js"
 import IPhysicalPlace from "./IPhysicalPlace.js"
-import IRealStock from "./IRealStock.js"
+import ITheoreticalStock from "./ITheoreticalStock.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -124,18 +124,42 @@ export default class PhysicalPlace extends SemanticObject implements IPhysicalPl
 		
 	}
 
-	public addTheoreticalStock(theoreticalStock: ITheoreticalStock): void {
-		if (theoreticalStock.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:localizes", theoreticalStock);
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public addMainContact(mainContact: IPerson): void {
+		if (mainContact.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasMainContact", mainContact);
 		}
 		else {
-			this.connector.store(theoreticalStock);
-			this.addSemanticPropertyReference("dfc-b:localizes", theoreticalStock);
+			this.connector.store(mainContact);
+			this.addSemanticPropertyReference("dfc-b:hasMainContact", mainContact);
 		}
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public removeFeature(feature: IGeoJsonFeature): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getRealStocks(options?: IGetterOptions): Promise<IRealStock[]> {
+		const results = new Array<IRealStock>();
+		const properties = this.getSemanticPropertyAll("dfc-b:stores");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IRealStock>semanticObject);
+		}
+		return results;
+	}
+
+	public addPhoneNumber(phoneNumber: IPhoneNumber): void {
+		if (phoneNumber.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasPhoneNumber", phoneNumber);
+		}
+		else {
+			this.connector.store(phoneNumber);
+			this.addSemanticPropertyReference("dfc-b:hasPhoneNumber", phoneNumber);
+		}
 	}
 
 	public setTheoreticalStocks(theoreticalStocks: ITheoreticalStock[]): void {
@@ -148,78 +172,26 @@ export default class PhysicalPlace extends SemanticObject implements IPhysicalPl
 		});
 	}
 
-	public async getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]> {
-		const results = new Array<ISaleSession>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hosts");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ISaleSession>semanticObject);
-		}
-		return results;
-	}
-
-	public removeHostedSaleSession(): ISaleSession | undefined {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setAddress(address: IAddress): void {
-		this.setSemanticPropertyReference("dfc-b:hasAddress", address);
-		
-		this.connector.store(address);
-	}
-
-	public addRealStock(realStock: IRealStock): void {
-		if (realStock.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:stores", realStock);
-		}
-		else {
-			this.connector.store(realStock);
-			this.addSemanticPropertyReference("dfc-b:stores", realStock);
-		}
-	}
-
-	public setHostedSaleSessions(saleSessions: ISaleSession[]): void {
-		this.getSemanticPropertyAll("dfc-b:hosts").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		saleSessions.forEach((physicalPlace) => {
-			this.addSemanticPropertyReference("dfc-b:hosts", physicalPlace, true);
-			this.connector.store(physicalPlace);
-		});
-	}
-
 	public removeRealStock(realStock: IRealStock): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public removeOpeningHour(openingHour: IOpeningHoursSpecification): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public async getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]> {
-		const results = new Array<IGeoJsonFeature>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasGeoJsonFeature");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IGeoJsonFeature>semanticObject);
+	public addOpeningHour(openingHour: IOpeningHoursSpecification): void {
+		if (openingHour.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasOpeningHours", openingHour);
 		}
-		return results;
+		else {
+			this.connector.store(openingHour);
+			this.addSemanticPropertyReference("dfc-b:hasOpeningHours", openingHour);
+		}
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public removePhoneNumber(phoneNumber: IPhoneNumber): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setRealStocks(realStocks: IRealStock[]): void {
-		this.getSemanticPropertyAll("dfc-b:stores").forEach((prop) => {
+	public setFeatures(features: IGeoJsonFeature[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasGeoJsonFeature").forEach((prop) => {
 			this.connector.removeFromStore(prop);
 		});
-		realStocks.forEach((physicalPlace) => {
-			this.addSemanticPropertyReference("dfc-b:stores", physicalPlace, true);
+		features.forEach((physicalPlace) => {
+			this.addSemanticPropertyReference("dfc-b:hasGeoJsonFeature", physicalPlace, true);
 			this.connector.store(physicalPlace);
 		});
 	}
@@ -234,110 +206,24 @@ export default class PhysicalPlace extends SemanticObject implements IPhysicalPl
 		});
 	}
 
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public addHostedSaleSession(saleSession: ISaleSession): void {
-		if (saleSession.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hosts", saleSession);
+	public addTheoreticalStock(theoreticalStock: ITheoreticalStock): void {
+		if (theoreticalStock.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:localizes", theoreticalStock);
 		}
 		else {
-			this.connector.store(saleSession);
-			this.addSemanticPropertyReference("dfc-b:hosts", saleSession);
+			this.connector.store(theoreticalStock);
+			this.addSemanticPropertyReference("dfc-b:localizes", theoreticalStock);
 		}
 	}
 
-	public addFeature(feature: IGeoJsonFeature): void {
-		if (feature.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasGeoJsonFeature", feature);
-		}
-		else {
-			this.connector.store(feature);
-			this.addSemanticPropertyReference("dfc-b:hasGeoJsonFeature", feature);
-		}
-	}
-
-	public setPhoneNumbers(phoneNumbers: IPhoneNumber[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasPhoneNumber").forEach((prop) => {
+	public setRealStocks(realStocks: IRealStock[]): void {
+		this.getSemanticPropertyAll("dfc-b:stores").forEach((prop) => {
 			this.connector.removeFromStore(prop);
 		});
-		phoneNumbers.forEach((physicalPlace) => {
-			this.addSemanticPropertyReference("dfc-b:hasPhoneNumber", physicalPlace, true);
+		realStocks.forEach((physicalPlace) => {
+			this.addSemanticPropertyReference("dfc-b:stores", physicalPlace, true);
 			this.connector.store(physicalPlace);
 		});
-	}
-
-	public async getPhoneNumbers(options?: IGetterOptions): Promise<IPhoneNumber[]> {
-		const results = new Array<IPhoneNumber>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasPhoneNumber");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IPhoneNumber>semanticObject);
-		}
-		return results;
-	}
-
-	public removeTheoreticalStock(theoreticalStock: ITheoreticalStock): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public removeMainContact(mainContact: IPerson): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public addOpeningHour(openingHour: IOpeningHoursSpecification): void {
-		if (openingHour.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasOpeningHours", openingHour);
-		}
-		else {
-			this.connector.store(openingHour);
-			this.addSemanticPropertyReference("dfc-b:hasOpeningHours", openingHour);
-		}
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public addMainContact(mainContact: IPerson): void {
-		if (mainContact.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasMainContact", mainContact);
-		}
-		else {
-			this.connector.store(mainContact);
-			this.addSemanticPropertyReference("dfc-b:hasMainContact", mainContact);
-		}
-	}
-
-	public addPhoneNumber(phoneNumber: IPhoneNumber): void {
-		if (phoneNumber.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasPhoneNumber", phoneNumber);
-		}
-		else {
-			this.connector.store(phoneNumber);
-			this.addSemanticPropertyReference("dfc-b:hasPhoneNumber", phoneNumber);
-		}
-	}
-
-	public async getOpeningHours(options?: IGetterOptions): Promise<IOpeningHoursSpecification[]> {
-		const results = new Array<IOpeningHoursSpecification>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasOpeningHours");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOpeningHoursSpecification>semanticObject);
-		}
-		return results;
-	}
-
-	public async getTheoreticalStocks(options?: IGetterOptions): Promise<ITheoreticalStock[]> {
-		const results = new Array<ITheoreticalStock>();
-		const properties = this.getSemanticPropertyAll("dfc-b:localizes");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ITheoreticalStock>semanticObject);
-		}
-		return results;
 	}
 
 	public async getMainContacts(options?: IGetterOptions): Promise<IPerson[]> {
@@ -350,18 +236,64 @@ export default class PhysicalPlace extends SemanticObject implements IPhysicalPl
 		return results;
 	}
 
-	public async getRealStocks(options?: IGetterOptions): Promise<IRealStock[]> {
-		const results = new Array<IRealStock>();
-		const properties = this.getSemanticPropertyAll("dfc-b:stores");
+	public async getOpeningHours(options?: IGetterOptions): Promise<IOpeningHoursSpecification[]> {
+		const results = new Array<IOpeningHoursSpecification>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasOpeningHours");
 		for await (const semanticId of properties) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IRealStock>semanticObject);
+			if (semanticObject) results.push(<IOpeningHoursSpecification>semanticObject);
 		}
 		return results;
 	}
 
-	public removeFeature(feature: IGeoJsonFeature): void {
+	public setPhoneNumbers(phoneNumbers: IPhoneNumber[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasPhoneNumber").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		phoneNumbers.forEach((physicalPlace) => {
+			this.addSemanticPropertyReference("dfc-b:hasPhoneNumber", physicalPlace, true);
+			this.connector.store(physicalPlace);
+		});
+	}
+
+	public async getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]> {
+		const results = new Array<ISaleSession>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hosts");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ISaleSession>semanticObject);
+		}
+		return results;
+	}
+
+	public removeTheoreticalStock(theoreticalStock: ITheoreticalStock): void {
 		throw new Error("Not yet implemented.");
+	}
+
+	public async getFeatures(options?: IGetterOptions): Promise<IGeoJsonFeature[]> {
+		const results = new Array<IGeoJsonFeature>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasGeoJsonFeature");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IGeoJsonFeature>semanticObject);
+		}
+		return results;
+	}
+
+	public setHostedSaleSessions(saleSessions: ISaleSession[]): void {
+		this.getSemanticPropertyAll("dfc-b:hosts").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		saleSessions.forEach((physicalPlace) => {
+			this.addSemanticPropertyReference("dfc-b:hosts", physicalPlace, true);
+			this.connector.store(physicalPlace);
+		});
+	}
+
+	public setAddress(address: IAddress): void {
+		this.setSemanticPropertyReference("dfc-b:hasAddress", address);
+		
+		this.connector.store(address);
 	}
 
 	public async getAddress(options?: IGetterOptions): Promise<IAddress | undefined> {
@@ -374,14 +306,54 @@ export default class PhysicalPlace extends SemanticObject implements IPhysicalPl
 		return result;
 	}
 
-	public setFeatures(features: IGeoJsonFeature[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasGeoJsonFeature").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		features.forEach((physicalPlace) => {
-			this.addSemanticPropertyReference("dfc-b:hasGeoJsonFeature", physicalPlace, true);
-			this.connector.store(physicalPlace);
-		});
+	public addHostedSaleSession(saleSession: ISaleSession): void {
+		if (saleSession.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hosts", saleSession);
+		}
+		else {
+			this.connector.store(saleSession);
+			this.addSemanticPropertyReference("dfc-b:hosts", saleSession);
+		}
+	}
+
+	public async getTheoreticalStocks(options?: IGetterOptions): Promise<ITheoreticalStock[]> {
+		const results = new Array<ITheoreticalStock>();
+		const properties = this.getSemanticPropertyAll("dfc-b:localizes");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ITheoreticalStock>semanticObject);
+		}
+		return results;
+	}
+
+	public removePhoneNumber(phoneNumber: IPhoneNumber): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public addRealStock(realStock: IRealStock): void {
+		if (realStock.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:stores", realStock);
+		}
+		else {
+			this.connector.store(realStock);
+			this.addSemanticPropertyReference("dfc-b:stores", realStock);
+		}
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public removeHostedSaleSession(): ISaleSession | undefined {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
 	public setMainContacts(mainContacts: IPerson[]): void {
@@ -392,5 +364,33 @@ export default class PhysicalPlace extends SemanticObject implements IPhysicalPl
 			this.addSemanticPropertyReference("dfc-b:hasMainContact", physicalPlace, true);
 			this.connector.store(physicalPlace);
 		});
+	}
+
+	public removeMainContact(mainContact: IPerson): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public addFeature(feature: IGeoJsonFeature): void {
+		if (feature.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasGeoJsonFeature", feature);
+		}
+		else {
+			this.connector.store(feature);
+			this.addSemanticPropertyReference("dfc-b:hasGeoJsonFeature", feature);
+		}
+	}
+
+	public removeOpeningHour(openingHour: IOpeningHoursSpecification): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getPhoneNumbers(options?: IGetterOptions): Promise<IPhoneNumber[]> {
+		const results = new Array<IPhoneNumber>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasPhoneNumber");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IPhoneNumber>semanticObject);
+		}
+		return results;
 	}
 }

@@ -1,5 +1,5 @@
-import IPhysicalPlace from "./IPhysicalPlace.js";
 import IQuantity from "./IQuantity.js";
+import IPhysicalPlace from "./IPhysicalPlace.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IStock extends Semanticable {
     getQuantity(): IQuantity | undefined;

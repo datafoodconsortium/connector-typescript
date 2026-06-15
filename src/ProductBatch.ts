@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IRealStock from "./IRealStock.js"
 import IPhysicalProduct from "./IPhysicalProduct.js"
 import IProductBatch from "./IProductBatch.js"
-import IRealStock from "./IRealStock.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -108,28 +108,70 @@ export default class ProductBatch extends SemanticObject implements IProductBatc
 		
 	}
 
-	public getBatchNumber(): string | undefined {
-		return this.getSemanticProperty("dfc-b:batchNumber");
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
 	}
 
-	public getExpirationDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:expirationDate");
-	}
-
-	public setExpirationDate(expirationDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:expirationDate", expirationDate);
+	public setPhysicalProduct(physicalProduct: IPhysicalProduct): void {
+		this.setSemanticPropertyReference("dfc-b:contains", physicalProduct);
+		
+		this.connector.store(physicalProduct);
 	}
 
 	public getProductionDate(): string | undefined {
 		return this.getSemanticProperty("dfc-b:productionDate");
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public getBestBeforeDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:bestBeforeDate");
+	}
+
+	public getBatchNumber(): string | undefined {
+		return this.getSemanticProperty("dfc-b:batchNumber");
 	}
 
 	public setBestBeforeDate(bestBeforeDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:bestBeforeDate", bestBeforeDate);
+	}
+
+	public setBatchNumber(batchNumber: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:batchNumber", batchNumber);
+	}
+
+	public getExpirationDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:expirationDate");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public setRealStock(realStock: IRealStock): void {
+		this.setSemanticPropertyReference("dfc-b:identifiedBy", realStock);
+		
+		this.connector.store(realStock);
+	}
+
+	public setExpirationDate(expirationDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:expirationDate", expirationDate);
+	}
+
+	public async getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
+		let result: IPhysicalProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:contains");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalProduct> semanticObject;
+		}
+		return result;
 	}
 
 	public async getRealStock(options?: IGetterOptions): Promise<IRealStock | undefined> {
@@ -144,47 +186,5 @@ export default class ProductBatch extends SemanticObject implements IProductBatc
 
 	public setProductionDate(productionDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:productionDate", productionDate);
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public setPhysicalProduct(physicalProduct: IPhysicalProduct): void {
-		this.setSemanticPropertyReference("dfc-b:contains", physicalProduct);
-		
-		this.connector.store(physicalProduct);
-	}
-
-	public setBatchNumber(batchNumber: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:batchNumber", batchNumber);
-	}
-
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public getBestBeforeDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:bestBeforeDate");
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public async getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
-		let result: IPhysicalProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:contains");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalProduct> semanticObject;
-		}
-		return result;
-	}
-
-	public setRealStock(realStock: IRealStock): void {
-		this.setSemanticPropertyReference("dfc-b:identifiedBy", realStock);
-		
-		this.connector.store(realStock);
 	}
 }

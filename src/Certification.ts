@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IOrganization from "./IOrganization.js"
 import ICertification from "./ICertification.js"
+import IOrganization from "./IOrganization.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -97,84 +97,28 @@ export default class Certification extends SemanticObject implements ICertificat
 		
 	}
 
-	public addCertificationScore(certificationReference: string): void {
-		this.addSemanticPropertyLiteral("dfc-b:certificationScore", certificationReference);
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:hasDescription");
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public setOperatorIds(operatorIds: string[]): void {
+		this.setSemanticPropertyLiteralAll("dfc-b:operatorId", operatorIds);
 	}
 
 	public getCertificationReferences(): string[] {
 		return this.getSemanticPropertyAll("dfc-b:certiferReference");
 	}
 
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public removeCertificationReference(certificationReference: string): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public getCertificationScores(): string[] {
-		return this.getSemanticPropertyAll("dfc-b:certificationScore");
-	}
-
-	public removeCertifiedOrganization(certifiedOrganization: IOrganization): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public addOperatorId(operatorId: string): void {
-		this.addSemanticPropertyLiteral("dfc-b:operatorId", operatorId);
-	}
-
-	public addCertifiedOrganization(certifiedOrganization: IOrganization): void {
-		if (certifiedOrganization.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:certifies", certifiedOrganization);
-		}
-		else {
-			this.connector.store(certifiedOrganization);
-			this.addSemanticPropertyReference("dfc-b:certifies", certifiedOrganization);
-		}
-	}
-
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:hasDescription");
+	public setCertificationReferences(certificationReferences: string[]): void {
+		this.setSemanticPropertyLiteralAll("dfc-b:certiferReference", certificationReferences);
 	}
 
 	public setCertificationScores(certificationReferences: string[]): void {
 		this.setSemanticPropertyLiteralAll("dfc-b:certificationScore", certificationReferences);
 	}
 
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:hasDescription", description);
-	}
-
-	public setCertifiedOrganizations(certifiedOrganizations: IOrganization[]): void {
-		this.getSemanticPropertyAll("dfc-b:certifies").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		certifiedOrganizations.forEach((certification) => {
-			this.addSemanticPropertyReference("dfc-b:certifies", certification, true);
-			this.connector.store(certification);
-		});
-	}
-
-	public setCertificationReferences(certificationReferences: string[]): void {
-		this.setSemanticPropertyLiteralAll("dfc-b:certiferReference", certificationReferences);
-	}
-
 	public getOpereratorIds(): string[] {
 		return this.getSemanticPropertyAll("dfc-b:operatorId");
-	}
-
-	public removeCertificationScore(certificationReference: string): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public removeOperatorId(operatorId: string): void {
-		throw new Error("Not yet implemented.");
 	}
 
 	public addCertificationReference(certificationReference: string): void {
@@ -191,7 +135,63 @@ export default class Certification extends SemanticObject implements ICertificat
 		return results;
 	}
 
-	public setOperatorIds(operatorIds: string[]): void {
-		this.setSemanticPropertyLiteralAll("dfc-b:operatorId", operatorIds);
+	public removeOperatorId(operatorId: string): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public getCertificationScores(): string[] {
+		return this.getSemanticPropertyAll("dfc-b:certificationScore");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:hasDescription", description);
+	}
+
+	public removeCertifiedOrganization(certifiedOrganization: IOrganization): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public removeCertificationReference(certificationReference: string): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public addCertificationScore(certificationReference: string): void {
+		this.addSemanticPropertyLiteral("dfc-b:certificationScore", certificationReference);
+	}
+
+	public removeCertificationScore(certificationReference: string): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public addCertifiedOrganization(certifiedOrganization: IOrganization): void {
+		if (certifiedOrganization.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:certifies", certifiedOrganization);
+		}
+		else {
+			this.connector.store(certifiedOrganization);
+			this.addSemanticPropertyReference("dfc-b:certifies", certifiedOrganization);
+		}
+	}
+
+	public setCertifiedOrganizations(certifiedOrganizations: IOrganization[]): void {
+		this.getSemanticPropertyAll("dfc-b:certifies").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		certifiedOrganizations.forEach((certification) => {
+			this.addSemanticPropertyReference("dfc-b:certifies", certification, true);
+			this.connector.store(certification);
+		});
+	}
+
+	public addOperatorId(operatorId: string): void {
+		this.addSemanticPropertyLiteral("dfc-b:operatorId", operatorId);
 	}
 }

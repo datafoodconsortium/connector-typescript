@@ -22,16 +22,16 @@
  * SOFTWARE.
 */
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import ICatalogItem from "./ICatalogItem.js"
-import ISKOSConcept from "./ISKOSConcept.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import IQuantity from "./IQuantity.js"
 import IVariant from "./IVariant.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import DefinedProduct from "./DefinedProduct.js"
 import IProductOption from "./IProductOption.js"
 import ILocalizedProduct from "./ILocalizedProduct.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
-import IQuantity from "./IQuantity.js"
+import ICatalogItem from "./ICatalogItem.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -138,8 +138,14 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 		});
 	}
 
-	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
-		throw new Error("Not yet implemented.");
+	public addLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		if (localizedProduct.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:referenceOf", localizedProduct);
+		}
+		else {
+			this.connector.store(localizedProduct);
+			this.addSemanticPropertyReference("dfc-b:referenceOf", localizedProduct);
+		}
 	}
 
 	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {
@@ -152,13 +158,7 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 		return results;
 	}
 
-	public addLocalizedProduct(localizedProduct: ILocalizedProduct): void {
-		if (localizedProduct.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:referenceOf", localizedProduct);
-		}
-		else {
-			this.connector.store(localizedProduct);
-			this.addSemanticPropertyReference("dfc-b:referenceOf", localizedProduct);
-		}
+	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		throw new Error("Not yet implemented.");
 	}
 }

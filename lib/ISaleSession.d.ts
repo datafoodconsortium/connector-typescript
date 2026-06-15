@@ -1,8 +1,8 @@
+import Ellapsable from "./Ellapsable.js";
 import IHostingPlace from "./IHostingPlace.js";
 import IOffer from "./IOffer.js";
-import Ellapsable from "./Ellapsable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default interface ISaleSession extends Semanticable, IHostingPlace, Ellapsable {
+export default interface ISaleSession extends Semanticable, Ellapsable, IHostingPlace {
     getQuantity(): number | undefined;
     setQuantity(quantity: number): void;
     getOffers(): Promise<IOffer[]>;

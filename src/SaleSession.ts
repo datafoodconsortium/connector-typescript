@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IPlace from "./IPlace.js"
 import ISaleSession from "./ISaleSession.js"
 import IOffer from "./IOffer.js"
-import IPlace from "./IPlace.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -93,16 +93,22 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		
 	}
 
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
-	}
-
-	public removeOffer(offer: IOffer): void {
-		throw new Error("Not yet implemented.");
+	public addHostingPlace(hostingPlace: IPlace): void {
+		if (hostingPlace.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hostedAt", hostingPlace);
+		}
+		else {
+			this.connector.store(hostingPlace);
+			this.addSemanticPropertyReference("dfc-b:hostedAt", hostingPlace);
+		}
 	}
 
 	public setBeginDate(beginDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
+	}
+
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
 	}
 
 	public addOffer(offer: IOffer): void {
@@ -115,38 +121,8 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		}
 	}
 
-	public setOffers(offers: IOffer[]): void {
-		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		offers.forEach((saleSession) => {
-			this.addSemanticPropertyReference("dfc-b:lists", saleSession, true);
-			this.connector.store(saleSession);
-		});
-	}
-
-	public addHostingPlace(hostingPlace: IPlace): void {
-		if (hostingPlace.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hostedAt", hostingPlace);
-		}
-		else {
-			this.connector.store(hostingPlace);
-			this.addSemanticPropertyReference("dfc-b:hostedAt", hostingPlace);
-		}
-	}
-
-	public async getHostingPlaces(options?: IGetterOptions): Promise<IPlace[]> {
-		const results = new Array<IPlace>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hostedAt");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IPlace>semanticObject);
-		}
-		return results;
-	}
-
-	public getQuantity(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:quantity"));
+	public setQuantity(quantity: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
 	}
 
 	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {
@@ -159,18 +135,6 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		return results;
 	}
 
-	public removeHostingPlace(hostingPlace: IPlace): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setQuantity(quantity: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
-	}
-
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
-	}
-
 	public setHostingPlaces(hostingPlaces: IPlace[]): void {
 		this.getSemanticPropertyAll("dfc-b:hostedAt").forEach((prop) => {
 			this.connector.removeFromStore(prop);
@@ -181,7 +145,43 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		});
 	}
 
+	public setOffers(offers: IOffer[]): void {
+		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		offers.forEach((saleSession) => {
+			this.addSemanticPropertyReference("dfc-b:lists", saleSession, true);
+			this.connector.store(saleSession);
+		});
+	}
+
 	public getBeginDate(): string | undefined {
 		return this.getSemanticProperty("dfc-b:beginDate");
+	}
+
+	public removeOffer(offer: IOffer): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public getQuantity(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:quantity"));
+	}
+
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
+	}
+
+	public removeHostingPlace(hostingPlace: IPlace): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getHostingPlaces(options?: IGetterOptions): Promise<IPlace[]> {
+		const results = new Array<IPlace>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hostedAt");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IPlace>semanticObject);
+		}
+		return results;
 	}
 }

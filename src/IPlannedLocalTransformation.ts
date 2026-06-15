@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISKOSConcept from "./ISKOSConcept.js"
+import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
 import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js"
 import Ellapsable from "./Ellapsable.js"
-import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

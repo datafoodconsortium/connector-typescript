@@ -1,6 +1,6 @@
+import IPlace from "./IPlace.js";
 import ISaleSession from "./ISaleSession.js";
 import IOffer from "./IOffer.js";
-import IPlace from "./IPlace.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -18,19 +18,19 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
         hostingPlaces?: IPlace[];
         doNotStore?: boolean;
     });
-    getEndDate(): string | undefined;
-    removeOffer(offer: IOffer): void;
-    setBeginDate(beginDate: string): void;
-    addOffer(offer: IOffer): void;
-    setOffers(offers: IOffer[]): void;
     addHostingPlace(hostingPlace: IPlace): void;
-    getHostingPlaces(options?: IGetterOptions): Promise<IPlace[]>;
-    getQuantity(): number | undefined;
-    getOffers(options?: IGetterOptions): Promise<IOffer[]>;
-    removeHostingPlace(hostingPlace: IPlace): void;
-    setQuantity(quantity: number): void;
+    setBeginDate(beginDate: string): void;
     setEndDate(endDate: string): void;
+    addOffer(offer: IOffer): void;
+    setQuantity(quantity: number): void;
+    getOffers(options?: IGetterOptions): Promise<IOffer[]>;
     setHostingPlaces(hostingPlaces: IPlace[]): void;
+    setOffers(offers: IOffer[]): void;
     getBeginDate(): string | undefined;
+    removeOffer(offer: IOffer): void;
+    getQuantity(): number | undefined;
+    getEndDate(): string | undefined;
+    removeHostingPlace(hostingPlace: IPlace): void;
+    getHostingPlaces(options?: IGetterOptions): Promise<IPlace[]>;
 }
 //# sourceMappingURL=SaleSession.d.ts.map

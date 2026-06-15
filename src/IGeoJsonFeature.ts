@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IGeoJsonGeometry from "./IGeoJsonGeometry.js"
 import IGeoJsonProperties from "./IGeoJsonProperties.js"
+import IGeoJsonGeometry from "./IGeoJsonGeometry.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

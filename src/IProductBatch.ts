@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPhysicalProduct from "./IPhysicalProduct.js"
 import Nameable from "./Nameable.js"
 import Describable from "./Describable.js"
 import IRealStock from "./IRealStock.js"
+import IPhysicalProduct from "./IPhysicalProduct.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

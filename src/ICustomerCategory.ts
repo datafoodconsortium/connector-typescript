@@ -21,14 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Groupable from "./Groupable.js"
 import Nameable from "./Nameable.js"
+import Groupable from "./Groupable.js"
 import Describable from "./Describable.js"
 import IAgent from "./IAgent.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ICustomerCategory extends Semanticable, Groupable, Describable, Nameable {
+export default interface ICustomerCategory extends Semanticable, Groupable, Nameable, Describable {
 
 	addMember(member: IAgent): void;
 

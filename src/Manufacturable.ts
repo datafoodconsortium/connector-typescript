@@ -23,8 +23,8 @@
 */
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
 import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import ISKOSConcept from "./ISKOSConcept.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

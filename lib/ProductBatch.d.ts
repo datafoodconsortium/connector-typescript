@@ -1,6 +1,6 @@
+import IRealStock from "./IRealStock.js";
 import IPhysicalProduct from "./IPhysicalProduct.js";
 import IProductBatch from "./IProductBatch.js";
-import IRealStock from "./IRealStock.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -21,21 +21,21 @@ export default class ProductBatch extends SemanticObject implements IProductBatc
         productionDate?: string;
         doNotStore?: boolean;
     });
-    getBatchNumber(): string | undefined;
-    getExpirationDate(): string | undefined;
-    setExpirationDate(expirationDate: string): void;
+    getDescription(): string | undefined;
+    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
     getProductionDate(): string | undefined;
-    getName(): string | undefined;
+    getBestBeforeDate(): string | undefined;
+    getBatchNumber(): string | undefined;
     setBestBeforeDate(bestBeforeDate: string): void;
+    setBatchNumber(batchNumber: string): void;
+    getExpirationDate(): string | undefined;
+    getName(): string | undefined;
+    setDescription(description: string): void;
+    setName(name: string): void;
+    setRealStock(realStock: IRealStock): void;
+    setExpirationDate(expirationDate: string): void;
+    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
     getRealStock(options?: IGetterOptions): Promise<IRealStock | undefined>;
     setProductionDate(productionDate: string): void;
-    setName(name: string): void;
-    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
-    setBatchNumber(batchNumber: string): void;
-    getDescription(): string | undefined;
-    getBestBeforeDate(): string | undefined;
-    setDescription(description: string): void;
-    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
-    setRealStock(realStock: IRealStock): void;
 }
 //# sourceMappingURL=ProductBatch.d.ts.map

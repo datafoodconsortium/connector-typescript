@@ -1,5 +1,5 @@
-import ICatalogItem from "./ICatalogItem.js";
 import IOrganization from "./IOrganization.js";
+import ICatalogItem from "./ICatalogItem.js";
 export default interface Browsable {
     getMaintainers(): Promise<IOrganization[]>;
     getItems(): Promise<ICatalogItem[]>;

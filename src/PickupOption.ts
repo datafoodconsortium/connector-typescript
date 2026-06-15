@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISaleSession from "./ISaleSession.js"
-import IOrder from "./IOrder.js"
-import IPickupOption from "./IPickupOption.js"
-import IPhysicalPlace from "./IPhysicalPlace.js"
-import ShippingOption from "./ShippingOption.js"
 import IQuantity from "./IQuantity.js"
+import IPickupOption from "./IPickupOption.js"
+import ShippingOption from "./ShippingOption.js"
+import ISaleSession from "./ISaleSession.js"
+import IPhysicalPlace from "./IPhysicalPlace.js"
+import IOrder from "./IOrder.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -88,12 +88,6 @@ export default class PickupOption extends ShippingOption implements IPickupOptio
 		
 	}
 
-	public setPickedUpPlace(pickedUpPlace: IPhysicalPlace): void {
-		this.setSemanticPropertyReference("dfc-b:pickedUpAt", pickedUpPlace);
-		
-		this.connector.store(pickedUpPlace);
-	}
-
 	public async getPickedUpPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
 		let result: IPhysicalPlace | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:pickedUpAt");
@@ -102,5 +96,11 @@ export default class PickupOption extends ShippingOption implements IPickupOptio
 			if (semanticObject) result = <IPhysicalPlace> semanticObject;
 		}
 		return result;
+	}
+
+	public setPickedUpPlace(pickedUpPlace: IPhysicalPlace): void {
+		this.setSemanticPropertyReference("dfc-b:pickedUpAt", pickedUpPlace);
+		
+		this.connector.store(pickedUpPlace);
 	}
 }

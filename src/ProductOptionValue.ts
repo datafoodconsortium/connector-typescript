@@ -81,27 +81,27 @@ export default class ProductOptionValue extends SemanticObject implements IProdu
 		
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
+	public getDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:date");
 	}
 
 	public getName(): string | undefined {
 		return this.getSemanticProperty("dfc-b:name");
 	}
 
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
 	public setDescription(description: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
-	}
-
-	public getDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:date");
-	}
-
 	public setName(name: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
 	}
 }

@@ -79,18 +79,18 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 		
 	}
 
-	public setVatRate(vatRate: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:VATrate", vatRate);
+	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasUnit");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
 	}
 
 	public getQuantityValue(): number | undefined {
 		return Number(this.getSemanticProperty("dfc-b:value"));
-	}
-
-	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
-		
-		this.connector.store(quantityUnit);
 	}
 
 	public getVatRate(): number | undefined {
@@ -101,13 +101,13 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
 		this.setSemanticPropertyLiteral("dfc-b:value", quantityValue);
 	}
 
-	public async getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
-		let result: ISKOSConcept | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasUnit");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISKOSConcept> semanticObject;
-		}
-		return result;
+	public setVatRate(vatRate: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:VATrate", vatRate);
+	}
+
+	public setQuantityUnit(quantityUnit: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasUnit", quantityUnit);
+		
+		this.connector.store(quantityUnit);
 	}
 }

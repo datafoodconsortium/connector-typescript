@@ -1,5 +1,5 @@
-import IDefinedProduct from "./IDefinedProduct.js";
 import ILocalizedProduct from "./ILocalizedProduct.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 export default interface ISuppliedProduct extends IDefinedProduct {
     getLocalizedProducts(): Promise<ILocalizedProduct[]>;
     addLocalizedProduct(localizedProduct: ILocalizedProduct): void;

@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalogItem from "./ICatalogItem.js"
 import ICatalog from "./ICatalog.js"
 import IOrganization from "./IOrganization.js"
+import ICatalogItem from "./ICatalogItem.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -88,24 +88,6 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		
 	}
 
-	public setItems(items: ICatalogItem[]): void {
-		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		items.forEach((catalog) => {
-			this.addSemanticPropertyReference("dfc-b:lists", catalog, true);
-			this.connector.store(catalog);
-		});
-	}
-
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
-	}
-
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
-	}
-
 	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
 		const results = new Array<ICatalogItem>();
 		const properties = this.getSemanticPropertyAll("dfc-b:lists");
@@ -116,18 +98,22 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		return results;
 	}
 
-	public addItem(item: ICatalogItem): void {
-		if (item.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:lists", item);
-		}
-		else {
-			this.connector.store(item);
-			this.addSemanticPropertyReference("dfc-b:lists", item);
-		}
+	public setItems(items: ICatalogItem[]): void {
+		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		items.forEach((catalog) => {
+			this.addSemanticPropertyReference("dfc-b:lists", catalog, true);
+			this.connector.store(catalog);
+		});
 	}
 
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	public removeItem(item: ICatalogItem): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
 	}
 
 	public addMaintainer(maintainer: IOrganization): void {
@@ -140,6 +126,10 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		}
 	}
 
+	public removeMaintainer(maintainer: IOrganization): void {
+		throw new Error("Not yet implemented.");
+	}
+
 	public async getMaintainers(options?: IGetterOptions): Promise<IOrganization[]> {
 		const results = new Array<IOrganization>();
 		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
@@ -148,14 +138,6 @@ export default class Catalog extends SemanticObject implements ICatalog {
 			if (semanticObject) results.push(<IOrganization>semanticObject);
 		}
 		return results;
-	}
-
-	public getBeginDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:beginDate");
-	}
-
-	public removeItem(item: ICatalogItem): void {
-		throw new Error("Not yet implemented.");
 	}
 
 	public setMaintainers(maintainers: IOrganization[]): void {
@@ -168,7 +150,25 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		});
 	}
 
-	public removeMaintainer(maintainer: IOrganization): void {
-		throw new Error("Not yet implemented.");
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:beginDate");
+	}
+
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	}
+
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
+	}
+
+	public addItem(item: ICatalogItem): void {
+		if (item.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:lists", item);
+		}
+		else {
+			this.connector.store(item);
+			this.addSemanticPropertyReference("dfc-b:lists", item);
+		}
 	}
 }

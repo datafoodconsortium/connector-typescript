@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Datable from "./Datable.js"
 import Nameable from "./Nameable.js"
-import IProductOptionValue from "./IProductOptionValue.js"
 import Describable from "./Describable.js"
+import IProductOptionValue from "./IProductOptionValue.js"
+import Datable from "./Datable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

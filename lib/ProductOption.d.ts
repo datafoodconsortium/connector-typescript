@@ -16,15 +16,15 @@ export default class ProductOption extends SemanticObject implements IProductOpt
         referenceProductionOptionValue?: IProductOptionValue[];
         doNotStore?: boolean;
     });
-    addReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void;
-    getDescription(): string | undefined;
-    getName(): string | undefined;
-    getReferenceProductionOptionValue(options?: IGetterOptions): Promise<IProductOptionValue[]>;
-    setDescription(description: string): void;
-    setDate(date: string): void;
     getDate(): string | undefined;
+    getName(): string | undefined;
+    getDescription(): string | undefined;
+    setDescription(description: string): void;
+    addReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void;
     setName(name: string): void;
     removeReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void;
+    setDate(date: string): void;
     setReferenceProductionOptionValue(productOptionValues: IProductOptionValue[]): void;
+    getReferenceProductionOptionValue(options?: IGetterOptions): Promise<IProductOptionValue[]>;
 }
 //# sourceMappingURL=ProductOption.d.ts.map

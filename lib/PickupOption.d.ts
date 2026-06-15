@@ -1,9 +1,9 @@
-import ISaleSession from "./ISaleSession.js";
-import IOrder from "./IOrder.js";
-import IPickupOption from "./IPickupOption.js";
-import IPhysicalPlace from "./IPhysicalPlace.js";
-import ShippingOption from "./ShippingOption.js";
 import IQuantity from "./IQuantity.js";
+import IPickupOption from "./IPickupOption.js";
+import ShippingOption from "./ShippingOption.js";
+import ISaleSession from "./ISaleSession.js";
+import IPhysicalPlace from "./IPhysicalPlace.js";
+import IOrder from "./IOrder.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -23,7 +23,7 @@ export default class PickupOption extends ShippingOption implements IPickupOptio
         endDate?: string;
         doNotStore?: boolean;
     });
-    setPickedUpPlace(pickedUpPlace: IPhysicalPlace): void;
     getPickedUpPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
+    setPickedUpPlace(pickedUpPlace: IPhysicalPlace): void;
 }
 //# sourceMappingURL=PickupOption.d.ts.map

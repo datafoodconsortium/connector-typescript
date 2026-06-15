@@ -1,7 +1,7 @@
-import IOffer from "./IOffer.js";
-import ICatalogItem from "./ICatalogItem.js";
 import IPrice from "./IPrice.js";
+import IOffer from "./IOffer.js";
 import ICustomerCategory from "./ICustomerCategory.js";
+import ICatalogItem from "./ICatalogItem.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -18,13 +18,13 @@ export default class Offer extends SemanticObject implements IOffer {
         stockLimitation?: number;
         doNotStore?: boolean;
     });
-    setCustomerCategory(customerCategory: ICustomerCategory): void;
     setPrice(price: IPrice): void;
+    setCustomerCategory(customerCategory: ICustomerCategory): void;
+    getStockLimitation(): number | undefined;
+    setStockLimitation(stockLimitation: number): void;
     getPrice(): IPrice | undefined;
     getCustomerCategory(options?: IGetterOptions): Promise<ICustomerCategory | undefined>;
-    getOfferedItem(options?: IGetterOptions): Promise<ICatalogItem | undefined>;
-    setStockLimitation(stockLimitation: number): void;
-    getStockLimitation(): number | undefined;
     setOfferedItem(offeredItem: ICatalogItem): void;
+    getOfferedItem(options?: IGetterOptions): Promise<ICatalogItem | undefined>;
 }
 //# sourceMappingURL=Offer.d.ts.map

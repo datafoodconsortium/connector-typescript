@@ -1,14 +1,14 @@
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import ICatalogItem from "./ICatalogItem.js";
-import ISKOSConcept from "./ISKOSConcept.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import IVariant from "./IVariant.js";
+import IQuantity from "./IQuantity.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import DefinedProduct from "./DefinedProduct.js";
-import IDefinedProduct from "./IDefinedProduct.js";
 import IProductOption from "./IProductOption.js";
 import IVariantCharacteristic from "./IVariantCharacteristic.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import IQuantity from "./IQuantity.js";
+import IDefinedProduct from "./IDefinedProduct.js";
+import ICatalogItem from "./ICatalogItem.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -41,12 +41,12 @@ export default class Variant extends DefinedProduct implements IVariant {
         doNotStore?: boolean;
     });
     removeIsVariantOf(product: IDefinedProduct): void;
-    setVariantCharacteristics(variantCharacteristics: IVariantCharacteristic[]): void;
-    removeVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
     getVariantCharacteristics(options?: IGetterOptions): Promise<IVariantCharacteristic[]>;
-    setIsVariantOf(products: IDefinedProduct[]): void;
     isVariantOf(options?: IGetterOptions): Promise<IDefinedProduct[]>;
-    addIsVariantOf(product: IDefinedProduct): void;
+    removeVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
+    setVariantCharacteristics(variantCharacteristics: IVariantCharacteristic[]): void;
+    setIsVariantOf(products: IDefinedProduct[]): void;
     addVariantCharacteristic(variantCharacteristic: IVariantCharacteristic): void;
+    addIsVariantOf(product: IDefinedProduct): void;
 }
 //# sourceMappingURL=Variant.d.ts.map

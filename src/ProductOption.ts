@@ -87,6 +87,22 @@ export default class ProductOption extends SemanticObject implements IProductOpt
 		
 	}
 
+	public getDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:date");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
 	public addReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void {
 		if (productOptionValue.isSemanticObjectAnonymous()) {
 			this.addSemanticPropertyAnonymous("dfc-b:hasReferenceProductOptionValue", productOptionValue);
@@ -97,42 +113,16 @@ export default class ProductOption extends SemanticObject implements IProductOpt
 		}
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
-	public async getReferenceProductionOptionValue(options?: IGetterOptions): Promise<IProductOptionValue[]> {
-		const results = new Array<IProductOptionValue>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasReferenceProductOptionValue");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IProductOptionValue>semanticObject);
-		}
-		return results;
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
-	}
-
-	public getDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:date");
-	}
-
 	public setName(name: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
 	public removeReferenceProductionOptionValue(productOptionValue: IProductOptionValue): void {
 		throw new Error("Not yet implemented.");
+	}
+
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
 	}
 
 	public setReferenceProductionOptionValue(productOptionValues: IProductOptionValue[]): void {
@@ -143,5 +133,15 @@ export default class ProductOption extends SemanticObject implements IProductOpt
 			this.addSemanticPropertyReference("dfc-b:hasReferenceProductOptionValue", productOption, true);
 			this.connector.store(productOption);
 		});
+	}
+
+	public async getReferenceProductionOptionValue(options?: IGetterOptions): Promise<IProductOptionValue[]> {
+		const results = new Array<IProductOptionValue>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasReferenceProductOptionValue");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IProductOptionValue>semanticObject);
+		}
+		return results;
 	}
 }

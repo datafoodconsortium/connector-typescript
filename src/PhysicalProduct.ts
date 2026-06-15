@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPhysicalProduct from "./IPhysicalProduct.js"
-import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
-import IProductBatch from "./IProductBatch.js"
 import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
-import ILocalizedProduct from "./ILocalizedProduct.js"
+import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import IRealStock from "./IRealStock.js"
 import IQuantity from "./IQuantity.js"
+import IPhysicalProduct from "./IPhysicalProduct.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
+import IProductBatch from "./IProductBatch.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -117,73 +117,12 @@ export default class PhysicalProduct extends SemanticObject implements IPhysical
 		
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public removeProductBatch(productBatch: IProductBatch): void {
+		throw new Error("Not yet implemented.");
 	}
 
-	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {
-		const results = new Array<ILocalizedProduct>();
-		const properties = this.getSemanticPropertyAll("dfc-b:represents");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ILocalizedProduct>semanticObject);
-		}
-		return results;
-	}
-
-	public setRealStocks(realStock: IRealStock[]): void {
-		this.getSemanticPropertyAll("dfc-b:constituedBy").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		realStock.forEach((physicalProduct) => {
-			this.addSemanticPropertyReference("dfc-b:constituedBy", physicalProduct, true);
-			this.connector.store(physicalProduct);
-		});
-	}
-
-	public async getProductBatches(options?: IGetterOptions): Promise<IProductBatch[]> {
-		const results = new Array<IProductBatch>();
-		const properties = this.getSemanticPropertyAll("dfc-b:tracedBy");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IProductBatch>semanticObject);
-		}
-		return results;
-	}
-
-	public async getRealizedProductionFlows(options?: IGetterOptions): Promise<IRealizedProductionFlow[]> {
-		const results = new Array<IRealizedProductionFlow>();
-		const properties = this.getSemanticPropertyAll("dfc-b:producedBy");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IRealizedProductionFlow>semanticObject);
-		}
-		return results;
-	}
-
-	public getQuantity(): IQuantity | undefined {
-		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasQuantity");
-		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
-	}
-
-	public addRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void {
-		if (realizedProductionFlow.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:producedBy", realizedProductionFlow);
-		}
-		else {
-			this.connector.store(realizedProductionFlow);
-			this.addSemanticPropertyReference("dfc-b:producedBy", realizedProductionFlow);
-		}
-	}
-
-	public addRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
-		if (realizedConsumptionFlow.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:consumedBy", realizedConsumptionFlow);
-		}
-		else {
-			this.connector.store(realizedConsumptionFlow);
-			this.addSemanticPropertyReference("dfc-b:consumedBy", realizedConsumptionFlow);
-		}
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
 	}
 
 	public addRealStock(realStock: IRealStock): void {
@@ -196,24 +135,14 @@ export default class PhysicalProduct extends SemanticObject implements IPhysical
 		}
 	}
 
-	public removeRealStock(realStock: IRealStock): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public addImage(image: string): void {
-		this.addSemanticPropertyLiteral("dfc-b:image", image);
-	}
-
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public removeProductBatch(productBatch: IProductBatch): void {
-		throw new Error("Not yet implemented.");
+	public addLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		if (localizedProduct.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:represents", localizedProduct);
+		}
+		else {
+			this.connector.store(localizedProduct);
+			this.addSemanticPropertyReference("dfc-b:represents", localizedProduct);
+		}
 	}
 
 	public addProductBatch(productBatch: IProductBatch): void {
@@ -226,42 +155,46 @@ export default class PhysicalProduct extends SemanticObject implements IPhysical
 		}
 	}
 
-	public setRealizedConsumptionFlows(realizedConsumptionFlows: IRealizedConsumptionFlow[]): void {
-		this.getSemanticPropertyAll("dfc-b:consumedBy").forEach((prop) => {
+	public async getRealizedProductionFlows(options?: IGetterOptions): Promise<IRealizedProductionFlow[]> {
+		const results = new Array<IRealizedProductionFlow>();
+		const properties = this.getSemanticPropertyAll("dfc-b:producedBy");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IRealizedProductionFlow>semanticObject);
+		}
+		return results;
+	}
+
+	public removeRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setQuantity(quantity: IQuantity): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+		
+	}
+
+	public setRealStocks(realStock: IRealStock[]): void {
+		this.getSemanticPropertyAll("dfc-b:constituedBy").forEach((prop) => {
 			this.connector.removeFromStore(prop);
 		});
-		realizedConsumptionFlows.forEach((physicalProduct) => {
-			this.addSemanticPropertyReference("dfc-b:consumedBy", physicalProduct, true);
+		realStock.forEach((physicalProduct) => {
+			this.addSemanticPropertyReference("dfc-b:constituedBy", physicalProduct, true);
 			this.connector.store(physicalProduct);
 		});
 	}
 
-	public addLocalizedProduct(localizedProduct: ILocalizedProduct): void {
-		if (localizedProduct.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:represents", localizedProduct);
-		}
-		else {
-			this.connector.store(localizedProduct);
-			this.addSemanticPropertyReference("dfc-b:represents", localizedProduct);
-		}
+	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		throw new Error("Not yet implemented.");
 	}
 
-	public removeImage(image: string): void {
-		throw new Error("Not yet implemented.");
+	public getQuantity(): IQuantity | undefined {
+		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasQuantity");
+		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 
 	public setImages(image: string[]): void {
 		this.setSemanticPropertyLiteralAll("dfc-b:image", image);
-	}
-
-	public setProductBatches(productBatches: IProductBatch[]): void {
-		this.getSemanticPropertyAll("dfc-b:tracedBy").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		productBatches.forEach((physicalProduct) => {
-			this.addSemanticPropertyReference("dfc-b:tracedBy", physicalProduct, true);
-			this.connector.store(physicalProduct);
-		});
 	}
 
 	public async getRealizedConsumptionFlows(options?: IGetterOptions): Promise<IRealizedConsumptionFlow[]> {
@@ -274,33 +207,6 @@ export default class PhysicalProduct extends SemanticObject implements IPhysical
 		return results;
 	}
 
-	public setQuantity(quantity: IQuantity): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
-		
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public removeRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void {
-		this.getSemanticPropertyAll("dfc-b:represents").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		localizedProducts.forEach((physicalProduct) => {
-			this.addSemanticPropertyReference("dfc-b:represents", physicalProduct, true);
-			this.connector.store(physicalProduct);
-		});
-	}
-
-	public getImages(): string[] {
-		return this.getSemanticPropertyAll("dfc-b:image");
-	}
-
 	public setRealizedProductionFlows(realizedProductionFlows: IRealizedProductionFlow[]): void {
 		this.getSemanticPropertyAll("dfc-b:producedBy").forEach((prop) => {
 			this.connector.removeFromStore(prop);
@@ -309,6 +215,20 @@ export default class PhysicalProduct extends SemanticObject implements IPhysical
 			this.addSemanticPropertyReference("dfc-b:producedBy", physicalProduct, true);
 			this.connector.store(physicalProduct);
 		});
+	}
+
+	public async getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]> {
+		const results = new Array<ILocalizedProduct>();
+		const properties = this.getSemanticPropertyAll("dfc-b:represents");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ILocalizedProduct>semanticObject);
+		}
+		return results;
+	}
+
+	public removeImage(image: string): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public async getRealStocks(options?: IGetterOptions): Promise<IRealStock[]> {
@@ -321,11 +241,91 @@ export default class PhysicalProduct extends SemanticObject implements IPhysical
 		return results;
 	}
 
-	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+	public setRealizedConsumptionFlows(realizedConsumptionFlows: IRealizedConsumptionFlow[]): void {
+		this.getSemanticPropertyAll("dfc-b:consumedBy").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		realizedConsumptionFlows.forEach((physicalProduct) => {
+			this.addSemanticPropertyReference("dfc-b:consumedBy", physicalProduct, true);
+			this.connector.store(physicalProduct);
+		});
+	}
+
+	public getImages(): string[] {
+		return this.getSemanticPropertyAll("dfc-b:image");
+	}
+
+	public setProductBatches(productBatches: IProductBatch[]): void {
+		this.getSemanticPropertyAll("dfc-b:tracedBy").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		productBatches.forEach((physicalProduct) => {
+			this.addSemanticPropertyReference("dfc-b:tracedBy", physicalProduct, true);
+			this.connector.store(physicalProduct);
+		});
+	}
+
+	public addImage(image: string): void {
+		this.addSemanticPropertyLiteral("dfc-b:image", image);
+	}
+
+	public setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void {
+		this.getSemanticPropertyAll("dfc-b:represents").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		localizedProducts.forEach((physicalProduct) => {
+			this.addSemanticPropertyReference("dfc-b:represents", physicalProduct, true);
+			this.connector.store(physicalProduct);
+		});
+	}
+
+	public addRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void {
+		if (realizedProductionFlow.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:producedBy", realizedProductionFlow);
+		}
+		else {
+			this.connector.store(realizedProductionFlow);
+			this.addSemanticPropertyReference("dfc-b:producedBy", realizedProductionFlow);
+		}
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public removeRealStock(realStock: IRealStock): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public removeRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void {
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public removeRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
 		throw new Error("Not yet implemented.");
+	}
+
+	public addRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
+		if (realizedConsumptionFlow.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:consumedBy", realizedConsumptionFlow);
+		}
+		else {
+			this.connector.store(realizedConsumptionFlow);
+			this.addSemanticPropertyReference("dfc-b:consumedBy", realizedConsumptionFlow);
+		}
+	}
+
+	public async getProductBatches(options?: IGetterOptions): Promise<IProductBatch[]> {
+		const results = new Array<IProductBatch>();
+		const properties = this.getSemanticPropertyAll("dfc-b:tracedBy");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IProductBatch>semanticObject);
+		}
+		return results;
 	}
 }

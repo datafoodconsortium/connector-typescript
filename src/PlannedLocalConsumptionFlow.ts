@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Flow from "./Flow.js"
-import ILocalizedProduct from "./ILocalizedProduct.js"
-import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js"
 import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
-import IPlannedLocalFlow from "./IPlannedLocalFlow.js"
+import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js"
+import Flow from "./Flow.js"
 import IQuantity from "./IQuantity.js"
+import IPlannedLocalFlow from "./IPlannedLocalFlow.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -34,7 +34,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const PLANNED_LOCAL_CONSUMPTION_FLOW_SEM_TYPE: string = "dfc-b:AsPlannedLocalConsumptionFlow";
 
-export default class PlannedLocalConsumptionFlow extends Flow implements IPlannedLocalConsumptionFlow, IPlannedLocalFlow {
+export default class PlannedLocalConsumptionFlow extends Flow implements IPlannedLocalFlow, IPlannedLocalConsumptionFlow {
 
 	public constructor(parameters: {
 		connector: IConnector,
@@ -79,12 +79,12 @@ export default class PlannedLocalConsumptionFlow extends Flow implements IPlanne
 		
 	}
 
-	public async getPlannedLocalTransformation(options?: IGetterOptions): Promise<IPlannedLocalTransformation | undefined> {
-		let result: IPlannedLocalTransformation | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
+	public async getConsumedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined> {
+		let result: ILocalizedProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:consumes");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPlannedLocalTransformation> semanticObject;
+			if (semanticObject) result = <ILocalizedProduct> semanticObject;
 		}
 		return result;
 	}
@@ -95,12 +95,12 @@ export default class PlannedLocalConsumptionFlow extends Flow implements IPlanne
 		this.connector.store(consumedProduct);
 	}
 
-	public async getConsumedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined> {
-		let result: ILocalizedProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:consumes");
+	public async getPlannedLocalTransformation(options?: IGetterOptions): Promise<IPlannedLocalTransformation | undefined> {
+		let result: IPlannedLocalTransformation | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ILocalizedProduct> semanticObject;
+			if (semanticObject) result = <IPlannedLocalTransformation> semanticObject;
 		}
 		return result;
 	}

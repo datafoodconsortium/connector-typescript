@@ -13,11 +13,11 @@ export default class ProductOptionValue extends SemanticObject implements IProdu
         date?: string;
         doNotStore?: boolean;
     });
-    getDescription(): string | undefined;
-    getName(): string | undefined;
-    setDescription(description: string): void;
-    setDate(date: string): void;
     getDate(): string | undefined;
+    getName(): string | undefined;
+    getDescription(): string | undefined;
+    setDescription(description: string): void;
     setName(name: string): void;
+    setDate(date: string): void;
 }
 //# sourceMappingURL=ProductOptionValue.d.ts.map

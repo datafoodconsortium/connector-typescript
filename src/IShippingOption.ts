@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IOrder from "./IOrder.js"
-import ISaleSession from "./ISaleSession.js"
 import Nameable from "./Nameable.js"
 import Describable from "./Describable.js"
-import Ellapsable from "./Ellapsable.js"
 import IQuantity from "./IQuantity.js"
+import Ellapsable from "./Ellapsable.js"
+import ISaleSession from "./ISaleSession.js"
+import IOrder from "./IOrder.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

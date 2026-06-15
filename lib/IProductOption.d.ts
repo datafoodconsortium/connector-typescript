@@ -1,7 +1,7 @@
-import Datable from "./Datable.js";
 import Nameable from "./Nameable.js";
-import IProductOptionValue from "./IProductOptionValue.js";
 import Describable from "./Describable.js";
+import IProductOptionValue from "./IProductOptionValue.js";
+import Datable from "./Datable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IProductOption extends Semanticable, Describable, Datable, Nameable {
     getReferenceProductionOptionValue(): Promise<IProductOptionValue[]>;

@@ -1,7 +1,7 @@
-import IPhysicalProduct from "./IPhysicalProduct.js";
 import Nameable from "./Nameable.js";
 import Describable from "./Describable.js";
 import IRealStock from "./IRealStock.js";
+import IPhysicalProduct from "./IPhysicalProduct.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IProductBatch extends Semanticable, Nameable, Describable {
     getBatchNumber(): string | undefined;

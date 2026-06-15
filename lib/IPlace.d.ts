@@ -1,6 +1,6 @@
-import ISaleSession from "./ISaleSession.js";
 import Nameable from "./Nameable.js";
 import Describable from "./Describable.js";
+import ISaleSession from "./ISaleSession.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IPlace extends Semanticable, Describable, Nameable {
     getHostedSaleSessions(): Promise<ISaleSession[]>;

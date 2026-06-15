@@ -1,5 +1,5 @@
-import ISKOSConcept from "./ISKOSConcept.js";
 import IAddress from "./IAddress.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -19,19 +19,19 @@ export default class Address extends SemanticObject implements IAddress {
         region?: string;
         doNotStore?: boolean;
     });
-    setStreet(street: string): void;
     getCity(): string | undefined;
+    setPostalCode(postalCode: string): void;
+    setLatitude(latitude: number): void;
     getLongitude(): number | undefined;
+    getStreet(): string | undefined;
+    getLatitude(): number | undefined;
+    getRegion(): string | undefined;
+    setCountry(country: ISKOSConcept): void;
+    setStreet(street: string): void;
+    setCity(city: string): void;
+    getCountry(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    getPostalCode(): string | undefined;
     setRegion(region: string): void;
     setLongitude(longitude: number): void;
-    setLatitude(latitude: number): void;
-    getStreet(): string | undefined;
-    getRegion(): string | undefined;
-    getLatitude(): number | undefined;
-    setCountry(country: ISKOSConcept): void;
-    setCity(city: string): void;
-    getPostalCode(): string | undefined;
-    setPostalCode(postalCode: string): void;
-    getCountry(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
 }
 //# sourceMappingURL=Address.d.ts.map

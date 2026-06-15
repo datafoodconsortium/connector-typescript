@@ -1,9 +1,9 @@
-import IOrder from "./IOrder.js";
-import ISaleSession from "./ISaleSession.js";
 import Nameable from "./Nameable.js";
 import Describable from "./Describable.js";
-import Ellapsable from "./Ellapsable.js";
 import IQuantity from "./IQuantity.js";
+import Ellapsable from "./Ellapsable.js";
+import ISaleSession from "./ISaleSession.js";
+import IOrder from "./IOrder.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IShippingOption extends Semanticable, Nameable, Describable, Ellapsable {
     getFee(): number | undefined;

@@ -1,5 +1,5 @@
-import IPhysicalProduct from "./IPhysicalProduct.js";
 import IStock from "./IStock.js";
+import IPhysicalProduct from "./IPhysicalProduct.js";
 import IProductBatch from "./IProductBatch.js";
 export default interface IRealStock extends IStock {
     getPhysicalProduct(): Promise<IPhysicalProduct | undefined>;

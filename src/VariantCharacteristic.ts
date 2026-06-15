@@ -93,6 +93,14 @@ export default class VariantCharacteristic extends SemanticObject implements IVa
 		
 	}
 
+	public getDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:date");
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
 	public async getProductOption(options?: IGetterOptions): Promise<IProductOption | undefined> {
 		let result: IProductOption | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:hasProductOption");
@@ -107,30 +115,8 @@ export default class VariantCharacteristic extends SemanticObject implements IVa
 		return this.getSemanticProperty("dfc-b:description");
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
 	public setDescription(description: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
-	}
-
-	public getDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:date");
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
-	}
-
-	public setProductOption(productOption: IProductOption): void {
-		this.setSemanticPropertyReference("dfc-b:hasProductOption", productOption);
-		
-		this.connector.store(productOption);
 	}
 
 	public async getProductOptionValue(options?: IGetterOptions): Promise<IProductOptionValue | undefined> {
@@ -141,6 +127,20 @@ export default class VariantCharacteristic extends SemanticObject implements IVa
 			if (semanticObject) result = <IProductOptionValue> semanticObject;
 		}
 		return result;
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
+	}
+
+	public setProductOption(productOption: IProductOption): void {
+		this.setSemanticPropertyReference("dfc-b:hasProductOption", productOption);
+		
+		this.connector.store(productOption);
 	}
 
 	public setProductOptionValue(productOptionValue: IProductOptionValue): void {

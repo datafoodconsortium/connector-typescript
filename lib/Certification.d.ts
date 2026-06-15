@@ -1,5 +1,5 @@
-import IOrganization from "./IOrganization.js";
 import ICertification from "./ICertification.js";
+import IOrganization from "./IOrganization.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -18,25 +18,25 @@ export default class Certification extends SemanticObject implements ICertificat
         description?: string;
         doNotStore?: boolean;
     });
-    addCertificationScore(certificationReference: string): void;
-    getName(): string | undefined;
-    getCertificationReferences(): string[];
-    setName(name: string): void;
-    removeCertificationReference(certificationReference: string): void;
-    getCertificationScores(): string[];
-    removeCertifiedOrganization(certifiedOrganization: IOrganization): void;
-    addOperatorId(operatorId: string): void;
-    addCertifiedOrganization(certifiedOrganization: IOrganization): void;
     getDescription(): string | undefined;
-    setCertificationScores(certificationReferences: string[]): void;
-    setDescription(description: string): void;
-    setCertifiedOrganizations(certifiedOrganizations: IOrganization[]): void;
+    setOperatorIds(operatorIds: string[]): void;
+    getCertificationReferences(): string[];
     setCertificationReferences(certificationReferences: string[]): void;
+    setCertificationScores(certificationReferences: string[]): void;
     getOpereratorIds(): string[];
-    removeCertificationScore(certificationReference: string): void;
-    removeOperatorId(operatorId: string): void;
     addCertificationReference(certificationReference: string): void;
     getCertifiedOrganizations(options?: IGetterOptions): Promise<IOrganization[]>;
-    setOperatorIds(operatorIds: string[]): void;
+    removeOperatorId(operatorId: string): void;
+    getName(): string | undefined;
+    getCertificationScores(): string[];
+    setDescription(description: string): void;
+    removeCertifiedOrganization(certifiedOrganization: IOrganization): void;
+    setName(name: string): void;
+    removeCertificationReference(certificationReference: string): void;
+    addCertificationScore(certificationReference: string): void;
+    removeCertificationScore(certificationReference: string): void;
+    addCertifiedOrganization(certifiedOrganization: IOrganization): void;
+    setCertifiedOrganizations(certifiedOrganizations: IOrganization[]): void;
+    addOperatorId(operatorId: string): void;
 }
 //# sourceMappingURL=Certification.d.ts.map

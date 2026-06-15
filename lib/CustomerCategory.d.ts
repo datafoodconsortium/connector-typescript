@@ -1,5 +1,5 @@
-import ICustomerCategory from "./ICustomerCategory.js";
 import IAgent from "./IAgent.js";
+import ICustomerCategory from "./ICustomerCategory.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -15,13 +15,13 @@ export default class CustomerCategory extends SemanticObject implements ICustome
         members?: IAgent[];
         doNotStore?: boolean;
     });
-    getDescription(): string | undefined;
-    getName(): string | undefined;
-    setDescription(description: string): void;
-    addMember(member: IAgent): void;
-    setName(name: string): void;
     setMembers(members: IAgent[]): void;
-    removeMember(member: IAgent): void;
+    getName(): string | undefined;
+    getDescription(): string | undefined;
+    setDescription(description: string): void;
+    setName(name: string): void;
     getMembers(options?: IGetterOptions): Promise<IAgent[]>;
+    removeMember(member: IAgent): void;
+    addMember(member: IAgent): void;
 }
 //# sourceMappingURL=CustomerCategory.d.ts.map

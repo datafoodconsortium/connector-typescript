@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IRoute from "./IRoute.js"
-import IShipment from "./IShipment.js"
 import IStep from "./IStep.js"
+import IShipment from "./IShipment.js"
+import IRoute from "./IRoute.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -95,52 +95,12 @@ export default abstract class Step extends SemanticObject implements IStep {
 		
 	}
 
-	public async getPickedUpShipments(options?: IGetterOptions): Promise<IShipment[]> {
-		const results = new Array<IShipment>();
-		const properties = this.getSemanticPropertyAll("dfc-b:pickUp");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IShipment>semanticObject);
-		}
-		return results;
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
 	}
 
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
-	}
-
-	public addPickedUpShipment(pickedUpShipment: IShipment): void {
-		if (pickedUpShipment.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:pickUp", pickedUpShipment);
-		}
-		else {
-			this.connector.store(pickedUpShipment);
-			this.addSemanticPropertyReference("dfc-b:pickUp", pickedUpShipment);
-		}
-	}
-
-	public async getRoutes(options?: IGetterOptions): Promise<IRoute[]> {
-		const results = new Array<IRoute>();
-		const properties = this.getSemanticPropertyAll("dfc-b:isStepOf");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IRoute>semanticObject);
-		}
-		return results;
-	}
-
-	public addDeliveredShipment(deliveredShipment: IShipment): void {
-		if (deliveredShipment.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:delivery", deliveredShipment);
-		}
-		else {
-			this.connector.store(deliveredShipment);
-			this.addSemanticPropertyReference("dfc-b:delivery", deliveredShipment);
-		}
-	}
-
-	public setName(name: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	public setDuration(duration: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:duration", duration);
 	}
 
 	public addRoute(route: IRoute): void {
@@ -153,8 +113,24 @@ export default abstract class Step extends SemanticObject implements IStep {
 		}
 	}
 
-	public getArrivalDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:arrivalDate");
+	public setDeliveredShipments(deliveredShipments: IShipment[]): void {
+		this.getSemanticPropertyAll("dfc-b:delivery").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		deliveredShipments.forEach((step) => {
+			this.addSemanticPropertyReference("dfc-b:delivery", step, true);
+			this.connector.store(step);
+		});
+	}
+
+	public async getPickedUpShipments(options?: IGetterOptions): Promise<IShipment[]> {
+		const results = new Array<IShipment>();
+		const properties = this.getSemanticPropertyAll("dfc-b:pickUp");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IShipment>semanticObject);
+		}
+		return results;
 	}
 
 	public setPickedUpShipments(pickedUpShipments: IShipment[]): void {
@@ -167,22 +143,62 @@ export default abstract class Step extends SemanticObject implements IStep {
 		});
 	}
 
-	public setDuration(duration: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:duration", duration);
+	public removeRoute(route: IRoute): void {
+		throw new Error("Not yet implemented.");
 	}
 
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
+	public addDeliveredShipment(deliveredShipment: IShipment): void {
+		if (deliveredShipment.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:delivery", deliveredShipment);
+		}
+		else {
+			this.connector.store(deliveredShipment);
+			this.addSemanticPropertyReference("dfc-b:delivery", deliveredShipment);
+		}
 	}
 
-	public setDeliveredShipments(deliveredShipments: IShipment[]): void {
-		this.getSemanticPropertyAll("dfc-b:delivery").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		deliveredShipments.forEach((step) => {
-			this.addSemanticPropertyReference("dfc-b:delivery", step, true);
-			this.connector.store(step);
-		});
+	public addPickedUpShipment(pickedUpShipment: IShipment): void {
+		if (pickedUpShipment.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:pickUp", pickedUpShipment);
+		}
+		else {
+			this.connector.store(pickedUpShipment);
+			this.addSemanticPropertyReference("dfc-b:pickUp", pickedUpShipment);
+		}
+	}
+
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
+	public removePickedUpShipment(pickedUpShipment: IShipment): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	}
+
+	public setArrivalDate(arrivalDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:arrivalDate", arrivalDate);
+	}
+
+	public setName(name: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public async getRoutes(options?: IGetterOptions): Promise<IRoute[]> {
+		const results = new Array<IRoute>();
+		const properties = this.getSemanticPropertyAll("dfc-b:isStepOf");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IRoute>semanticObject);
+		}
+		return results;
+	}
+
+	public getDuration(): string | undefined {
+		return this.getSemanticProperty("dfc-b:duration");
 	}
 
 	public async getDeliveredShipments(options?: IGetterOptions): Promise<IShipment[]> {
@@ -199,16 +215,8 @@ export default abstract class Step extends SemanticObject implements IStep {
 		throw new Error("Not yet implemented.");
 	}
 
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
-	}
-
-	public removePickedUpShipment(pickedUpShipment: IShipment): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public getDuration(): string | undefined {
-		return this.getSemanticProperty("dfc-b:duration");
+	public getArrivalDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:arrivalDate");
 	}
 
 	public setRoutes(routes: IRoute[]): void {
@@ -219,13 +227,5 @@ export default abstract class Step extends SemanticObject implements IStep {
 			this.addSemanticPropertyReference("dfc-b:isStepOf", step, true);
 			this.connector.store(step);
 		});
-	}
-
-	public removeRoute(route: IRoute): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setArrivalDate(arrivalDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:arrivalDate", arrivalDate);
 	}
 }

@@ -27,7 +27,7 @@ import Payable from "./Payable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IPaymentMethod extends Semanticable, Describable, Payable, Nameable {
+export default interface IPaymentMethod extends Semanticable, Payable, Nameable, Describable {
 
 	getProvider(): string | undefined;
 

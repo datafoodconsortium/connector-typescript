@@ -1,8 +1,8 @@
-import IPhysicalProduct from "./IPhysicalProduct.js";
-import IProductBatch from "./IProductBatch.js";
-import IPhysicalPlace from "./IPhysicalPlace.js";
 import IRealStock from "./IRealStock.js";
 import IQuantity from "./IQuantity.js";
+import IPhysicalProduct from "./IPhysicalProduct.js";
+import IPhysicalPlace from "./IPhysicalPlace.js";
+import IProductBatch from "./IProductBatch.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -20,17 +20,17 @@ export default class RealStock extends SemanticObject implements IRealStock {
         productBatches?: IProductBatch[];
         doNotStore?: boolean;
     });
-    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
     getQuantity(): IQuantity | undefined;
-    setQuantity(quantity: IQuantity): void;
-    getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
-    getAvailabilityDate(): string | undefined;
-    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
-    setAvailabilityDate(availabilityDate: string): void;
-    addProductBatch(productBatch: IProductBatch): void;
-    removeProductBatch(ProductBatch: IProductBatch): void;
-    setPhysicalPlace(physicalPlace: IPhysicalPlace): void;
+    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
     setProductBatches(ProductBatches: IProductBatch[]): void;
+    setPhysicalPlace(physicalPlace: IPhysicalPlace): void;
+    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
+    addProductBatch(productBatch: IProductBatch): void;
+    getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
     getProductBatches(options?: IGetterOptions): Promise<IProductBatch[]>;
+    getAvailabilityDate(): string | undefined;
+    setAvailabilityDate(availabilityDate: string): void;
+    setQuantity(quantity: IQuantity): void;
+    removeProductBatch(ProductBatch: IProductBatch): void;
 }
 //# sourceMappingURL=RealStock.d.ts.map

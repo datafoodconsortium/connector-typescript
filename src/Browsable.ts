@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ICatalogItem from "./ICatalogItem.js"
 import IOrganization from "./IOrganization.js"
+import ICatalogItem from "./ICatalogItem.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

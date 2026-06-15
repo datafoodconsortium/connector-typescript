@@ -23,8 +23,8 @@
 */
 import Nameable from "./Nameable.js"
 import Describable from "./Describable.js"
-import IRoute from "./IRoute.js"
 import IShipment from "./IShipment.js"
+import IRoute from "./IRoute.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

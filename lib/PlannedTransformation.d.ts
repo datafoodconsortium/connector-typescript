@@ -1,7 +1,7 @@
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
-import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
-import ISKOSConcept from "./ISKOSConcept.js";
 import IPlannedTransformation from "./IPlannedTransformation.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import IPlannedProductionFlow from "./IPlannedProductionFlow.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -17,15 +17,15 @@ export default class PlannedTransformation extends SemanticObject implements IPl
         productionFlows?: IPlannedProductionFlow[];
         doNotStore?: boolean;
     });
-    getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]>;
-    getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]>;
-    setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void;
-    getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
-    addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
-    removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
-    setTransformationType(transformationType: ISKOSConcept): void;
-    addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
     setPlannedConsumptionFlows(plannedConsumptionFlows: IPlannedConsumptionFlow[]): void;
+    addPlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
+    getPlannedConsumptionFlows(options?: IGetterOptions): Promise<IPlannedConsumptionFlow[]>;
     removePlannedProductionFlow(plannedProductionFlow: IPlannedProductionFlow): void;
+    getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    getPlannedProductionFlows(options?: IGetterOptions): Promise<IPlannedProductionFlow[]>;
+    addPlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
+    setTransformationType(transformationType: ISKOSConcept): void;
+    setPlannedProductionFlows(plannedProductionFlows: IPlannedProductionFlow[]): void;
+    removePlannedConsumptionFlow(plannedConsumptionFlow: IPlannedConsumptionFlow): void;
 }
 //# sourceMappingURL=PlannedTransformation.d.ts.map

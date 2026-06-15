@@ -21,13 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IOrganization from "./IOrganization.js"
 import IHostingPlace from "./IHostingPlace.js"
 import Datable from "./Datable.js"
-import IOrganization from "./IOrganization.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ITemplateSaleSession extends Semanticable, Datable, IHostingPlace {
+export default interface ITemplateSaleSession extends Semanticable, IHostingPlace, Datable {
 
 	getOrganizations(): Promise<IOrganization[]>;
 

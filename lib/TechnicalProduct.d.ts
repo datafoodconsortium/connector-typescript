@@ -1,13 +1,13 @@
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import ICatalogItem from "./ICatalogItem.js";
-import ISKOSConcept from "./ISKOSConcept.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
 import IVariant from "./IVariant.js";
-import DefinedProduct from "./DefinedProduct.js";
-import IProductOption from "./IProductOption.js";
-import ITechnicalProduct from "./ITechnicalProduct.js";
-import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
 import IQuantity from "./IQuantity.js";
+import ITechnicalProduct from "./ITechnicalProduct.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
+import DefinedProduct from "./DefinedProduct.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import IProductOption from "./IProductOption.js";
+import ICatalogItem from "./ICatalogItem.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 export default class TechnicalProduct extends DefinedProduct implements ITechnicalProduct {

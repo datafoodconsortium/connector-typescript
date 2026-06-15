@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ILocalizedProduct from "./ILocalizedProduct.js"
-import ITheoreticalStock from "./ITheoreticalStock.js"
-import IPhysicalPlace from "./IPhysicalPlace.js"
 import IQuantity from "./IQuantity.js"
+import ILocalizedProduct from "./ILocalizedProduct.js"
+import IPhysicalPlace from "./IPhysicalPlace.js"
+import ITheoreticalStock from "./ITheoreticalStock.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -94,9 +94,10 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
 		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 
-	public setQuantity(quantity: IQuantity): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+	public setPhysicalPlace(physicalPlace: IPhysicalPlace): void {
+		this.setSemanticPropertyReference("dfc-b:localizedBy", physicalPlace);
 		
+		this.connector.store(physicalPlace);
 	}
 
 	public async getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
@@ -109,10 +110,6 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
 		return result;
 	}
 
-	public getAvailabilityDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:availabilityDate");
-	}
-
 	public async getLocalizedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined> {
 		let result: ILocalizedProduct | undefined = undefined;
 		const semanticId = this.getSemanticProperty("dfc-b:constitutes");
@@ -123,19 +120,22 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
 		return result;
 	}
 
+	public getAvailabilityDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:availabilityDate");
+	}
+
 	public setAvailabilityDate(availabilityDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:availabilityDate", availabilityDate);
+	}
+
+	public setQuantity(quantity: IQuantity): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+		
 	}
 
 	public setLocalizedProduct(localizedProduct: ILocalizedProduct): void {
 		this.setSemanticPropertyReference("dfc-b:constitutes", localizedProduct);
 		
 		this.connector.store(localizedProduct);
-	}
-
-	public setPhysicalPlace(physicalPlace: IPhysicalPlace): void {
-		this.setSemanticPropertyReference("dfc-b:localizedBy", physicalPlace);
-		
-		this.connector.store(physicalPlace);
 	}
 }

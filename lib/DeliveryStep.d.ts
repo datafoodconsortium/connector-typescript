@@ -1,6 +1,6 @@
+import Step from "./Step.js";
 import IDeliveryStep from "./IDeliveryStep.js";
 import IRoute from "./IRoute.js";
-import Step from "./Step.js";
 import IShipment from "./IShipment.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";

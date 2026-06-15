@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ISKOSConcept from "./ISKOSConcept.js"
 import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
-import IRealizedTransformation from "./IRealizedTransformation.js"
 import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
+import IRealizedTransformation from "./IRealizedTransformation.js"
+import ISKOSConcept from "./ISKOSConcept.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -94,6 +94,14 @@ export default class RealizedTransformation extends SemanticObject implements IR
 		
 	}
 
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:startDate", beginDate);
+	}
+
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	}
+
 	public setTransformationType(transformationType: ISKOSConcept): void {
 		this.setSemanticPropertyReference("dfc-b:hasTransformationType", transformationType);
 		
@@ -110,8 +118,24 @@ export default class RealizedTransformation extends SemanticObject implements IR
 		return results;
 	}
 
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
+	public setRealizedProductionFlows(realizedProductionFlows: IRealizedProductionFlow[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasOutput").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		realizedProductionFlows.forEach((realizedTransformation) => {
+			this.addSemanticPropertyReference("dfc-b:hasOutput", realizedTransformation, true);
+			this.connector.store(realizedTransformation);
+		});
+	}
+
+	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
 	}
 
 	public setRealizedConsumptionFlows(realizedConsumptionFlows: IRealizedConsumptionFlow[]): void {
@@ -124,21 +148,15 @@ export default class RealizedTransformation extends SemanticObject implements IR
 		});
 	}
 
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:startDate", beginDate);
-	}
-
-	public setRealizedProductionFlows(realizedProductionFlows: IRealizedProductionFlow[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasOutput").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		realizedProductionFlows.forEach((realizedTransformation) => {
-			this.addSemanticPropertyReference("dfc-b:hasOutput", realizedTransformation, true);
-			this.connector.store(realizedTransformation);
-		});
-	}
-
 	public removeRealizedProductionFlow(realizedProductionFlow: IRealizedProductionFlow): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:startDate");
+	}
+
+	public removeRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
 		throw new Error("Not yet implemented.");
 	}
 
@@ -152,14 +170,8 @@ export default class RealizedTransformation extends SemanticObject implements IR
 		}
 	}
 
-	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
-		let result: ISKOSConcept | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISKOSConcept> semanticObject;
-		}
-		return result;
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
 	}
 
 	public addRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
@@ -170,18 +182,6 @@ export default class RealizedTransformation extends SemanticObject implements IR
 			this.connector.store(realizedConsumptionFlow);
 			this.addSemanticPropertyReference("dfc-b:hasInput", realizedConsumptionFlow);
 		}
-	}
-
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
-	}
-
-	public removeRealizedConsumptionFlow(realizedConsumptionFlow: IRealizedConsumptionFlow): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public getBeginDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:startDate");
 	}
 
 	public async getRealizedProductionFlows(options?: IGetterOptions): Promise<IRealizedProductionFlow[]> {

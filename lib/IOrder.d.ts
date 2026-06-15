@@ -1,8 +1,8 @@
-import ISaleSession from "./ISaleSession.js";
-import ISKOSConcept from "./ISKOSConcept.js";
-import IPaymentMethod from "./IPaymentMethod.js";
 import IOrderLine from "./IOrderLine.js";
 import IAgent from "./IAgent.js";
+import ISaleSession from "./ISaleSession.js";
+import IPaymentMethod from "./IPaymentMethod.js";
+import ISKOSConcept from "./ISKOSConcept.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 export default interface IOrder extends Semanticable {
     getNumber(): string | undefined;
