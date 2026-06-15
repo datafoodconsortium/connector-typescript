@@ -22,11 +22,11 @@
  * SOFTWARE.
 */
 import IOrder from "./IOrder.js"
+import ISaleSession from "./ISaleSession.js"
+import IQuantity from "./IQuantity.js"
+import ShippingOption from "./ShippingOption.js"
 import IPhysicalPlace from "./IPhysicalPlace.js"
 import IDeliveryOption from "./IDeliveryOption.js"
-import ISaleSession from "./ISaleSession.js"
-import ShippingOption from "./ShippingOption.js"
-import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -102,10 +102,18 @@ export default class DeliveryOption extends ShippingOption implements IDeliveryO
 		return this.getSemanticProperty("dfc-b:deliveryConstraint");
 	}
 
+	public setAccessibilityInformation(accessibilityInformation: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:accessibilityInfo", accessibilityInformation);
+	}
+
 	public setDeliveredPlace(deliveredPlace: IPhysicalPlace): void {
 		this.setSemanticPropertyReference("dfc-b:deliveredAt", deliveredPlace);
 		
 		this.connector.store(deliveredPlace);
+	}
+
+	public getAccessibilityInformation(): string | undefined {
+		return this.getSemanticProperty("dfc-b:accessibilityInfo");
 	}
 
 	public async getDeliveredPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
@@ -120,13 +128,5 @@ export default class DeliveryOption extends ShippingOption implements IDeliveryO
 
 	public setDeliveryConstraint(deliveryConstraint: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:deliveryConstraint", deliveryConstraint);
-	}
-
-	public getAccessibilityInformation(): string | undefined {
-		return this.getSemanticProperty("dfc-b:accessibilityInfo");
-	}
-
-	public setAccessibilityInformation(accessibilityInformation: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:accessibilityInfo", accessibilityInformation);
 	}
 }

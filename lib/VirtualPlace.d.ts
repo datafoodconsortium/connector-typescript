@@ -1,5 +1,5 @@
-import IVirtualPlace from "./IVirtualPlace.js";
 import ISaleSession from "./ISaleSession.js";
+import IVirtualPlace from "./IVirtualPlace.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -17,16 +17,16 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
         doNotStore?: boolean;
     });
     setUrls(urls: string[]): void;
+    getName(): string | undefined;
     getDescription(): string | undefined;
     setDescription(description: string): void;
-    removeUrl(url: string): void;
-    getUrls(): string[];
-    removeHostedSaleSession(): ISaleSession | undefined;
-    setHostedSaleSessions(saleSessions: ISaleSession[]): void;
-    getName(): string | undefined;
-    addHostedSaleSession(saleSession: ISaleSession): void;
-    setName(name: string): void;
-    addUrl(url: string): void;
     getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]>;
+    addHostedSaleSession(saleSession: ISaleSession): void;
+    getUrls(): string[];
+    setName(name: string): void;
+    removeHostedSaleSession(): ISaleSession | undefined;
+    removeUrl(url: string): void;
+    addUrl(url: string): void;
+    setHostedSaleSessions(saleSessions: ISaleSession[]): void;
 }
 //# sourceMappingURL=VirtualPlace.d.ts.map

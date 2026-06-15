@@ -1,12 +1,12 @@
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js";
-import ISuppliedProduct from "./ISuppliedProduct.js";
 import ISKOSConcept from "./ISKOSConcept.js";
+import ISuppliedProduct from "./ISuppliedProduct.js";
+import INutrientCharacteristic from "./INutrientCharacteristic.js";
+import IQuantity from "./IQuantity.js";
 import ILocalizedProduct from "./ILocalizedProduct.js";
 import ICatalogItem from "./ICatalogItem.js";
 import DefinedProduct from "./DefinedProduct.js";
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js";
-import INutrientCharacteristic from "./INutrientCharacteristic.js";
-import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -38,9 +38,9 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
         localizedProducts?: ILocalizedProduct[];
         doNotStore?: boolean;
     });
-    removeLocalizedProduct(localizedProduct: ILocalizedProduct): void;
     setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void;
     getLocalizedProducts(options?: IGetterOptions): Promise<ILocalizedProduct[]>;
     addLocalizedProduct(localizedProduct: ILocalizedProduct): void;
+    removeLocalizedProduct(localizedProduct: ILocalizedProduct): void;
 }
 //# sourceMappingURL=SuppliedProduct.d.ts.map

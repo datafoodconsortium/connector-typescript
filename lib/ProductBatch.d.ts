@@ -1,6 +1,6 @@
+import IRealStock from "./IRealStock.js";
 import IProductBatch from "./IProductBatch.js";
 import IPhysicalProduct from "./IPhysicalProduct.js";
-import IRealStock from "./IRealStock.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -21,21 +21,21 @@ export default class ProductBatch extends SemanticObject implements IProductBatc
         productionDate?: string;
         doNotStore?: boolean;
     });
-    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
     getDescription(): string | undefined;
-    setDescription(description: string): void;
-    getName(): string | undefined;
-    getBatchNumber(): string | undefined;
+    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
+    getProductionDate(): string | undefined;
+    setRealStock(realStock: IRealStock): void;
+    getBestBeforeDate(): string | undefined;
+    getRealStock(options?: IGetterOptions): Promise<IRealStock | undefined>;
     getExpirationDate(): string | undefined;
     setBatchNumber(batchNumber: string): void;
-    setRealStock(realStock: IRealStock): void;
-    setExpirationDate(expirationDate: string): void;
-    setBestBeforeDate(bestBeforeDate: string): void;
-    getRealStock(options?: IGetterOptions): Promise<IRealStock | undefined>;
-    getProductionDate(): string | undefined;
-    setName(name: string): void;
-    getBestBeforeDate(): string | undefined;
     setProductionDate(productionDate: string): void;
-    setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
+    getName(): string | undefined;
+    setBestBeforeDate(bestBeforeDate: string): void;
+    setDescription(description: string): void;
+    setName(name: string): void;
+    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
+    getBatchNumber(): string | undefined;
+    setExpirationDate(expirationDate: string): void;
 }
 //# sourceMappingURL=ProductBatch.d.ts.map

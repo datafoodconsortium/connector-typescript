@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPaymentMethod from "./IPaymentMethod.js"
 import IOrder from "./IOrder.js"
+import IAgent from "./IAgent.js"
 import ISKOSConcept from "./ISKOSConcept.js"
 import ISaleSession from "./ISaleSession.js"
-import IAgent from "./IAgent.js"
+import IPaymentMethod from "./IPaymentMethod.js"
 import IOrderLine from "./IOrderLine.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -121,18 +121,110 @@ export default class Order extends SemanticObject implements IOrder {
 		
 	}
 
-	public setClient(client: IAgent): void {
-		this.setSemanticPropertyReference("dfc-b:orderedBy", client);
-		
-		this.connector.store(client);
+	public setDate(date: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:date", date);
 	}
 
-	public async getOrderStatus(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
-		let result: ISKOSConcept | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasOrderStatus");
+	public getNumber(): string | undefined {
+		return this.getSemanticProperty("dfc-b:orderNumber");
+	}
+
+	public setLines(lines: IOrderLine[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasPart").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		lines.forEach((order) => {
+			this.addSemanticPropertyReference("dfc-b:hasPart", order, true);
+			this.connector.store(order);
+		});
+	}
+
+	public setSaleSession(saleSession: ISaleSession): void {
+		this.setSemanticPropertyReference("dfc-b:belongsTo", saleSession);
+		
+		this.connector.store(saleSession);
+	}
+
+	public async getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined> {
+		let result: ISaleSession | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:belongsTo");
 		if (semanticId) {
 			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISKOSConcept> semanticObject;
+			if (semanticObject) result = <ISaleSession> semanticObject;
+		}
+		return result;
+	}
+
+	public addLine(line: IOrderLine): void {
+		if (line.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasPart", line);
+		}
+		else {
+			this.connector.store(line);
+			this.addSemanticPropertyReference("dfc-b:hasPart", line);
+		}
+	}
+
+	public setPaymentMethod(paymentMethod: IPaymentMethod): void {
+		this.setSemanticPropertyReference("dfc-b:hasPaymentMethod", paymentMethod);
+		
+		this.connector.store(paymentMethod);
+	}
+
+	public async getClient(options?: IGetterOptions): Promise<IAgent | undefined> {
+		let result: IAgent | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:orderedBy");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IAgent> semanticObject;
+		}
+		return result;
+	}
+
+	public async getSoldBy(options?: IGetterOptions): Promise<IAgent | undefined> {
+		let result: IAgent | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:soldBy");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IAgent> semanticObject;
+		}
+		return result;
+	}
+
+	public setFulfilmentStatus(fulfilmentState: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasFulfilmentStatus", fulfilmentState);
+		
+		this.connector.store(fulfilmentState);
+	}
+
+	public async getLines(options?: IGetterOptions): Promise<IOrderLine[]> {
+		const results = new Array<IOrderLine>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasPart");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IOrderLine>semanticObject);
+		}
+		return results;
+	}
+
+	public setPaymentStatus(paymentState: ISKOSConcept): void {
+		this.setSemanticPropertyReference("dfc-b:hasPaymentStatus", paymentState);
+		
+		this.connector.store(paymentState);
+	}
+
+	public setSoldBy(soldBy: IAgent): void {
+		this.setSemanticPropertyReference("dfc-b:soldBy", soldBy);
+		
+		this.connector.store(soldBy);
+	}
+
+	public async getPaymentMethod(options?: IGetterOptions): Promise<IPaymentMethod | undefined> {
+		let result: IPaymentMethod | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasPaymentMethod");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPaymentMethod> semanticObject;
 		}
 		return result;
 	}
@@ -147,116 +239,16 @@ export default class Order extends SemanticObject implements IOrder {
 		return result;
 	}
 
-	public setPaymentStatus(paymentState: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasPaymentStatus", paymentState);
-		
-		this.connector.store(paymentState);
-	}
-
-	public getNumber(): string | undefined {
-		return this.getSemanticProperty("dfc-b:orderNumber");
-	}
-
-	public setFulfilmentStatus(fulfilmentState: ISKOSConcept): void {
-		this.setSemanticPropertyReference("dfc-b:hasFulfilmentStatus", fulfilmentState);
-		
-		this.connector.store(fulfilmentState);
-	}
-
-	public getDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:date");
-	}
-
-	public async getSaleSession(options?: IGetterOptions): Promise<ISaleSession | undefined> {
-		let result: ISaleSession | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:belongsTo");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISaleSession> semanticObject;
-		}
-		return result;
-	}
-
-	public async getClient(options?: IGetterOptions): Promise<IAgent | undefined> {
-		let result: IAgent | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:orderedBy");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IAgent> semanticObject;
-		}
-		return result;
-	}
-
-	public setPaymentMethod(paymentMethod: IPaymentMethod): void {
-		this.setSemanticPropertyReference("dfc-b:hasPaymentMethod", paymentMethod);
-		
-		this.connector.store(paymentMethod);
-	}
-
-	public addLine(line: IOrderLine): void {
-		if (line.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasPart", line);
-		}
-		else {
-			this.connector.store(line);
-			this.addSemanticPropertyReference("dfc-b:hasPart", line);
-		}
-	}
-
-	public setDate(date: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:date", date);
-	}
-
-	public async getPaymentMethod(options?: IGetterOptions): Promise<IPaymentMethod | undefined> {
-		let result: IPaymentMethod | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasPaymentMethod");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPaymentMethod> semanticObject;
-		}
-		return result;
-	}
-
-	public setSaleSession(saleSession: ISaleSession): void {
-		this.setSemanticPropertyReference("dfc-b:belongsTo", saleSession);
-		
-		this.connector.store(saleSession);
-	}
-
-	public setSoldBy(soldBy: IAgent): void {
-		this.setSemanticPropertyReference("dfc-b:soldBy", soldBy);
-		
-		this.connector.store(soldBy);
-	}
-
 	public setOrderStatus(orderState: ISKOSConcept): void {
 		this.setSemanticPropertyReference("dfc-b:hasOrderStatus", orderState);
 		
 		this.connector.store(orderState);
 	}
 
-	public async getLines(options?: IGetterOptions): Promise<IOrderLine[]> {
-		const results = new Array<IOrderLine>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasPart");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOrderLine>semanticObject);
-		}
-		return results;
-	}
-
-	public setNumber(number: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:orderNumber", number);
-	}
-
-	public async getSoldBy(options?: IGetterOptions): Promise<IAgent | undefined> {
-		let result: IAgent | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:soldBy");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IAgent> semanticObject;
-		}
-		return result;
+	public setClient(client: IAgent): void {
+		this.setSemanticPropertyReference("dfc-b:orderedBy", client);
+		
+		this.connector.store(client);
 	}
 
 	public async getPaymentStatus(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
@@ -269,17 +261,25 @@ export default class Order extends SemanticObject implements IOrder {
 		return result;
 	}
 
+	public getDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:date");
+	}
+
+	public setNumber(number: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:orderNumber", number);
+	}
+
 	public removeLine(line: IOrderLine): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public setLines(lines: IOrderLine[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasPart").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		lines.forEach((order) => {
-			this.addSemanticPropertyReference("dfc-b:hasPart", order, true);
-			this.connector.store(order);
-		});
+	public async getOrderStatus(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasOrderStatus");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
 	}
 }

@@ -1,13 +1,13 @@
-import ISKOSConcept from "./ISKOSConcept.js";
-import Describable from "./Describable.js";
-import Proposable from "./Proposable.js";
-import Certifiable from "./Certifiable.js";
-import Exhibitable from "./Exhibitable.js";
-import IQuantity from "./IQuantity.js";
-import Manufacturable from "./Manufacturable.js";
 import Nameable from "./Nameable.js";
+import Describable from "./Describable.js";
+import ISKOSConcept from "./ISKOSConcept.js";
+import Certifiable from "./Certifiable.js";
+import IQuantity from "./IQuantity.js";
+import Exhibitable from "./Exhibitable.js";
+import Manufacturable from "./Manufacturable.js";
+import Proposable from "./Proposable.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
-export default interface IDefinedProduct extends Semanticable, Certifiable, Exhibitable, Nameable, Proposable, Manufacturable, Describable {
+export default interface IDefinedProduct extends Semanticable, Nameable, Proposable, Certifiable, Exhibitable, Manufacturable, Describable {
     addClaim(claim: ISKOSConcept): void;
     getQuantity(): IQuantity | undefined;
     setQuantity(quantity: IQuantity): void;

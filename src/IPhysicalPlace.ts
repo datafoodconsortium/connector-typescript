@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IRealStock from "./IRealStock.js"
+import Openable from "./Openable.js"
 import ITheoreticalStock from "./ITheoreticalStock.js"
 import IAddress from "./IAddress.js"
 import IPlace from "./IPlace.js"
 import PhoneNumberOwner from "./PhoneNumberOwner.js"
-import IPerson from "./IPerson.js"
 import ContactableByPhone from "./ContactableByPhone.js"
-import IRealStock from "./IRealStock.js"
-import Openable from "./Openable.js"
+import IPerson from "./IPerson.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IPhysicalPlace extends Openable, IPlace, PhoneNumberOwner, ContactableByPhone {
+export default interface IPhysicalPlace extends Openable, IPlace, ContactableByPhone, PhoneNumberOwner {
 
 	getAddress(): Promise<IAddress | undefined>;
 

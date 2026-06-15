@@ -23,10 +23,10 @@
 */
 import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
 import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js"
+import IQuantity from "./IQuantity.js"
+import Flow from "./Flow.js"
 import ILocalizedProduct from "./ILocalizedProduct.js"
 import IPlannedLocalFlow from "./IPlannedLocalFlow.js"
-import Flow from "./Flow.js"
-import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -85,10 +85,14 @@ export default class PlannedLocalConsumptionFlow extends Flow implements IPlanne
 		this.connector.store(consumedProduct);
 	}
 
-	public setPlannedLocalTransformation(plannedLocalTransformation: IPlannedLocalTransformation): void {
-		this.setSemanticPropertyReference("dfc-b:inputOf", plannedLocalTransformation);
-		
-		this.connector.store(plannedLocalTransformation);
+	public async getPlannedLocalTransformation(options?: IGetterOptions): Promise<IPlannedLocalTransformation | undefined> {
+		let result: IPlannedLocalTransformation | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPlannedLocalTransformation> semanticObject;
+		}
+		return result;
 	}
 
 	public async getConsumedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined> {
@@ -101,13 +105,9 @@ export default class PlannedLocalConsumptionFlow extends Flow implements IPlanne
 		return result;
 	}
 
-	public async getPlannedLocalTransformation(options?: IGetterOptions): Promise<IPlannedLocalTransformation | undefined> {
-		let result: IPlannedLocalTransformation | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:inputOf");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPlannedLocalTransformation> semanticObject;
-		}
-		return result;
+	public setPlannedLocalTransformation(plannedLocalTransformation: IPlannedLocalTransformation): void {
+		this.setSemanticPropertyReference("dfc-b:inputOf", plannedLocalTransformation);
+		
+		this.connector.store(plannedLocalTransformation);
 	}
 }

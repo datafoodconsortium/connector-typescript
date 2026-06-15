@@ -15,11 +15,11 @@ export default class Price extends SemanticObjectAnonymous implements IPrice {
         vatRate?: number;
         unit?: ISKOSConcept;
     });
-    getVatRate(): number | undefined;
+    setVatRate(vatRate: number): void;
     getQuantityUnit(options?: IGetterOptions): Promise<ISKOSConcept | undefined>;
+    getVatRate(): number | undefined;
     getQuantityValue(): number | undefined;
     setQuantityValue(quantityValue: number): void;
     setQuantityUnit(quantityUnit: ISKOSConcept): void;
-    setVatRate(vatRate: number): void;
 }
 //# sourceMappingURL=Price.d.ts.map

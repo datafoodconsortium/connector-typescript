@@ -21,9 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import ISKOSConcept from "./ISKOSConcept.js"
 import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
 import IPlannedLocalTransformation from "./IPlannedLocalTransformation.js"
-import ISKOSConcept from "./ISKOSConcept.js"
 import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
@@ -99,26 +99,40 @@ export default class PlannedLocalTransformation extends SemanticObject implement
 		
 	}
 
-	public getCost(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:cost"));
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:startDate");
 	}
 
 	public setCost(cost: number): void {
 		this.setSemanticPropertyLiteral("dfc-b:cost", cost);
 	}
 
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
+	public setEndDate(endDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
 	}
 
-	public addPlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void {
-		if (plannedLocalProductionFlow.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasOutput", plannedLocalProductionFlow);
+	public setPlannedLocalProductionFlows(plannedLocalProductionFlows: IPlannedLocalProductionFlow[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasOutput").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		plannedLocalProductionFlows.forEach((plannedLocalTransformation) => {
+			this.addSemanticPropertyReference("dfc-b:hasOutput", plannedLocalTransformation, true);
+			this.connector.store(plannedLocalTransformation);
+		});
+	}
+
+	public getCost(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:cost"));
+	}
+
+	public async getPlannedLocalConsumptionFlows(options?: IGetterOptions): Promise<IPlannedLocalConsumptionFlow[]> {
+		const results = new Array<IPlannedLocalConsumptionFlow>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasInput");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IPlannedLocalConsumptionFlow>semanticObject);
 		}
-		else {
-			this.connector.store(plannedLocalProductionFlow);
-			this.addSemanticPropertyReference("dfc-b:hasOutput", plannedLocalProductionFlow);
-		}
+		return results;
 	}
 
 	public setPlannedLocalConsumptionFlows(plannedLocalConsumptionFlows: IPlannedLocalConsumptionFlow[]): void {
@@ -141,50 +155,28 @@ export default class PlannedLocalTransformation extends SemanticObject implement
 		}
 	}
 
-	public removePlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
-		let result: ISKOSConcept | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <ISKOSConcept> semanticObject;
-		}
-		return result;
-	}
-
-	public removePlannedLocalConsumptionFlow(plannedLocalConsumptionFlow: IPlannedLocalConsumptionFlow): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public async getPlannedLocalConsumptionFlows(options?: IGetterOptions): Promise<IPlannedLocalConsumptionFlow[]> {
-		const results = new Array<IPlannedLocalConsumptionFlow>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasInput");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IPlannedLocalConsumptionFlow>semanticObject);
-		}
-		return results;
-	}
-
 	public setTransformationType(transformationType: ISKOSConcept): void {
 		this.setSemanticPropertyReference("dfc-b:hasTransformationType", transformationType);
 		
 		this.connector.store(transformationType);
 	}
 
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:startDate", beginDate);
+	public addPlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void {
+		if (plannedLocalProductionFlow.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasOutput", plannedLocalProductionFlow);
+		}
+		else {
+			this.connector.store(plannedLocalProductionFlow);
+			this.addSemanticPropertyReference("dfc-b:hasOutput", plannedLocalProductionFlow);
+		}
 	}
 
-	public getBeginDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:startDate");
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
 	}
 
-	public setEndDate(endDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
+	public removePlannedLocalProductionFlow(plannedLocalProductionFlow: IPlannedLocalProductionFlow): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public async getPlannedLocalProductionFlows(options?: IGetterOptions): Promise<IPlannedLocalProductionFlow[]> {
@@ -197,13 +189,21 @@ export default class PlannedLocalTransformation extends SemanticObject implement
 		return results;
 	}
 
-	public setPlannedLocalProductionFlows(plannedLocalProductionFlows: IPlannedLocalProductionFlow[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasOutput").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		plannedLocalProductionFlows.forEach((plannedLocalTransformation) => {
-			this.addSemanticPropertyReference("dfc-b:hasOutput", plannedLocalTransformation, true);
-			this.connector.store(plannedLocalTransformation);
-		});
+	public async getTransformationType(options?: IGetterOptions): Promise<ISKOSConcept | undefined> {
+		let result: ISKOSConcept | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:hasTransformationType");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <ISKOSConcept> semanticObject;
+		}
+		return result;
+	}
+
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:startDate", beginDate);
+	}
+
+	public removePlannedLocalConsumptionFlow(plannedLocalConsumptionFlow: IPlannedLocalConsumptionFlow): void {
+		throw new Error("Not yet implemented.");
 	}
 }

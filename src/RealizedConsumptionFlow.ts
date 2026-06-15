@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IQuantity from "./IQuantity.js"
+import IPhysicalProduct from "./IPhysicalProduct.js"
 import IRealizedTransformation from "./IRealizedTransformation.js"
 import Flow from "./Flow.js"
-import IPhysicalProduct from "./IPhysicalProduct.js"
 import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import IRealizedFlow from "./IRealizedFlow.js"
-import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -34,7 +34,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const REALIZED_CONSUMPTION_FLOW_SEM_TYPE: string = "dfc-b:AsRealizedConsumptionFlow";
 
-export default class RealizedConsumptionFlow extends Flow implements IRealizedConsumptionFlow, IRealizedFlow {
+export default class RealizedConsumptionFlow extends Flow implements IRealizedFlow, IRealizedConsumptionFlow {
 
 	public constructor(parameters: {
 		connector: IConnector,

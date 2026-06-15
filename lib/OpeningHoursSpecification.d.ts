@@ -13,11 +13,11 @@ export default class OpeningHoursSpecification extends SemanticObject implements
         closes?: string;
         doNotStore?: boolean;
     });
-    setCloses(closes: string): void;
-    getDayOfWeek(): string | undefined;
-    getCloses(): string | undefined;
     setOpens(opens: string): void;
-    getOpens(): string | undefined;
+    setCloses(closes: string): void;
+    getCloses(): string | undefined;
     setDayOfWeek(dayOfWeek: string): void;
+    getDayOfWeek(): string | undefined;
+    getOpens(): string | undefined;
 }
 //# sourceMappingURL=OpeningHoursSpecification.d.ts.map

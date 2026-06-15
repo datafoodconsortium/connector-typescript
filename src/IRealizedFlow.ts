@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IFlow from "./IFlow.js"
 import IRealizedTransformation from "./IRealizedTransformation.js"
+import IFlow from "./IFlow.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

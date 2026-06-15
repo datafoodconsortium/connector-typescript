@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IVirtualPlace from "./IVirtualPlace.js"
 import ISaleSession from "./ISaleSession.js"
+import IVirtualPlace from "./IVirtualPlace.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -91,6 +91,10 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
 		this.setSemanticPropertyLiteralAll("dfc-b:URL", urls);
 	}
 
+	public getName(): string | undefined {
+		return this.getSemanticProperty("dfc-b:name");
+	}
+
 	public getDescription(): string | undefined {
 		return this.getSemanticProperty("dfc-b:description");
 	}
@@ -99,30 +103,14 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
 		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
-	public removeUrl(url: string): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public getUrls(): string[] {
-		return this.getSemanticPropertyAll("dfc-b:URL");
-	}
-
-	public removeHostedSaleSession(): ISaleSession | undefined {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setHostedSaleSessions(saleSessions: ISaleSession[]): void {
-		this.getSemanticPropertyAll("dfc-b:hosts").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		saleSessions.forEach((virtualPlace) => {
-			this.addSemanticPropertyReference("dfc-b:hosts", virtualPlace, true);
-			this.connector.store(virtualPlace);
-		});
-	}
-
-	public getName(): string | undefined {
-		return this.getSemanticProperty("dfc-b:name");
+	public async getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]> {
+		const results = new Array<ISaleSession>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hosts");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ISaleSession>semanticObject);
+		}
+		return results;
 	}
 
 	public addHostedSaleSession(saleSession: ISaleSession): void {
@@ -135,21 +123,33 @@ export default class VirtualPlace extends SemanticObject implements IVirtualPlac
 		}
 	}
 
+	public getUrls(): string[] {
+		return this.getSemanticPropertyAll("dfc-b:URL");
+	}
+
 	public setName(name: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
+	}
+
+	public removeHostedSaleSession(): ISaleSession | undefined {
+		throw new Error("Not yet implemented.");
+	}
+
+	public removeUrl(url: string): void {
+		throw new Error("Not yet implemented.");
 	}
 
 	public addUrl(url: string): void {
 		this.addSemanticPropertyLiteral("dfc-b:URL", url);
 	}
 
-	public async getHostedSaleSessions(options?: IGetterOptions): Promise<ISaleSession[]> {
-		const results = new Array<ISaleSession>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hosts");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ISaleSession>semanticObject);
-		}
-		return results;
+	public setHostedSaleSessions(saleSessions: ISaleSession[]): void {
+		this.getSemanticPropertyAll("dfc-b:hosts").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		saleSessions.forEach((virtualPlace) => {
+			this.addSemanticPropertyReference("dfc-b:hosts", virtualPlace, true);
+			this.connector.store(virtualPlace);
+		});
 	}
 }

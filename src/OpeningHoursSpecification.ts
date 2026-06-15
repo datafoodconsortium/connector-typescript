@@ -81,27 +81,27 @@ export default class OpeningHoursSpecification extends SemanticObject implements
 		
 	}
 
-	public setCloses(closes: string): void {
-		this.setSemanticPropertyLiteral("https://schema.org/closes", closes);
+	public setOpens(opens: string): void {
+		this.setSemanticPropertyLiteral("https://schema.org/opens", opens);
 	}
 
-	public getDayOfWeek(): string | undefined {
-		return this.getSemanticProperty("https://schema.org/dayOfWeek");
+	public setCloses(closes: string): void {
+		this.setSemanticPropertyLiteral("https://schema.org/closes", closes);
 	}
 
 	public getCloses(): string | undefined {
 		return this.getSemanticProperty("https://schema.org/closes");
 	}
 
-	public setOpens(opens: string): void {
-		this.setSemanticPropertyLiteral("https://schema.org/opens", opens);
+	public setDayOfWeek(dayOfWeek: string): void {
+		this.setSemanticPropertyLiteral("https://schema.org/dayOfWeek", dayOfWeek);
+	}
+
+	public getDayOfWeek(): string | undefined {
+		return this.getSemanticProperty("https://schema.org/dayOfWeek");
 	}
 
 	public getOpens(): string | undefined {
 		return this.getSemanticProperty("https://schema.org/opens");
-	}
-
-	public setDayOfWeek(dayOfWeek: string): void {
-		this.setSemanticPropertyLiteral("https://schema.org/dayOfWeek", dayOfWeek);
 	}
 }

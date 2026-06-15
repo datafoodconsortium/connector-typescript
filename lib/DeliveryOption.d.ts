@@ -1,9 +1,9 @@
 import IOrder from "./IOrder.js";
+import ISaleSession from "./ISaleSession.js";
+import IQuantity from "./IQuantity.js";
+import ShippingOption from "./ShippingOption.js";
 import IPhysicalPlace from "./IPhysicalPlace.js";
 import IDeliveryOption from "./IDeliveryOption.js";
-import ISaleSession from "./ISaleSession.js";
-import ShippingOption from "./ShippingOption.js";
-import IQuantity from "./IQuantity.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";
@@ -26,10 +26,10 @@ export default class DeliveryOption extends ShippingOption implements IDeliveryO
         doNotStore?: boolean;
     });
     getDeliveryConstraint(): string | undefined;
+    setAccessibilityInformation(accessibilityInformation: string): void;
     setDeliveredPlace(deliveredPlace: IPhysicalPlace): void;
+    getAccessibilityInformation(): string | undefined;
     getDeliveredPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
     setDeliveryConstraint(deliveryConstraint: string): void;
-    getAccessibilityInformation(): string | undefined;
-    setAccessibilityInformation(accessibilityInformation: string): void;
 }
 //# sourceMappingURL=DeliveryOption.d.ts.map

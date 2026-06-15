@@ -1,5 +1,5 @@
-import IFlow from "./IFlow.js";
 import IQuantity from "./IQuantity.js";
+import IFlow from "./IFlow.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -13,7 +13,7 @@ export default abstract class Flow extends SemanticObject implements IFlow {
         quantity?: IQuantity;
         doNotStore?: boolean;
     });
-    getQuantity(): IQuantity | undefined;
     setQuantity(quantity: IQuantity): void;
+    getQuantity(): IQuantity | undefined;
 }
 //# sourceMappingURL=Flow.d.ts.map

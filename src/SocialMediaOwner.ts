@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import ContactableBySocialMedia from "./ContactableBySocialMedia.js"
 import ISocialMedia from "./ISocialMedia.js"
+import ContactableBySocialMedia from "./ContactableBySocialMedia.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

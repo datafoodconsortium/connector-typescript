@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IProductBatch from "./IProductBatch.js"
-import IPhysicalPlace from "./IPhysicalPlace.js"
-import IPhysicalProduct from "./IPhysicalProduct.js"
 import IRealStock from "./IRealStock.js"
+import IProductBatch from "./IProductBatch.js"
 import IQuantity from "./IQuantity.js"
+import IPhysicalProduct from "./IPhysicalProduct.js"
+import IPhysicalPlace from "./IPhysicalPlace.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -95,34 +95,14 @@ export default class RealStock extends SemanticObject implements IRealStock {
 		
 	}
 
-	public async getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
-		let result: IPhysicalPlace | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:isStoredIn");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalPlace> semanticObject;
-		}
-		return result;
+	public setPhysicalProduct(physicalProduct: IPhysicalProduct): void {
+		this.setSemanticPropertyReference("dfc-b:constitutes", physicalProduct);
+		
+		this.connector.store(physicalProduct);
 	}
 
-	public addProductBatch(productBatch: IProductBatch): void {
-		if (productBatch.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:identifies", productBatch);
-		}
-		else {
-			this.connector.store(productBatch);
-			this.addSemanticPropertyReference("dfc-b:identifies", productBatch);
-		}
-	}
-
-	public async getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
-		let result: IPhysicalProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:constitutes");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalProduct> semanticObject;
-		}
-		return result;
+	public getAvailabilityDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:availabilityDate");
 	}
 
 	public setProductBatches(ProductBatches: IProductBatch[]): void {
@@ -135,19 +115,20 @@ export default class RealStock extends SemanticObject implements IRealStock {
 		});
 	}
 
-	public setQuantity(quantity: IQuantity): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
-		
+	public async getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined> {
+		let result: IPhysicalPlace | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:isStoredIn");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalPlace> semanticObject;
+		}
+		return result;
 	}
 
-	public getAvailabilityDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:availabilityDate");
-	}
-
-	public setPhysicalProduct(physicalProduct: IPhysicalProduct): void {
-		this.setSemanticPropertyReference("dfc-b:constitutes", physicalProduct);
+	public setPhysicalPlace(physicalPlace: IPhysicalPlace): void {
+		this.setSemanticPropertyReference("dfc-b:isStoredIn", physicalPlace);
 		
-		this.connector.store(physicalProduct);
+		this.connector.store(physicalPlace);
 	}
 
 	public removeProductBatch(ProductBatch: IProductBatch): void {
@@ -159,6 +140,35 @@ export default class RealStock extends SemanticObject implements IRealStock {
 		return <IQuantity> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 
+	public setQuantity(quantity: IQuantity): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasQuantity", quantity);
+		
+	}
+
+	public addProductBatch(productBatch: IProductBatch): void {
+		if (productBatch.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:identifies", productBatch);
+		}
+		else {
+			this.connector.store(productBatch);
+			this.addSemanticPropertyReference("dfc-b:identifies", productBatch);
+		}
+	}
+
+	public setAvailabilityDate(availabilityDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:availabilityDate", availabilityDate);
+	}
+
+	public async getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
+		let result: IPhysicalProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:constitutes");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalProduct> semanticObject;
+		}
+		return result;
+	}
+
 	public async getProductBatches(options?: IGetterOptions): Promise<IProductBatch[]> {
 		const results = new Array<IProductBatch>();
 		const properties = this.getSemanticPropertyAll("dfc-b:identifies");
@@ -167,15 +177,5 @@ export default class RealStock extends SemanticObject implements IRealStock {
 			if (semanticObject) results.push(<IProductBatch>semanticObject);
 		}
 		return results;
-	}
-
-	public setAvailabilityDate(availabilityDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:availabilityDate", availabilityDate);
-	}
-
-	public setPhysicalPlace(physicalPlace: IPhysicalPlace): void {
-		this.setSemanticPropertyReference("dfc-b:isStoredIn", physicalPlace);
-		
-		this.connector.store(physicalPlace);
 	}
 }
