@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import Nameable from "./Nameable.js"
 import IOrder from "./IOrder.js"
 import Describable from "./Describable.js"
 import ISaleSession from "./ISaleSession.js"
 import IQuantity from "./IQuantity.js"
 import Ellapsable from "./Ellapsable.js"
-import Nameable from "./Nameable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface IShippingOption extends Semanticable, Ellapsable, Nameable, Describable {
+export default interface IShippingOption extends Semanticable, Describable, Nameable, Ellapsable {
 
 	getFee(): number | undefined;
 

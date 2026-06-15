@@ -22,8 +22,8 @@
  * SOFTWARE.
 */
 import ICatalogItem from "./ICatalogItem.js"
-import ICatalog from "./ICatalog.js"
 import IEnterprise from "./IEnterprise.js"
+import ICatalog from "./ICatalog.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -78,6 +78,20 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		
 	}
 
+	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
+		const results = new Array<IEnterprise>();
+		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IEnterprise>semanticObject);
+		}
+		return results;
+	}
+
+	public removeItem(item: ICatalogItem): void {
+		throw new Error("Not yet implemented.");
+	}
+
 	public async getItems(options?: IGetterOptions): Promise<ICatalogItem[]> {
 		const results = new Array<ICatalogItem>();
 		const properties = this.getSemanticPropertyAll("dfc-b:lists");
@@ -86,6 +100,26 @@ export default class Catalog extends SemanticObject implements ICatalog {
 			if (semanticObject) results.push(<ICatalogItem>semanticObject);
 		}
 		return results;
+	}
+
+	public setMaintainers(maintainers: IEnterprise[]): void {
+		this.getSemanticPropertyAll("dfc-b:maintainedBy").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		maintainers.forEach((catalog) => {
+			this.addSemanticPropertyReference("dfc-b:maintainedBy", catalog, true);
+			this.connector.store(catalog);
+		});
+	}
+
+	public addMaintainer(maintainer: IEnterprise): void {
+		if (maintainer.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:maintainedBy", maintainer);
+		}
+		else {
+			this.connector.store(maintainer);
+			this.addSemanticPropertyReference("dfc-b:maintainedBy", maintainer);
+		}
 	}
 
 	public setItems(items: ICatalogItem[]): void {
@@ -108,41 +142,7 @@ export default class Catalog extends SemanticObject implements ICatalog {
 		}
 	}
 
-	public addMaintainer(maintainer: IEnterprise): void {
-		if (maintainer.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:maintainedBy", maintainer);
-		}
-		else {
-			this.connector.store(maintainer);
-			this.addSemanticPropertyReference("dfc-b:maintainedBy", maintainer);
-		}
-	}
-
-	public setMaintainers(maintainers: IEnterprise[]): void {
-		this.getSemanticPropertyAll("dfc-b:maintainedBy").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		maintainers.forEach((catalog) => {
-			this.addSemanticPropertyReference("dfc-b:maintainedBy", catalog, true);
-			this.connector.store(catalog);
-		});
-	}
-
-	public async getMaintainers(options?: IGetterOptions): Promise<IEnterprise[]> {
-		const results = new Array<IEnterprise>();
-		const properties = this.getSemanticPropertyAll("dfc-b:maintainedBy");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IEnterprise>semanticObject);
-		}
-		return results;
-	}
-
 	public removeMaintainer(maintainer: IEnterprise): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public removeItem(item: ICatalogItem): void {
 		throw new Error("Not yet implemented.");
 	}
 }

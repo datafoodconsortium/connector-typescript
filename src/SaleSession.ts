@@ -87,26 +87,6 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		
 	}
 
-	public getQuantity(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:quantity"));
-	}
-
-	public setBeginDate(beginDate: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
-	}
-
-	public getEndDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:endDate");
-	}
-
-	public removeOffer(offer: IOffer): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public setQuantity(quantity: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
-	}
-
 	public setOffers(offers: IOffer[]): void {
 		this.getSemanticPropertyAll("dfc-b:lists").forEach((prop) => {
 			this.connector.removeFromStore(prop);
@@ -115,6 +95,20 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 			this.addSemanticPropertyReference("dfc-b:lists", saleSession, true);
 			this.connector.store(saleSession);
 		});
+	}
+
+	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {
+		const results = new Array<IOffer>();
+		const properties = this.getSemanticPropertyAll("dfc-b:lists");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IOffer>semanticObject);
+		}
+		return results;
+	}
+
+	public getBeginDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:beginDate");
 	}
 
 	public addOffer(offer: IOffer): void {
@@ -127,21 +121,27 @@ export default class SaleSession extends SemanticObject implements ISaleSession 
 		}
 	}
 
-	public getBeginDate(): string | undefined {
-		return this.getSemanticProperty("dfc-b:beginDate");
+	public getQuantity(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:quantity"));
+	}
+
+	public getEndDate(): string | undefined {
+		return this.getSemanticProperty("dfc-b:endDate");
 	}
 
 	public setEndDate(endDate: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:endDate", endDate);
 	}
 
-	public async getOffers(options?: IGetterOptions): Promise<IOffer[]> {
-		const results = new Array<IOffer>();
-		const properties = this.getSemanticPropertyAll("dfc-b:lists");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IOffer>semanticObject);
-		}
-		return results;
+	public setQuantity(quantity: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:quantity", quantity);
+	}
+
+	public removeOffer(offer: IOffer): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public setBeginDate(beginDate: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:beginDate", beginDate);
 	}
 }

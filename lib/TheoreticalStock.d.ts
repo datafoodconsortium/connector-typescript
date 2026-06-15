@@ -1,7 +1,7 @@
 import ITheoreticalStock from "./ITheoreticalStock.js";
+import IQuantity from "./IQuantity.js";
 import ILocalizedProduct from "./ILocalizedProduct.js";
 import IPhysicalPlace from "./IPhysicalPlace.js";
-import IQuantity from "./IQuantity.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -18,13 +18,13 @@ export default class TheoreticalStock extends SemanticObject implements ITheoret
         availabilityDate?: string;
         doNotStore?: boolean;
     });
-    getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
-    setQuantity(quantity: IQuantity): void;
     getAvailabilityDate(): string | undefined;
-    getQuantity(): IQuantity | undefined;
-    setAvailabilityDate(availabilityDate: string): void;
+    getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
     setPhysicalPlace(physicalPlace: IPhysicalPlace): void;
-    getLocalizedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined>;
+    getQuantity(): IQuantity | undefined;
+    setQuantity(quantity: IQuantity): void;
     setLocalizedProduct(localizedProduct: ILocalizedProduct): void;
+    getLocalizedProduct(options?: IGetterOptions): Promise<ILocalizedProduct | undefined>;
+    setAvailabilityDate(availabilityDate: string): void;
 }
 //# sourceMappingURL=TheoreticalStock.d.ts.map

@@ -22,14 +22,14 @@
  * SOFTWARE.
 */
 import IPhysicalCharacteristic from "./IPhysicalCharacteristic.js"
-import ISuppliedProduct from "./ISuppliedProduct.js"
 import ISKOSConcept from "./ISKOSConcept.js"
+import ISuppliedProduct from "./ISuppliedProduct.js"
+import INutrientCharacteristic from "./INutrientCharacteristic.js"
+import IQuantity from "./IQuantity.js"
 import ILocalizedProduct from "./ILocalizedProduct.js"
 import ICatalogItem from "./ICatalogItem.js"
 import DefinedProduct from "./DefinedProduct.js"
 import IAllergenCharacteristic from "./IAllergenCharacteristic.js"
-import INutrientCharacteristic from "./INutrientCharacteristic.js"
-import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -122,10 +122,6 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 		
 	}
 
-	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
-		throw new Error("Not yet implemented.");
-	}
-
 	public setLocalizedProducts(localizedProducts: ILocalizedProduct[]): void {
 		this.getSemanticPropertyAll("dfc-b:referenceOf").forEach((prop) => {
 			this.connector.removeFromStore(prop);
@@ -154,5 +150,9 @@ export default class SuppliedProduct extends DefinedProduct implements ISupplied
 			this.connector.store(localizedProduct);
 			this.addSemanticPropertyReference("dfc-b:referenceOf", localizedProduct);
 		}
+	}
+
+	public removeLocalizedProduct(localizedProduct: ILocalizedProduct): void {
+		throw new Error("Not yet implemented.");
 	}
 }

@@ -1,8 +1,8 @@
-import IProductBatch from "./IProductBatch.js";
-import IPhysicalPlace from "./IPhysicalPlace.js";
-import IPhysicalProduct from "./IPhysicalProduct.js";
 import IRealStock from "./IRealStock.js";
+import IProductBatch from "./IProductBatch.js";
 import IQuantity from "./IQuantity.js";
+import IPhysicalProduct from "./IPhysicalProduct.js";
+import IPhysicalPlace from "./IPhysicalPlace.js";
 import { SemanticObject } from "@virtual-assembly/semantizer";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
@@ -20,17 +20,17 @@ export default class RealStock extends SemanticObject implements IRealStock {
         productBatches?: IProductBatch[];
         doNotStore?: boolean;
     });
-    getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
-    addProductBatch(productBatch: IProductBatch): void;
-    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
-    setProductBatches(ProductBatches: IProductBatch[]): void;
-    setQuantity(quantity: IQuantity): void;
-    getAvailabilityDate(): string | undefined;
     setPhysicalProduct(physicalProduct: IPhysicalProduct): void;
+    getAvailabilityDate(): string | undefined;
+    setProductBatches(ProductBatches: IProductBatch[]): void;
+    getPhysicalPlace(options?: IGetterOptions): Promise<IPhysicalPlace | undefined>;
+    setPhysicalPlace(physicalPlace: IPhysicalPlace): void;
     removeProductBatch(ProductBatch: IProductBatch): void;
     getQuantity(): IQuantity | undefined;
-    getProductBatches(options?: IGetterOptions): Promise<IProductBatch[]>;
+    setQuantity(quantity: IQuantity): void;
+    addProductBatch(productBatch: IProductBatch): void;
     setAvailabilityDate(availabilityDate: string): void;
-    setPhysicalPlace(physicalPlace: IPhysicalPlace): void;
+    getPhysicalProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined>;
+    getProductBatches(options?: IGetterOptions): Promise<IProductBatch[]>;
 }
 //# sourceMappingURL=RealStock.d.ts.map

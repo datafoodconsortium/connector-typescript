@@ -76,16 +76,16 @@ export default class PhoneNumber extends SemanticObject implements IPhoneNumber 
 		
 	}
 
-	public setNumber(number: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:phoneNumber", number);
-	}
-
 	public getNumber(): string | undefined {
 		return this.getSemanticProperty("dfc-b:phoneNumber");
 	}
 
 	public getCountryCode(): number | undefined {
 		return Number(this.getSemanticProperty("dfc-b:countryCode"));
+	}
+
+	public setNumber(number: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:phoneNumber", number);
 	}
 
 	public setCountryCode(countryCode: number): void {

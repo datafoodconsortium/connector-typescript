@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
+import IQuantity from "./IQuantity.js"
+import IPhysicalProduct from "./IPhysicalProduct.js"
 import IRealizedTransformation from "./IRealizedTransformation.js"
 import Flow from "./Flow.js"
-import IPhysicalProduct from "./IPhysicalProduct.js"
-import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
 import IRealizedFlow from "./IRealizedFlow.js"
-import IQuantity from "./IQuantity.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -34,7 +34,7 @@ import IGetterOptions from "./IGetterOptions.js";
 
 const REALIZED_PRODUCTION_FLOW_SEM_TYPE: string = "dfc-b:AsRealizedProductionFlow";
 
-export default class RealizedProductionFlow extends Flow implements IRealizedProductionFlow, IRealizedFlow {
+export default class RealizedProductionFlow extends Flow implements IRealizedFlow, IRealizedProductionFlow {
 
 	public constructor(parameters: {
 		connector: IConnector,
@@ -79,14 +79,10 @@ export default class RealizedProductionFlow extends Flow implements IRealizedPro
 		
 	}
 
-	public async getProducedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
-		let result: IPhysicalProduct | undefined = undefined;
-		const semanticId = this.getSemanticProperty("dfc-b:produces");
-		if (semanticId) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) result = <IPhysicalProduct> semanticObject;
-		}
-		return result;
+	public setProducedProduct(producedProduct: IPhysicalProduct): void {
+		this.setSemanticPropertyReference("dfc-b:produces", producedProduct);
+		
+		this.connector.store(producedProduct);
 	}
 
 	public async getRealizedTransformation(options?: IGetterOptions): Promise<IRealizedTransformation | undefined> {
@@ -105,9 +101,13 @@ export default class RealizedProductionFlow extends Flow implements IRealizedPro
 		this.connector.store(realizedTransformation);
 	}
 
-	public setProducedProduct(producedProduct: IPhysicalProduct): void {
-		this.setSemanticPropertyReference("dfc-b:produces", producedProduct);
-		
-		this.connector.store(producedProduct);
+	public async getProducedProduct(options?: IGetterOptions): Promise<IPhysicalProduct | undefined> {
+		let result: IPhysicalProduct | undefined = undefined;
+		const semanticId = this.getSemanticProperty("dfc-b:produces");
+		if (semanticId) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) result = <IPhysicalProduct> semanticObject;
+		}
+		return result;
 	}
 }

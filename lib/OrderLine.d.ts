@@ -18,15 +18,15 @@ export default class OrderLine extends SemanticObject implements IOrderLine {
         order?: IOrder;
         doNotStore?: boolean;
     });
-    getQuantity(): number | undefined;
-    getOrder(options?: IGetterOptions): Promise<IOrder | undefined>;
-    setPrice(price: IPrice): void;
-    getDescription(): string | undefined;
-    setDescription(description: string): void;
-    getOffer(options?: IGetterOptions): Promise<IOffer | undefined>;
     getPrice(): IPrice | undefined;
-    setOffer(offer: IOffer): void;
     setQuantity(quantity: number): void;
+    getDescription(): string | undefined;
+    setOffer(offer: IOffer): void;
+    setDescription(description: string): void;
+    setPrice(price: IPrice): void;
+    getOrder(options?: IGetterOptions): Promise<IOrder | undefined>;
     setOrder(order: IOrder): void;
+    getQuantity(): number | undefined;
+    getOffer(options?: IGetterOptions): Promise<IOffer | undefined>;
 }
 //# sourceMappingURL=OrderLine.d.ts.map

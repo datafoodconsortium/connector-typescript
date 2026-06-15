@@ -21,19 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
+import Nameable from "./Nameable.js"
+import Describable from "./Describable.js"
 import ITheoreticalStock from "./ITheoreticalStock.js"
 import IPlannedLocalConsumptionFlow from "./IPlannedLocalConsumptionFlow.js"
 import ISuppliedProduct from "./ISuppliedProduct.js"
-import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js"
-import Describable from "./Describable.js"
+import IQuantity from "./IQuantity.js"
 import IPhysicalProduct from "./IPhysicalProduct.js"
 import Exhibitable from "./Exhibitable.js"
-import IQuantity from "./IQuantity.js"
-import Nameable from "./Nameable.js"
+import IPlannedLocalProductionFlow from "./IPlannedLocalProductionFlow.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 
-export default interface ILocalizedProduct extends Semanticable, Nameable, Describable, Exhibitable {
+export default interface ILocalizedProduct extends Semanticable, Describable, Exhibitable, Nameable {
 
 	getCost(): number | undefined;
 

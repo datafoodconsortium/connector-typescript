@@ -1,9 +1,9 @@
 import IPlannedConsumptionFlow from "./IPlannedConsumptionFlow.js";
-import IPlannedTransformation from "./IPlannedTransformation.js";
-import IPlannedFlow from "./IPlannedFlow.js";
-import Flow from "./Flow.js";
-import IDefinedProduct from "./IDefinedProduct.js";
 import IQuantity from "./IQuantity.js";
+import Flow from "./Flow.js";
+import IPlannedFlow from "./IPlannedFlow.js";
+import IPlannedTransformation from "./IPlannedTransformation.js";
+import IDefinedProduct from "./IDefinedProduct.js";
 import { Semanticable } from "@virtual-assembly/semantizer";
 import IConnector from "./IConnector.js";
 import IGetterOptions from "./IGetterOptions.js";

@@ -22,8 +22,8 @@
  * SOFTWARE.
 */
 import ISKOSConcept from "./ISKOSConcept.js"
-import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import IRealizedProductionFlow from "./IRealizedProductionFlow.js"
+import IRealizedConsumptionFlow from "./IRealizedConsumptionFlow.js"
 import Ellapsable from "./Ellapsable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"

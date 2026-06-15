@@ -21,10 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IAddress from "./IAddress.js"
-import IPhoneNumber from "./IPhoneNumber.js"
 import IAgent from "./IAgent.js"
+import IPhoneNumber from "./IPhoneNumber.js"
 import ISocialMedia from "./ISocialMedia.js"
+import IAddress from "./IAddress.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -91,26 +91,56 @@ export default abstract class Agent extends SemanticObject implements IAgent {
 		
 	}
 
+	public setWebsites(emailAddresses: string[]): void {
+		this.setSemanticPropertyLiteralAll("dfc-b:websitePage", emailAddresses);
+	}
+
+	public addSocialMedia(socialMedia: ISocialMedia): void {
+		if (socialMedia.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasSocialMedia", socialMedia);
+		}
+		else {
+			this.connector.store(socialMedia);
+			this.addSemanticPropertyReference("dfc-b:hasSocialMedia", socialMedia);
+		}
+	}
+
 	public removeEmailAddress(emailAddress: string): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public getLogo(): string | undefined {
-		return this.getSemanticProperty("dfc-b:logo");
-	}
-
-	public addLocalization(localization: IAddress): void {
-		if (localization.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasAddress", localization);
+	public addPhoneNumber(phoneNumber: IPhoneNumber): void {
+		if (phoneNumber.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasPhoneNumber", phoneNumber);
 		}
 		else {
-			this.connector.store(localization);
-			this.addSemanticPropertyReference("dfc-b:hasAddress", localization);
+			this.connector.store(phoneNumber);
+			this.addSemanticPropertyReference("dfc-b:hasPhoneNumber", phoneNumber);
 		}
 	}
 
-	public getWebsites(): string[] {
-		return this.getSemanticPropertyAll("dfc-b:websitePage");
+	public setLocalizations(localizations: IAddress[]): void {
+		this.getSemanticPropertyAll("dfc-b:hasAddress").forEach((prop) => {
+			this.connector.removeFromStore(prop);
+		});
+		localizations.forEach((agent) => {
+			this.addSemanticPropertyReference("dfc-b:hasAddress", agent, true);
+			this.connector.store(agent);
+		});
+	}
+
+	public removeSocialMedia(socialMedia: ISocialMedia): void {
+		throw new Error("Not yet implemented.");
+	}
+
+	public async getSocialMedias(options?: IGetterOptions): Promise<ISocialMedia[]> {
+		const results = new Array<ISocialMedia>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasSocialMedia");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<ISocialMedia>semanticObject);
+		}
+		return results;
 	}
 
 	public setSocialMedias(socialMedias: ISocialMedia[]): void {
@@ -133,28 +163,22 @@ export default abstract class Agent extends SemanticObject implements IAgent {
 		});
 	}
 
-	public removeSocialMedia(socialMedia: ISocialMedia): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public removePhoneNumber(phoneNumber: IPhoneNumber): void {
-		throw new Error("Not yet implemented.");
-	}
-
 	public removeLocalization(localization: IAddress): void {
 		throw new Error("Not yet implemented.");
 	}
 
-	public addEmailAddress(emailAddress: string): void {
-		this.addSemanticPropertyLiteral("dfc-b:email", emailAddress);
+	public addWebsite(website: string): void {
+		this.addSemanticPropertyLiteral("dfc-b:websitePage", website);
 	}
 
-	public removeWebsite(website: string): void {
-		throw new Error("Not yet implemented.");
-	}
-
-	public getEmails(): string[] {
-		return this.getSemanticPropertyAll("dfc-b:email");
+	public async getLocalizations(options?: IGetterOptions): Promise<IAddress[]> {
+		const results = new Array<IAddress>();
+		const properties = this.getSemanticPropertyAll("dfc-b:hasAddress");
+		for await (const semanticId of properties) {
+			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
+			if (semanticObject) results.push(<IAddress>semanticObject);
+		}
+		return results;
 	}
 
 	public async getPhoneNumbers(options?: IGetterOptions): Promise<IPhoneNumber[]> {
@@ -167,69 +191,45 @@ export default abstract class Agent extends SemanticObject implements IAgent {
 		return results;
 	}
 
-	public async getSocialMedias(options?: IGetterOptions): Promise<ISocialMedia[]> {
-		const results = new Array<ISocialMedia>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasSocialMedia");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<ISocialMedia>semanticObject);
-		}
-		return results;
-	}
-
 	public setEmails(emailAddresses: string[]): void {
 		this.setSemanticPropertyLiteralAll("dfc-b:email", emailAddresses);
 	}
 
-	public addWebsite(website: string): void {
-		this.addSemanticPropertyLiteral("dfc-b:websitePage", website);
+	public getWebsites(): string[] {
+		return this.getSemanticPropertyAll("dfc-b:websitePage");
 	}
 
-	public setLocalizations(localizations: IAddress[]): void {
-		this.getSemanticPropertyAll("dfc-b:hasAddress").forEach((prop) => {
-			this.connector.removeFromStore(prop);
-		});
-		localizations.forEach((agent) => {
-			this.addSemanticPropertyReference("dfc-b:hasAddress", agent, true);
-			this.connector.store(agent);
-		});
+	public getEmails(): string[] {
+		return this.getSemanticPropertyAll("dfc-b:email");
 	}
 
-	public setWebsites(emailAddresses: string[]): void {
-		this.setSemanticPropertyLiteralAll("dfc-b:websitePage", emailAddresses);
+	public addEmailAddress(emailAddress: string): void {
+		this.addSemanticPropertyLiteral("dfc-b:email", emailAddress);
+	}
+
+	public addLocalization(localization: IAddress): void {
+		if (localization.isSemanticObjectAnonymous()) {
+			this.addSemanticPropertyAnonymous("dfc-b:hasAddress", localization);
+		}
+		else {
+			this.connector.store(localization);
+			this.addSemanticPropertyReference("dfc-b:hasAddress", localization);
+		}
+	}
+
+	public getLogo(): string | undefined {
+		return this.getSemanticProperty("dfc-b:logo");
 	}
 
 	public setLogo(logo: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:logo", logo);
 	}
 
-	public addPhoneNumber(phoneNumber: IPhoneNumber): void {
-		if (phoneNumber.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasPhoneNumber", phoneNumber);
-		}
-		else {
-			this.connector.store(phoneNumber);
-			this.addSemanticPropertyReference("dfc-b:hasPhoneNumber", phoneNumber);
-		}
+	public removeWebsite(website: string): void {
+		throw new Error("Not yet implemented.");
 	}
 
-	public addSocialMedia(socialMedia: ISocialMedia): void {
-		if (socialMedia.isSemanticObjectAnonymous()) {
-			this.addSemanticPropertyAnonymous("dfc-b:hasSocialMedia", socialMedia);
-		}
-		else {
-			this.connector.store(socialMedia);
-			this.addSemanticPropertyReference("dfc-b:hasSocialMedia", socialMedia);
-		}
-	}
-
-	public async getLocalizations(options?: IGetterOptions): Promise<IAddress[]> {
-		const results = new Array<IAddress>();
-		const properties = this.getSemanticPropertyAll("dfc-b:hasAddress");
-		for await (const semanticId of properties) {
-			const semanticObject: Semanticable | undefined = await this.connector.fetch(semanticId, options);
-			if (semanticObject) results.push(<IAddress>semanticObject);
-		}
-		return results;
+	public removePhoneNumber(phoneNumber: IPhoneNumber): void {
+		throw new Error("Not yet implemented.");
 	}
 }

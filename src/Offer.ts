@@ -22,9 +22,9 @@
  * SOFTWARE.
 */
 import IOffer from "./IOffer.js"
+import IPrice from "./IPrice.js"
 import ICatalogItem from "./ICatalogItem.js"
 import ICustomerCategory from "./ICustomerCategory.js"
-import IPrice from "./IPrice.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -89,19 +89,8 @@ export default class Offer extends SemanticObject implements IOffer {
 		
 	}
 
-	public setPrice(price: IPrice): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasPrice", price);
-		
-	}
-
-	public setStockLimitation(stockLimitation: number): void {
-		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
-	}
-
-	public setOfferedItem(offeredItem: ICatalogItem): void {
-		this.setSemanticPropertyReference("dfc-b:offeredItem", offeredItem);
-		
-		this.connector.store(offeredItem);
+	public getStockLimitation(): number | undefined {
+		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
 	}
 
 	public async getOfferedItem(options?: IGetterOptions): Promise<ICatalogItem | undefined> {
@@ -114,15 +103,14 @@ export default class Offer extends SemanticObject implements IOffer {
 		return result;
 	}
 
-	public getPrice(): IPrice | undefined {
-		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
-		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
-	}
-
 	public setCustomerCategory(customerCategory: ICustomerCategory): void {
 		this.setSemanticPropertyReference("dfc-b:offeredTo", customerCategory);
 		
 		this.connector.store(customerCategory);
+	}
+
+	public setStockLimitation(stockLimitation: number): void {
+		this.setSemanticPropertyLiteral("dfc-b:stockLimitation", stockLimitation);
 	}
 
 	public async getCustomerCategory(options?: IGetterOptions): Promise<ICustomerCategory | undefined> {
@@ -135,7 +123,19 @@ export default class Offer extends SemanticObject implements IOffer {
 		return result;
 	}
 
-	public getStockLimitation(): number | undefined {
-		return Number(this.getSemanticProperty("dfc-b:stockLimitation"));
+	public setOfferedItem(offeredItem: ICatalogItem): void {
+		this.setSemanticPropertyReference("dfc-b:offeredItem", offeredItem);
+		
+		this.connector.store(offeredItem);
+	}
+
+	public setPrice(price: IPrice): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasPrice", price);
+		
+	}
+
+	public getPrice(): IPrice | undefined {
+		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
+		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
 	}
 }

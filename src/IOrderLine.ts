@@ -22,8 +22,8 @@
  * SOFTWARE.
 */
 import IOrder from "./IOrder.js"
-import IOffer from "./IOffer.js"
 import Describable from "./Describable.js"
+import IOffer from "./IOffer.js"
 import IPrice from "./IPrice.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"

@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import Affiliable from "./Affiliable.js"
 import Personable from "./Personable.js"
+import Affiliable from "./Affiliable.js"
 
 import { Semanticable } from "@virtual-assembly/semantizer"
 

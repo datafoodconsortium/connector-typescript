@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IOrder from "./IOrder.js"
-import IPhysicalPlace from "./IPhysicalPlace.js"
 import IPickupOption from "./IPickupOption.js"
+import IOrder from "./IOrder.js"
 import ISaleSession from "./ISaleSession.js"
-import ShippingOption from "./ShippingOption.js"
 import IQuantity from "./IQuantity.js"
+import ShippingOption from "./ShippingOption.js"
+import IPhysicalPlace from "./IPhysicalPlace.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";

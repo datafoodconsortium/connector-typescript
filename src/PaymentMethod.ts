@@ -21,8 +21,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
 */
-import IPaymentMethod from "./IPaymentMethod.js"
 import IPrice from "./IPrice.js"
+import IPaymentMethod from "./IPaymentMethod.js"
 import { SemanticObject } from "@virtual-assembly/semantizer"
 import { Semanticable } from "@virtual-assembly/semantizer"
 import IConnector from "./IConnector.js";
@@ -92,45 +92,45 @@ export default class PaymentMethod extends SemanticObject implements IPaymentMet
 		
 	}
 
-	public setPrice(price: IPrice): void {
-		this.setSemanticPropertyAnonymous("dfc-b:hasPrice", price);
-		
-	}
-
-	public getDescription(): string | undefined {
-		return this.getSemanticProperty("dfc-b:description");
-	}
-
-	public getProvider(): string | undefined {
-		return this.getSemanticProperty("dfc-b:paymentMethodProvider");
-	}
-
-	public setProvider(provider: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:paymentMethodProvider", provider);
-	}
-
-	public setDescription(description: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:description", description);
+	public setType(type: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:paymentMethodType", type);
 	}
 
 	public getName(): string | undefined {
 		return this.getSemanticProperty("dfc-b:name");
 	}
 
-	public setType(type: string): void {
-		this.setSemanticPropertyLiteral("dfc-b:paymentMethodType", type);
+	public getDescription(): string | undefined {
+		return this.getSemanticProperty("dfc-b:description");
+	}
+
+	public setDescription(description: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:description", description);
 	}
 
 	public setName(name: string): void {
 		this.setSemanticPropertyLiteral("dfc-b:name", name);
 	}
 
+	public getType(): string | undefined {
+		return this.getSemanticProperty("dfc-b:paymentMethodType");
+	}
+
+	public setProvider(provider: string): void {
+		this.setSemanticPropertyLiteral("dfc-b:paymentMethodProvider", provider);
+	}
+
+	public setPrice(price: IPrice): void {
+		this.setSemanticPropertyAnonymous("dfc-b:hasPrice", price);
+		
+	}
+
+	public getProvider(): string | undefined {
+		return this.getSemanticProperty("dfc-b:paymentMethodProvider");
+	}
+
 	public getPrice(): IPrice | undefined {
 		const blankNode: any = this.getSemanticPropertyAnonymous("dfc-b:hasPrice");
 		return <IPrice> this.connector.getDefaultFactory().createFromRdfDataset(blankNode);
-	}
-
-	public getType(): string | undefined {
-		return this.getSemanticProperty("dfc-b:paymentMethodType");
 	}
 }
